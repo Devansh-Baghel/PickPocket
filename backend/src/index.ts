@@ -1,9 +1,17 @@
+import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
+import { posts } from "./db/schema";
 
-const app = new Hono<{ Bindings: CloudflareBindings }>();
+export interface Env extends CloudflareBindings {
+  DB: D1Database;
+}
 
-app.get("/message", (c) => {
-  return c.text("Hello Hono!");
+const app = new Hono<{ Bindings: Env }>();
+
+app.get("/posts", async (c) => {
+  const db = drizzle(c.env.DB);
+  const result = await db.select().from(posts).all();
+  return c.json(result);
 });
 
 export default app;
