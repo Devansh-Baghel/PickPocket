@@ -9,7 +9,7 @@ export interface Env extends CloudflareBindings {
 const app = new Hono<{ Bindings: Env }>();
 
 app.get("/posts", async (c) => {
-  const db = drizzle(c.env.DB);
+  const db = drizzle(c.env.DB, { logger: true });
   const result = await db.select().from(posts).all();
   return c.json(result);
 });

@@ -5,7 +5,7 @@
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "db:generate": "drizzle-kit generate",
-    "db:up": "drizzle-kit up:sqlite",
+    "db:up": "drizzle-kit up",
     "studio": "drizzle-kit studio"
   },
   "dependencies": {
