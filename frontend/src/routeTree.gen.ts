@@ -8,13 +8,36 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as NewRouteImport } from './routes/new'
-import { Route as IndexRouteImport } from './routes/index'
+import { createServerRootRoute } from '@tanstack/react-start/server'
 
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as NewRouteImport } from './routes/new'
+import { Route as ErrorRouteImport } from './routes/error'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as IndexRouteImport } from './routes/index'
+import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
+
+const rootServerRouteImport = createServerRootRoute()
+
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewRoute = NewRouteImport.update({
   id: '/new',
   path: '/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ErrorRoute = ErrorRouteImport.update({
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +45,99 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/error': typeof ErrorRoute
   '/new': typeof NewRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/error': typeof ErrorRoute
   '/new': typeof NewRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/error': typeof ErrorRoute
   '/new': typeof NewRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/new'
+  fullPaths: '/' | '/dashboard' | '/error' | '/new' | '/welcome'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/new'
-  id: '__root__' | '/' | '/new'
+  to: '/' | '/dashboard' | '/error' | '/new' | '/welcome'
+  id: '__root__' | '/' | '/dashboard' | '/error' | '/new' | '/welcome'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  ErrorRoute: typeof ErrorRoute
   NewRoute: typeof NewRoute
+  WelcomeRoute: typeof WelcomeRoute
+}
+export interface FileServerRoutesByFullPath {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/api/auth/$'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/api/auth/$'
+  id: '__root__' | '/api/auth/$'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/new': {
       id: '/new'
       path: '/new'
       fullPath: '/new'
       preLoaderRoute: typeof NewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -67,11 +149,31 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+declare module '@tanstack/react-start/server' {
+  interface ServerFileRoutesByPath {
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+  }
+}
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
+  ErrorRoute: ErrorRoute,
   NewRoute: NewRoute,
+  WelcomeRoute: WelcomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+}
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()
