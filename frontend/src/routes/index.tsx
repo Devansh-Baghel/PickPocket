@@ -1,27 +1,29 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { authClient } from "~/lib/auth-client";
+import { useAuthStore } from "~/stores/userStore";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
-function Dashboard() {
-  const { data: session } = authClient.useSession();
+export default function Dashboard() {
+  const { session, signIn, signOut, getSession, loading } = useAuthStore();
 
-  console.log(session);
+  useEffect(() => {
+    getSession();
+  }, [getSession]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="p-2">
       {!session ? (
-        <button
-          onClick={() => authClient.signIn.social({ provider: "github" })}
-        >
-          Sign In
-        </button>
+        <button onClick={signIn}>Sign In</button>
       ) : (
-        <button onClick={() => authClient.signOut({})}>Log Out</button>
+        <button onClick={signOut}>Log Out</button>
       )}
       <h3 className="font-serif">Welcome Home!</h3>
     </div>
   );
 }
+
