@@ -6,6 +6,7 @@ export function SideBar() {
     queryKey: ["sidebar"],
     queryFn: () => getUsers(),
   });
+
   return (
     <nav>
       {data.map((user: any) => (

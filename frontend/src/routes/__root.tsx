@@ -75,10 +75,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="flex gap-10">
-        <React.Suspense fallback={"Loading sidebar..."}>
-          <SideBar />
-        </React.Suspense>
+      <body className="min-h-screen w-full">
+        {/* <React.Suspense fallback={"Loading sidebar..."}> */}
+        {/* <SideBar /> */}
+        {/* </React.Suspense> */}
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
