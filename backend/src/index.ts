@@ -1,8 +1,7 @@
 import { Hono } from "hono";
-import { posts } from "./db/schema";
 import { getDB } from "./db/db";
 import { verifyAuth } from "./middlewares/verifyAuth";
-import { bearerAuth } from "hono/bearer-auth";
+import { saves } from "./db/schemas/saves";
 
 export interface Env extends CloudflareBindings {
   DB: D1Database;
@@ -12,12 +11,11 @@ export interface Env extends CloudflareBindings {
 const app = new Hono<{ Bindings: Env }>();
 
 app.get(
-  "/posts",
-  verifyAuth,
+  "/saves",
+  // verifyAuth,
   async (c) => {
-    console.log("You are authenticated");
     const db = getDB(c);
-    const result = await db.select().from(posts).all();
+    const result = await db.select().from(saves).all();
     return c.json(result);
   }
 );
