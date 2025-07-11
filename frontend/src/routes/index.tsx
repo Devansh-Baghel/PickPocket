@@ -1,17 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useAuthStore } from "~/stores/userStore";
-import { useEffect } from "react";
+import { useAuthStore } from "~/stores/authStore";
 
 export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
 export default function Dashboard() {
-  const { session, signIn, signOut, getSession, loading } = useAuthStore();
-
-  useEffect(() => {
-    getSession();
-  }, [getSession]);
+  const { session, signIn, signOut, loading } = useAuthStore();
 
   if (loading) return <div>Loading...</div>;
 

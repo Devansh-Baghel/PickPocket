@@ -11,7 +11,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
-import { SideBar } from "~/components/SideBar";
+import { useAuthStore } from "~/stores/authStore";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 
@@ -70,6 +70,12 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const getSession = useAuthStore((state) => state.getSession);
+
+  React.useEffect(() => {
+    getSession();
+  }, [getSession]);
+
   return (
     <html>
       <head>
@@ -78,9 +84,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-screen w-full">
-        {/* <React.Suspense fallback={"Loading sidebar..."}> */}
-        {/* <SideBar /> */}
-        {/* </React.Suspense> */}
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
