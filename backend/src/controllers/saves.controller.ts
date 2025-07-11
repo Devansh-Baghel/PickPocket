@@ -4,7 +4,7 @@ import { saves } from "@/db/schemas/saves";
 import { Context } from "@/types/types";
 import { Readability } from "@paoramen/cheer-reader";
 import * as cheerio from "cheerio";
-import { and, eq, InferInsertModel } from "drizzle-orm";
+import { and, eq, getTableColumns, InferInsertModel } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 
 export async function getSaves(c: Context) {
@@ -18,10 +18,14 @@ export async function getSavesByUser(c: Context) {
 
   if (!userId) throw new HTTPException(400, { message: "userId is required" });
 
+  // This is required to exclude the article content from the response
+  const { content, ...rest } = getTableColumns(articles);
+
   const db = getDB(c);
   const result = await db
-    .select()
+    .select({ save: saves, article: { ...rest } })
     .from(saves)
+    .leftJoin(articles, eq(saves.article_id, articles.id))
     .where(eq(saves.made_by, userId))
     .all();
 
@@ -32,13 +36,6 @@ async function parseArticle(url: string) {
   const htmlString = await fetch(url).then((res) => res.text());
   const $ = cheerio.load(htmlString);
   const parsedArticle = new Readability($).parse();
-
-  // console.log(parsedArticle.title);
-  // console.log(parsedArticle.content);
-  // console.log(parsedArticle.excerpt);
-  // console.log(parsedArticle.lang);
-  // console.log(parsedArticle.publishedTime);
-  // console.log(parsedArticle.siteName);
 
   return parsedArticle;
 }
@@ -109,7 +106,7 @@ export async function postSave(c: Context) {
     const [savedArticle] = await db
       .insert(articles)
       .values(articleData)
-      .returning({ id: articles.id });
+      .returning({ id: articles.id, title: articles.title });
 
     // Save to saves table
     const saveData: InferInsertModel<typeof saves> = {

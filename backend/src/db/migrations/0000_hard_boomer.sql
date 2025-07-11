@@ -14,7 +14,11 @@ CREATE UNIQUE INDEX `articles_url_unique` ON `articles` (`url`);--> statement-br
 CREATE TABLE `saves` (
 	`id` text PRIMARY KEY NOT NULL,
 	`made_by` text NOT NULL,
+	`is_archived` integer DEFAULT false,
+	`is_favorite` integer DEFAULT false,
 	`article_id` text NOT NULL,
+	`title` text NOT NULL,
 	`timestamp` text DEFAULT (current_timestamp) NOT NULL,
-	FOREIGN KEY (`article_id`) REFERENCES `articles`(`id`) ON UPDATE no action ON DELETE cascade
+	FOREIGN KEY (`article_id`) REFERENCES `articles`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`title`) REFERENCES `articles`(`title`) ON UPDATE no action ON DELETE cascade
 );
