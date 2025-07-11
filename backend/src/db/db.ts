@@ -1,7 +1,6 @@
-import { Context } from "hono";
-import { Env } from "..";
+import { Context } from "@/types/types";
 import { drizzle } from "drizzle-orm/d1";
 
-export function getDB(c: Context<{Bindings: Env}>) {
-    return drizzle(c.env.DB, { logger: true });
+export function getDB(c: Context) {
+  return drizzle(c.env.DB, { logger: true });
 }

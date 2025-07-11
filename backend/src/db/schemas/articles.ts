@@ -6,7 +6,10 @@ export const articles = sqliteTable("articles", {
   url: text("url").unique().notNull(),
   title: text("title", { length: 255 }).notNull(),
   content: text("content").notNull(),
+  excerpt: text("excerpt").notNull(),
+  lang: text("lang").default("en"),
+  publishedTime: text("published_time"),
+  siteName: text("site_name").notNull(),
   timestamp: text("timestamp")
-    .notNull()
     .default(sql`(current_timestamp)`),
 });

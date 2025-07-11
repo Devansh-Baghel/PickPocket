@@ -1,6 +1,6 @@
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { articles } from "./articles";
 import { sql } from "drizzle-orm";
+import { articles } from "./articles";
 
 export const saves = sqliteTable("saves", {
   id: text("id").primaryKey().notNull(),
