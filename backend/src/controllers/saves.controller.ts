@@ -122,3 +122,37 @@ export async function postSave(c: Context) {
     return c.json(savedSave);
   }
 }
+
+export async function toggleArchived(c: Context, archived: boolean) {
+  const saveId = c.req.param("saveId");
+
+  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+
+  const db = getDB(c);
+
+  const [updatedSave] = await db
+    .update(saves)
+    .set({ is_archived: archived })
+    .where(eq(saves.id, saveId))
+    .limit(1)
+    .returning({ save: saves });
+
+  return c.json(updatedSave);
+}
+
+export async function toggleFavorite(c: Context, favorite: boolean) {
+  const saveId = c.req.param("saveId");
+
+  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+
+  const db = getDB(c);
+
+  const [updatedSave] = await db
+    .update(saves)
+    .set({ is_favorite: favorite })
+    .where(eq(saves.id, saveId))
+    .limit(1)
+    .returning({ save: saves });
+
+  return c.json(updatedSave);
+}
