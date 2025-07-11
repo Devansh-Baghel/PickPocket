@@ -20,7 +20,7 @@
       "binding": "DB",
       "database_name": "pickpocketdb",
       "database_id": "4af4ebc7-c621-4442-89fc-082da7171ea1",
-      "migrations_dir": "drizzle/migrations"
+      "migrations_dir": "src/db/migrations"
     }
   ]
   /**

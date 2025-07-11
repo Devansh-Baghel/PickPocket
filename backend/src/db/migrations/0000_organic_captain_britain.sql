@@ -3,7 +3,11 @@ CREATE TABLE `articles` (
 	`url` text NOT NULL,
 	`title` text(255) NOT NULL,
 	`content` text NOT NULL,
-	`timestamp` text DEFAULT (current_timestamp) NOT NULL
+	`excerpt` text NOT NULL,
+	`lang` text DEFAULT 'en',
+	`published_time` text,
+	`site_name` text NOT NULL,
+	`timestamp` text DEFAULT (current_timestamp)
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `articles_url_unique` ON `articles` (`url`);--> statement-breakpoint
@@ -14,5 +18,3 @@ CREATE TABLE `saves` (
 	`timestamp` text DEFAULT (current_timestamp) NOT NULL,
 	FOREIGN KEY (`article_id`) REFERENCES `articles`(`id`) ON UPDATE no action ON DELETE cascade
 );
---> statement-breakpoint
-DROP TABLE `posts`;

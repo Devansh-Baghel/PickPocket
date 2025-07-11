@@ -8,7 +8,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:up": "drizzle-kit up",
-    "studio": "drizzle-kit studio"
+    "studio:dev": "drizzle-kit studio",
+    "studio:prd": "NODE_ENV=production drizzle-kit studio"
   },
   "dependencies": {
     "@libsql/client": "^0.15.9",

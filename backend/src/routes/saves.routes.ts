@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { Env } from "..";
-import { getSaves, getSavesByUser } from "@/controllers/saves.controller";
+import { getSaves, getSavesByUser, postSave } from "@/controllers/saves.controller";
 
 const savesRouter = new Hono<{ Bindings: Env }>();
 
@@ -13,7 +13,7 @@ const savesRouter = new Hono<{ Bindings: Env }>();
 // TODO: add auth middleware to all of these, rando user shoud'nt see all saves
 savesRouter.get("/", getSaves);
 savesRouter.get("/:userId", getSavesByUser);
-// savesRouter.post("/:userId", postSave);
+savesRouter.post("/:userId", postSave);
 
 // Protected Routes
 
