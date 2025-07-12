@@ -2,20 +2,53 @@
 - [ ] add APIresponse type
 - [ ] save to obsidian feature
 
-## Endpoints
-    ### Saves
-    - [x] get all saves
-    - [x] get all saves by user
-    - [x] post save by user
-        - [x] parse article by cheerio
-        - [x] save article to articles table
-        - [x] save save to saves table
-    - [x] mark save as archived
-    - [x] mark save as favorite
-    - [x] remove save from favorites
-    - [x] remove save from archive
-    - [ ] delete save
+## Frontend
+- [ ] reading progress bar
+- [ ] sepia reading theme
+- [ ] light mode reading theme
+- [ ] dark mode reading theme
+- [ ] font options
+- [ ] render articles properly
+- [ ] list view option to see all saves
+- [ ] grid view option to see all saves
+- [ ] compact view option to see all saves
+- [ ] convert article to pdf
 
-    ### Articles
-    - [x] get article by id
-    - [ ] refresh article content (parse article again with cheerio)
+
+### Search
+- [ ] add search bar
+- [ ] add search by tag
+- [ ] add search by highlight
+- [ ] add search by collection
+
+
+## Endpoints
+### Saves
+- [x] get all saves
+- [x] get all saves by user
+- [x] post save by user
+    - [x] parse article by cheerio
+    - [x] save article to articles table
+    - [x] save save to saves table
+- [x] mark save as archived
+- [x] mark save as favorite
+- [x] remove save from favorites
+- [x] remove save from archive
+- [ ] delete save
+- [ ] pagination
+
+### Articles
+- [x] get article by id
+- [ ] refresh article content (parse article again with cheerio)
+
+### Collections
+- [ ] get all collections
+- [ ] get all collections by user
+
+### Tags
+- [ ] get all tags
+- [ ] get all tags by user
+
+### Highlights
+- [ ] get all highlights
+- [ ] get all highlights by user

@@ -7,10 +7,27 @@ import * as cheerio from "cheerio";
 import { and, eq, getTableColumns, InferInsertModel } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 
+
 export async function getSaves(c: Context) {
   const db = getDB(c);
-  const result = await db.select().from(saves).all();
-  return c.json(result);
+
+  // Parse `page` and `limit` from query params
+  const page = parseInt(c.req.query("page") || "1", 10);
+  const limit = parseInt(c.req.query("limit") || "10", 10);
+
+  // Validate
+  const safePage = page > 0 ? page : 1;
+  const safeLimit = limit > 0 && limit <= 100 ? limit : 10;
+
+  const offset = (safePage - 1) * safeLimit;
+
+  const result = await db.select().from(saves).limit(safeLimit).offset(offset);
+
+  return c.json({
+    page: safePage,
+    limit: safeLimit,
+    data: result,
+  });
 }
 
 export async function getSavesByUser(c: Context) {
@@ -36,6 +53,11 @@ async function parseArticle(url: string) {
   const htmlString = await fetch(url).then((res) => res.text());
   const $ = cheerio.load(htmlString);
   const parsedArticle = new Readability($).parse();
+
+  console.log(parsedArticle.title);
+  console.log(parsedArticle.content);
+  console.log(parsedArticle.siteName);
+  console.log(parsedArticle.excerpt);
 
   return parsedArticle;
 }
@@ -85,7 +107,7 @@ export async function postSave(c: Context) {
       !parsedArticle ||
       !parsedArticle.title ||
       !parsedArticle.content ||
-      !parsedArticle.siteName ||
+      // !parsedArticle.siteName ||
       !parsedArticle.excerpt
     ) {
       throw new HTTPException(400, { message: "Unable to parse article" });
@@ -100,7 +122,7 @@ export async function postSave(c: Context) {
       excerpt: parsedArticle.excerpt,
       lang: parsedArticle.lang,
       publishedTime: parsedArticle.publishedTime,
-      siteName: parsedArticle.siteName,
+      siteName: parsedArticle.siteName || "",
     };
 
     const [savedArticle] = await db
