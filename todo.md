@@ -2,7 +2,22 @@
 - [ ] add APIresponse type
 - [ ] save to obsidian feature
 
-## Frontend
+## Bugs
+- [ ] fix the controller pattern hono ts problem 
+    problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible
+    solution:- https://chatgpt.com/s/t_68728a9e28008191bb20f055cec25c17
+
+    ### Doesn't exist bugs
+    - [ ] GET to /articles/nonArticleId should return 404
+    - [ ] GET to /saves/userNameThatDoesntExist should return 404 
+    - [ ] GET to /saves/saveIdThatDoesntExist/archive should return 404
+    - [ ] GET to /saves/saveIdThatDoesntExist/unarchive should return 404
+    - [ ] GET to /saves/saveIdThatDoesntExist/favorite should return 404
+    - [ ] GET to /saves/saveIdThatDoesntExist/unfavorite should return 404
+
+
+
+## Frontend 
 - [ ] reading progress bar
 - [ ] sepia reading theme
 - [ ] light mode reading theme
@@ -14,50 +29,50 @@
 - [ ] compact view option to see all saves
 - [ ] convert article to pdf
 
-### Search
-- [ ] add search bar
-- [ ] add search by tag
-- [ ] add search by highlight
-- [ ] add search by collection
+    ### Search 
+    - [ ] add search bar
+    - [ ] add search by tag
+    - [ ] add search by highlight
+    - [ ] add search by collection
 
 
-## Backend
+## Backend 
 - [x] add hono/logger
 - [x] trim trailing slashes
+- [x] add cors
+- [x] setup secure headers
 - [ ] setup custom logger
-- [ ] setup secure headers
+- [ ] learn the web standards cache api and add hono cache middleware 
+- [ ] add caching to the /articles/:articleId endpoint
 - [ ] add a 10 sec timeout https://hono.dev/docs/middleware/builtin/timeout 
-- [ ] fix the controller pattern hono ts problem 
-problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible
-solution:- https://chatgpt.com/s/t_68728a9e28008191bb20f055cec25c17
 
-### Endpoints
-#### Saves
-- [x] get all saves
-- [x] get all saves by user
-- [x] post save by user
-    - [x] parse article by cheerio
-    - [x] save article to articles table
-    - [x] save save to saves table
-- [x] mark save as archived
-- [x] mark save as favorite
-- [x] remove save from favorites
-- [x] remove save from archive
-- [ ] delete save
-- [ ] pagination
+    ### Endpoints
+    #### Saves
+    - [x] get all saves
+    - [x] get all saves by user
+    - [x] post save by user
+        - [x] parse article by cheerio
+        - [x] save article to articles table
+        - [x] save save to saves table
+    - [x] mark save as archived
+    - [x] mark save as favorite
+    - [x] remove save from favorites
+    - [x] remove save from archive
+    - [ ] delete save
+    - [ ] pagination
 
-#### Articles
-- [x] get article by id
-- [ ] refresh article content (parse article again with cheerio)
+    #### Articles
+    - [x] get article by id
+    - [ ] refresh article content (parse article again with cheerio)
 
-#### Collections
-- [ ] get all collections
-- [ ] get all collections by user
+    #### Collections
+    - [ ] get all collections
+    - [ ] get all collections by user
 
-#### Tags
-- [ ] get all tags
-- [ ] get all tags by user
+    #### Tags
+    - [ ] get all tags
+    - [ ] get all tags by user
 
-#### Highlights
-- [ ] get all highlights
-- [ ] get all highlights by user
+    #### Highlights
+    - [ ] get all highlights
+    - [ ] get all highlights by user
