@@ -1,11 +1,12 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { trimTrailingSlash } from "hono/trailing-slash";
+import { cors } from "hono/cors";
+import { secureHeaders } from "hono/secure-headers";
+import { timeout } from "hono/timeout";
 
 import savesRouter from "./routes/saves.routes";
 import articleRouter from "./routes/articles.routes";
-import { cors } from "hono/cors";
-import { secureHeaders } from "hono/secure-headers";
 
 export interface Env extends CloudflareBindings {
   DB: D1Database;
@@ -24,6 +25,7 @@ app.use(
 app.use(secureHeaders());
 app.use(logger());
 app.use(trimTrailingSlash());
+app.use(timeout(8000));
 
 // Routes
 app.route("/saves", savesRouter);

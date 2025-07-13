@@ -41,10 +41,10 @@
 - [x] trim trailing slashes
 - [x] add cors
 - [x] setup secure headers
+- [x] add a 8 sec timeout https://hono.dev/docs/middleware/builtin/timeout 
 - [ ] setup custom logger
 - [ ] learn the web standards cache api and add hono cache middleware 
 - [ ] add caching to the /articles/:articleId endpoint
-- [ ] add a 10 sec timeout https://hono.dev/docs/middleware/builtin/timeout 
 
     ### Endpoints
     #### Saves
