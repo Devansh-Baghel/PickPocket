@@ -14,7 +14,6 @@
 - [ ] compact view option to see all saves
 - [ ] convert article to pdf
 
-
 ### Search
 - [ ] add search bar
 - [ ] add search by tag
@@ -22,8 +21,18 @@
 - [ ] add search by collection
 
 
-## Endpoints
-### Saves
+## Backend
+- [x] add hono/logger
+- [x] trim trailing slashes
+- [ ] setup custom logger
+- [ ] setup secure headers
+- [ ] add a 10 sec timeout https://hono.dev/docs/middleware/builtin/timeout 
+- [ ] fix the controller pattern hono ts problem 
+problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible
+solution:- https://chatgpt.com/s/t_68728a9e28008191bb20f055cec25c17
+
+### Endpoints
+#### Saves
 - [x] get all saves
 - [x] get all saves by user
 - [x] post save by user
@@ -37,18 +46,18 @@
 - [ ] delete save
 - [ ] pagination
 
-### Articles
+#### Articles
 - [x] get article by id
 - [ ] refresh article content (parse article again with cheerio)
 
-### Collections
+#### Collections
 - [ ] get all collections
 - [ ] get all collections by user
 
-### Tags
+#### Tags
 - [ ] get all tags
 - [ ] get all tags by user
 
-### Highlights
+#### Highlights
 - [ ] get all highlights
 - [ ] get all highlights by user
