@@ -5,6 +5,7 @@ import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
 import { timeout } from "hono/timeout";
 import { customLogger } from "./utils/utils";
+import { verifyAuth } from "./middlewares/verifyAuth";
 
 import savesRouter from "./routes/saves.routes";
 import articleRouter from "./routes/articles.routes";
@@ -27,6 +28,9 @@ app.use(secureHeaders());
 app.use(logger(customLogger));
 app.use(trimTrailingSlash());
 app.use(timeout(8000));
+
+// Global auth middleware
+app.use(verifyAuth);
 
 // Routes
 app.route("/saves", savesRouter);

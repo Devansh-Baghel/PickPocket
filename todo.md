@@ -49,6 +49,7 @@
 - [x] add a 8 sec timeout https://hono.dev/docs/middleware/builtin/timeout 
 - [x] move parseArticle to a util file
 - [x] setup custom logger
+- [x] add global auth middleware
 - [ ] learn the web standards cache api and add hono cache middleware 
 - [ ] add caching to the /articles/:articleId endpoint
 - [ ] rewrite verifyAuth middleware to use the factory pattern
