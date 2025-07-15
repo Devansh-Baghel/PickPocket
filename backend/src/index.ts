@@ -4,6 +4,7 @@ import { trimTrailingSlash } from "hono/trailing-slash";
 import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
 import { timeout } from "hono/timeout";
+import { customLogger } from "./utils/utils";
 
 import savesRouter from "./routes/saves.routes";
 import articleRouter from "./routes/articles.routes";
@@ -23,7 +24,7 @@ app.use(
   })
 );
 app.use(secureHeaders());
-app.use(logger());
+app.use(logger(customLogger));
 app.use(trimTrailingSlash());
 app.use(timeout(8000));
 

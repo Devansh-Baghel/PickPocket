@@ -47,10 +47,10 @@
 - [x] add cors
 - [x] setup secure headers
 - [x] add a 8 sec timeout https://hono.dev/docs/middleware/builtin/timeout 
-- [ ] setup custom logger
+- [x] move parseArticle to a util file
+- [x] setup custom logger
 - [ ] learn the web standards cache api and add hono cache middleware 
 - [ ] add caching to the /articles/:articleId endpoint
-- [ ] move parseArticle to a util file
 - [ ] rewrite verifyAuth middleware to use the factory pattern
 
     ### Endpoints

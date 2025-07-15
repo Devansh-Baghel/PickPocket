@@ -2,11 +2,11 @@ import { getDB } from "@/db/db";
 import { articles } from "@/db/schemas/articles";
 import { saves } from "@/db/schemas/saves";
 import { Context } from "@/types/types";
+import { customLogger, parseArticle } from "@/utils/utils";
 import { Readability } from "@paoramen/cheer-reader";
 import * as cheerio from "cheerio";
 import { and, eq, getTableColumns, InferInsertModel } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
-
 
 export async function getSaves(c: Context) {
   const db = getDB(c);
@@ -47,19 +47,6 @@ export async function getSavesByUser(c: Context) {
     .all();
 
   return c.json(result);
-}
-
-async function parseArticle(url: string) {
-  const htmlString = await fetch(url).then((res) => res.text());
-  const $ = cheerio.load(htmlString);
-  const parsedArticle = new Readability($).parse();
-
-  console.log(parsedArticle.title);
-  console.log(parsedArticle.content);
-  console.log(parsedArticle.siteName);
-  console.log(parsedArticle.excerpt);
-
-  return parsedArticle;
 }
 
 export async function postSave(c: Context) {
