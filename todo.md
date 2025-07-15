@@ -72,7 +72,7 @@
 
     #### Articles
     - [x] get article by id
-    - [ ] refresh article content (parse article again with cheerio)
+    - [x] refresh article content, title, excerpt, lang, publishedTime, siteName (parse article again by cheerio)
 
     #### Collections
     - [ ] get all collections
