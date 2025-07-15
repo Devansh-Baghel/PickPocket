@@ -169,3 +169,25 @@ export async function toggleFavorite(c: Context, favorite: boolean) {
 
   return c.json(updatedSave);
 }
+
+export async function deleteSave(c: Context) {
+  const saveId = c.req.param("saveId");
+
+  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+
+  const db = getDB(c);
+
+  const [deletedSave] = await db
+    .delete(saves)
+    .where(eq(saves.id, saveId))
+    .returning({ id: saves.id });
+
+  if (!deletedSave) {
+    throw new HTTPException(404, { message: "Save not found" });
+  }
+
+  return c.json({
+    message: "Save deleted successfully",
+    deletedSave,
+  });
+}

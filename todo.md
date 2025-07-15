@@ -65,7 +65,7 @@
     - [x] mark save as favorite
     - [x] remove save from favorites
     - [x] remove save from archive
-    - [ ] delete save
+    - [x] delete save
     - [ ] pagination
 
     #### Articles
