@@ -6,14 +6,19 @@
 - [ ] fix the controller pattern hono ts problem 
     problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible
     solution:- https://chatgpt.com/s/t_68728a9e28008191bb20f055cec25c17
+    - [ ] fix for getSaves
+    - [ ] fix for getSavesByUser
+    - [ ] fix for postSave
+    - [ ] fix for toggleArchived
+    - [ ] fix for toggleFavorite
+    - [ ] fix for getArticle
 
     ### Doesn't exist bugs
-    - [ ] GET to /articles/nonArticleId should return 404
-    - [ ] GET to /saves/userNameThatDoesntExist should return 404 
-    - [ ] GET to /saves/saveIdThatDoesntExist/archive should return 404
-    - [ ] GET to /saves/saveIdThatDoesntExist/unarchive should return 404
-    - [ ] GET to /saves/saveIdThatDoesntExist/favorite should return 404
-    - [ ] GET to /saves/saveIdThatDoesntExist/unfavorite should return 404
+    - [x] GET to /articles/nonArticleId should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/archive should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/unarchive should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/favorite should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/unfavorite should return 404
 
 
 
@@ -42,9 +47,12 @@
 - [x] add cors
 - [x] setup secure headers
 - [x] add a 8 sec timeout https://hono.dev/docs/middleware/builtin/timeout 
-- [ ] setup custom logger
+- [x] move parseArticle to a util file
+- [x] setup custom logger
+- [x] add global auth middleware
 - [ ] learn the web standards cache api and add hono cache middleware 
 - [ ] add caching to the /articles/:articleId endpoint
+- [ ] rewrite verifyAuth middleware to use the factory pattern
 
     ### Endpoints
     #### Saves
@@ -58,12 +66,14 @@
     - [x] mark save as favorite
     - [x] remove save from favorites
     - [x] remove save from archive
-    - [ ] delete save
-    - [ ] pagination
+    - [x] delete save
+    - [x] pagination
+        - [x] paginate all saves
+        - [x] paginate all saves by user
 
     #### Articles
     - [x] get article by id
-    - [ ] refresh article content (parse article again with cheerio)
+    - [x] refresh article content, title, excerpt, lang, publishedTime, siteName (parse article again by cheerio)
 
     #### Collections
     - [ ] get all collections

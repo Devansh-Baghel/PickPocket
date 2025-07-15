@@ -2,11 +2,11 @@ import { getDB } from "@/db/db";
 import { articles } from "@/db/schemas/articles";
 import { saves } from "@/db/schemas/saves";
 import { Context } from "@/types/types";
+import { customLogger, parseArticle } from "@/utils/utils";
 import { Readability } from "@paoramen/cheer-reader";
 import * as cheerio from "cheerio";
 import { and, eq, getTableColumns, InferInsertModel } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
-
 
 export async function getSaves(c: Context) {
   const db = getDB(c);
@@ -32,35 +32,38 @@ export async function getSaves(c: Context) {
 
 export async function getSavesByUser(c: Context) {
   const userId = c.req.param("userId");
-
   if (!userId) throw new HTTPException(400, { message: "userId is required" });
 
-  // This is required to exclude the article content from the response
+  // Parse `page` and `limit` from query params
+  const page = parseInt(c.req.query("page") || "1", 10);
+  const limit = parseInt(c.req.query("limit") || "10", 10);
+
+  // Validate
+  const safePage = page > 0 ? page : 1;
+  const safeLimit = limit > 0 && limit <= 100 ? limit : 10;
+
+  const offset = (safePage - 1) * safeLimit;
+
+  // Exclude article `content`
   const { content, ...rest } = getTableColumns(articles);
 
   const db = getDB(c);
+
   const result = await db
     .select({ save: saves, article: { ...rest } })
     .from(saves)
     .leftJoin(articles, eq(saves.article_id, articles.id))
     .where(eq(saves.made_by, userId))
-    .all();
+    .limit(safeLimit)
+    .offset(offset);
 
-  return c.json(result);
+  return c.json({
+    page: safePage,
+    limit: safeLimit,
+    data: result,
+  });
 }
 
-async function parseArticle(url: string) {
-  const htmlString = await fetch(url).then((res) => res.text());
-  const $ = cheerio.load(htmlString);
-  const parsedArticle = new Readability($).parse();
-
-  console.log(parsedArticle.title);
-  console.log(parsedArticle.content);
-  console.log(parsedArticle.siteName);
-  console.log(parsedArticle.excerpt);
-
-  return parsedArticle;
-}
 
 export async function postSave(c: Context) {
   const userId = c.req.param("userId");
@@ -159,6 +162,8 @@ export async function toggleArchived(c: Context, archived: boolean) {
     .limit(1)
     .returning({ save: saves });
 
+  if (!updatedSave) throw new HTTPException(404, { message: "Save not found" });
+
   return c.json(updatedSave);
 }
 
@@ -176,5 +181,29 @@ export async function toggleFavorite(c: Context, favorite: boolean) {
     .limit(1)
     .returning({ save: saves });
 
+  if (!updatedSave) throw new HTTPException(404, { message: "Save not found" });
+
   return c.json(updatedSave);
+}
+
+export async function deleteSave(c: Context) {
+  const saveId = c.req.param("saveId");
+
+  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+
+  const db = getDB(c);
+
+  const [deletedSave] = await db
+    .delete(saves)
+    .where(eq(saves.id, saveId))
+    .returning({ id: saves.id });
+
+  if (!deletedSave) {
+    throw new HTTPException(404, { message: "Save not found" });
+  }
+
+  return c.json({
+    message: "Save deleted successfully",
+    deletedSave,
+  });
 }
