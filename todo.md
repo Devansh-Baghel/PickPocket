@@ -66,7 +66,9 @@
     - [x] remove save from favorites
     - [x] remove save from archive
     - [x] delete save
-    - [ ] pagination
+    - [x] pagination
+        - [x] paginate all saves
+        - [x] paginate all saves by user
 
     #### Articles
     - [x] get article by id

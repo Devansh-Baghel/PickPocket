@@ -32,22 +32,38 @@ export async function getSaves(c: Context) {
 
 export async function getSavesByUser(c: Context) {
   const userId = c.req.param("userId");
-
   if (!userId) throw new HTTPException(400, { message: "userId is required" });
 
-  // This is required to exclude the article content from the response
+  // Parse `page` and `limit` from query params
+  const page = parseInt(c.req.query("page") || "1", 10);
+  const limit = parseInt(c.req.query("limit") || "10", 10);
+
+  // Validate
+  const safePage = page > 0 ? page : 1;
+  const safeLimit = limit > 0 && limit <= 100 ? limit : 10;
+
+  const offset = (safePage - 1) * safeLimit;
+
+  // Exclude article `content`
   const { content, ...rest } = getTableColumns(articles);
 
   const db = getDB(c);
+
   const result = await db
     .select({ save: saves, article: { ...rest } })
     .from(saves)
     .leftJoin(articles, eq(saves.article_id, articles.id))
     .where(eq(saves.made_by, userId))
-    .all();
+    .limit(safeLimit)
+    .offset(offset);
 
-  return c.json(result);
+  return c.json({
+    page: safePage,
+    limit: safeLimit,
+    data: result,
+  });
 }
+
 
 export async function postSave(c: Context) {
   const userId = c.req.param("userId");
