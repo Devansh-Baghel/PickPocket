@@ -17,5 +17,7 @@ export async function getArticle(c: Context) {
     .where(eq(articles.id, articleId))
     .limit(1);
 
+  if (!article) throw new HTTPException(404, { message: "Article not found" });
+
   return c.json(article);
 }

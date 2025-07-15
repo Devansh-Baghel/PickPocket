@@ -6,14 +6,19 @@
 - [ ] fix the controller pattern hono ts problem 
     problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible
     solution:- https://chatgpt.com/s/t_68728a9e28008191bb20f055cec25c17
+    - [ ] fix for getSaves
+    - [ ] fix for getSavesByUser
+    - [ ] fix for postSave
+    - [ ] fix for toggleArchived
+    - [ ] fix for toggleFavorite
+    - [ ] fix for getArticle
 
     ### Doesn't exist bugs
-    - [ ] GET to /articles/nonArticleId should return 404
-    - [ ] GET to /saves/userNameThatDoesntExist should return 404 
-    - [ ] GET to /saves/saveIdThatDoesntExist/archive should return 404
-    - [ ] GET to /saves/saveIdThatDoesntExist/unarchive should return 404
-    - [ ] GET to /saves/saveIdThatDoesntExist/favorite should return 404
-    - [ ] GET to /saves/saveIdThatDoesntExist/unfavorite should return 404
+    - [x] GET to /articles/nonArticleId should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/archive should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/unarchive should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/favorite should return 404
+    - [x] GET to /saves/saveIdThatDoesntExist/unfavorite should return 404
 
 
 
@@ -45,6 +50,8 @@
 - [ ] setup custom logger
 - [ ] learn the web standards cache api and add hono cache middleware 
 - [ ] add caching to the /articles/:articleId endpoint
+- [ ] move parseArticle to a util file
+- [ ] rewrite verifyAuth middleware to use the factory pattern
 
     ### Endpoints
     #### Saves

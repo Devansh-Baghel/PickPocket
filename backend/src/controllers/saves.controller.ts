@@ -159,6 +159,8 @@ export async function toggleArchived(c: Context, archived: boolean) {
     .limit(1)
     .returning({ save: saves });
 
+  if (!updatedSave) throw new HTTPException(404, { message: "Save not found" });
+
   return c.json(updatedSave);
 }
 
@@ -175,6 +177,8 @@ export async function toggleFavorite(c: Context, favorite: boolean) {
     .where(eq(saves.id, saveId))
     .limit(1)
     .returning({ save: saves });
+
+  if (!updatedSave) throw new HTTPException(404, { message: "Save not found" });
 
   return c.json(updatedSave);
 }
