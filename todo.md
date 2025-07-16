@@ -78,6 +78,10 @@
     #### Collections
     - [ ] get all collections
     - [ ] get all collections by user
+    - [ ] create collection
+    - [ ] delete collection
+    - [ ] add saves to collection (support for both single save as well as multiple saves)
+    - [ ] remove saves from collection (support for both single save as well as multiple saves)
 
     #### Tags
     - [ ] get all tags
@@ -86,3 +90,8 @@
     #### Highlights
     - [ ] get all highlights
     - [ ] get all highlights by user
+
+
+## Maybe some day
+- [ ] bump.sh integration
+- [ ] 

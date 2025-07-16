@@ -2,9 +2,7 @@ import { getDB } from "@/db/db";
 import { articles } from "@/db/schemas/articles";
 import { saves } from "@/db/schemas/saves";
 import { Context } from "@/types/types";
-import { customLogger, parseArticle } from "@/utils/utils";
-import { Readability } from "@paoramen/cheer-reader";
-import * as cheerio from "cheerio";
+import { parseArticle } from "@/utils/utils";
 import { and, eq, getTableColumns, InferInsertModel } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 

@@ -11,6 +11,8 @@
     "types": ["./worker-configuration.d.ts"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
 }

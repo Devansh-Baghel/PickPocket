@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import Saves from "~/components/Saves";
 import { useAuthStore } from "~/stores/authStore";
 
 export const Route = createFileRoute("/")({
@@ -12,12 +13,16 @@ export default function Dashboard() {
 
   return (
     <div className="p-2">
+      <h1>Dashboard</h1>
+      <p>Welcome to your dashboard!</p>
       {!session ? (
         <button onClick={signIn}>Sign In</button>
       ) : (
-        <button onClick={signOut}>Log Out</button>
+        <div>
+          <button onClick={signOut}>Log Out</button>
+          <Saves />
+        </div>
       )}
-      <h3 className="font-serif">Welcome Home!</h3>
     </div>
   );
 }
