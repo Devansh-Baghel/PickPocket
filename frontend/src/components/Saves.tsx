@@ -2,12 +2,10 @@ import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { getSaves } from "~/server-functions/server-functions";
 
 export default function Saves() {
-  const { data, isLoading } = useSuspenseQuery({
+  const { data } = useSuspenseQuery({
     queryKey: ["saves"],
     queryFn: getSaves,
   });
-
-  if (isLoading) return <div>Loading Saves...</div>;
 
   return (
     <div>

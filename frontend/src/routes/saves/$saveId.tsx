@@ -9,5 +9,5 @@ function RouteComponent() {
   const {} = useQuery({
     queryKey: ["saves"],
   });
-  return <div>Hello "/posts/$saveId"!</div>;
+  return <div>Hello "/saves/$saveId"!</div>;
 }
