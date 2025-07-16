@@ -9,8 +9,8 @@ import {
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import axios from "axios";
 import * as React from "react";
+import CheckAuth from "~/components/CheckAuth";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import { useAuthStore } from "~/stores/authStore";
@@ -90,7 +90,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <br />
         <Link to="/login">Login Page</Link>
 
-        {children}
+        <CheckAuth>{children}</CheckAuth>
+
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
