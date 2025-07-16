@@ -15,6 +15,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SavesSaveIdRouteImport } from './routes/saves/$saveId'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -39,6 +40,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SavesSaveIdRoute = SavesSaveIdRouteImport.update({
+  id: '/saves/$saveId',
+  path: '/saves/$saveId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -50,12 +56,14 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/saves/$saveId': typeof SavesSaveIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/saves/$saveId': typeof SavesSaveIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -63,13 +71,14 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/saves/$saveId': typeof SavesSaveIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/profile'
+  fullPaths: '/' | '/dashboard' | '/login' | '/profile' | '/saves/$saveId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/profile'
-  id: '__root__' | '/' | '/dashboard' | '/login' | '/profile'
+  to: '/' | '/dashboard' | '/login' | '/profile' | '/saves/$saveId'
+  id: '__root__' | '/' | '/dashboard' | '/login' | '/profile' | '/saves/$saveId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +86,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
+  SavesSaveIdRoute: typeof SavesSaveIdRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
@@ -130,6 +140,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/saves/$saveId': {
+      id: '/saves/$saveId'
+      path: '/saves/$saveId'
+      fullPath: '/saves/$saveId'
+      preLoaderRoute: typeof SavesSaveIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 declare module '@tanstack/react-start/server' {
@@ -149,6 +166,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,
+  SavesSaveIdRoute: SavesSaveIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

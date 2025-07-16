@@ -3,12 +3,14 @@ import { type QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   HeadContent,
+  Link,
   Outlet,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
+import CheckAuth from "~/components/CheckAuth";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import { useAuthStore } from "~/stores/authStore";
@@ -84,7 +86,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-screen w-full">
-        {children}
+        <Link to="/">Home Page</Link>
+        <br />
+        <Link to="/login">Login Page</Link>
+
+        <CheckAuth>{children}</CheckAuth>
+
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
