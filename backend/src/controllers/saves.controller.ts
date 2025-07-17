@@ -6,6 +6,11 @@ import { parseArticle } from "@/utils/utils";
 import { and, eq, getTableColumns, InferInsertModel, sql } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 
+/**
+ * Retrieves a paginated list of saves from the database.
+ *
+ * Parses and validates `page` and `limit` query parameters, applies pagination, and returns the corresponding saves as a JSON response.
+ */
 export async function getSaves(c: Context) {
   const db = getDB(c);
 
@@ -28,6 +33,12 @@ export async function getSaves(c: Context) {
   });
 }
 
+/**
+ * Retrieves a paginated list of saves for a specific user, including associated article metadata but excluding article content.
+ *
+ * Throws a 400 error if `userId` is missing from the route parameters.
+ * Returns a JSON object containing the current page, limit, and an array of save-article pairs.
+ */
 export async function getSavesByUser(c: Context) {
   const userId = c.req.param("userId");
   if (!userId) throw new HTTPException(400, { message: "userId is required" });
@@ -62,6 +73,13 @@ export async function getSavesByUser(c: Context) {
   });
 }
 
+/**
+ * Saves an article for a user, parsing and storing the article if it does not already exist.
+ *
+ * If the article with the given URL exists, links it to the user unless already saved. If not, parses the article, stores its metadata, and then links it to the user. Throws a 400 error if required fields are missing or the article cannot be parsed, or if the article is already saved by the user.
+ *
+ * @returns The ID of the newly created save record as a JSON object.
+ */
 export async function postSave(c: Context) {
   const userId = c.req.param("userId");
   const { url } = await c.req.json<{ url: string }>();
@@ -145,6 +163,12 @@ export async function postSave(c: Context) {
   }
 }
 
+/**
+ * Updates the archived status of a save and returns the updated save with a status message.
+ *
+ * @param archived - Whether to mark the save as archived (`true`) or unarchived (`false`)
+ * @returns An object containing a descriptive message and the updated save record
+ */
 export async function toggleArchived(c: Context, archived: boolean) {
   const saveId = c.req.param("saveId");
 
@@ -167,6 +191,14 @@ export async function toggleArchived(c: Context, archived: boolean) {
   });
 }
 
+/**
+ * Updates the favorite status of a save and returns a message with the updated save.
+ *
+ * Throws a 400 error if `saveId` is missing and a 404 error if the save does not exist.
+ *
+ * @param favorite - Whether to mark the save as favorite (`true`) or not favorite (`false`)
+ * @returns An object containing a descriptive message and the updated save record
+ */
 export async function toggleFavorite(c: Context, favorite: boolean) {
   const saveId = c.req.param("saveId");
 
@@ -191,6 +223,11 @@ export async function toggleFavorite(c: Context, favorite: boolean) {
   });
 }
 
+/**
+ * Deletes a save record by its ID and returns a confirmation message with the deleted save's ID.
+ *
+ * Throws a 400 error if `saveId` is missing and a 404 error if the save does not exist.
+ */
 export async function deleteSave(c: Context) {
   const saveId = c.req.param("saveId");
 
@@ -213,6 +250,11 @@ export async function deleteSave(c: Context) {
   });
 }
 
+/**
+ * Updates the read status and timestamp of a save by its ID.
+ *
+ * Marks the specified save as read or unread and updates the `read_at` timestamp accordingly. Returns a JSON response with a message and the updated save object.
+ */
 export async function toggleRead(c: Context, read: boolean) {
   const saveId = c.req.param("saveId");
 
