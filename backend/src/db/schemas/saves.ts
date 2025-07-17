@@ -9,6 +9,8 @@ export const saves = sqliteTable(
     made_by: text("made_by").notNull(),
     is_archived: integer({ mode: "boolean" }).default(false),
     is_favorite: integer({ mode: "boolean" }).default(false),
+    is_read: integer({ mode: "boolean" }).default(false),
+    read_at: text("read_at"),
     article_id: text("article_id")
       .notNull()
       .references(() => articles.id, { onDelete: "cascade" }),
