@@ -15,6 +15,13 @@
       "when": 1752247165412,
       "tag": "0001_graceful_iron_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1752755524008,
+      "tag": "0002_good_tomas",
+      "breakpoints": true
     }
   ]
 }
