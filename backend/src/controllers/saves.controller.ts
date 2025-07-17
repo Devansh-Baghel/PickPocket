@@ -3,7 +3,7 @@ import { articles } from "@/db/schemas/articles";
 import { saves } from "@/db/schemas/saves";
 import { Context } from "@/types/types";
 import { parseArticle } from "@/utils/utils";
-import { and, eq, getTableColumns, InferInsertModel } from "drizzle-orm";
+import { and, eq, getTableColumns, InferInsertModel, sql } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 
 export async function getSaves(c: Context) {
@@ -61,7 +61,6 @@ export async function getSavesByUser(c: Context) {
     data: result,
   });
 }
-
 
 export async function postSave(c: Context) {
   const userId = c.req.param("userId");
@@ -162,7 +161,10 @@ export async function toggleArchived(c: Context, archived: boolean) {
 
   if (!updatedSave) throw new HTTPException(404, { message: "Save not found" });
 
-  return c.json(updatedSave);
+  return c.json({
+    message: archived ? "Save marked as archived" : "Save marked as unarchived",
+    updatedSave,
+  });
 }
 
 export async function toggleFavorite(c: Context, favorite: boolean) {
@@ -181,7 +183,12 @@ export async function toggleFavorite(c: Context, favorite: boolean) {
 
   if (!updatedSave) throw new HTTPException(404, { message: "Save not found" });
 
-  return c.json(updatedSave);
+  return c.json({
+    message: favorite
+      ? "Save marked as favorite"
+      : "Save marked as not favorite",
+    updatedSave,
+  });
 }
 
 export async function deleteSave(c: Context) {
@@ -203,5 +210,30 @@ export async function deleteSave(c: Context) {
   return c.json({
     message: "Save deleted successfully",
     deletedSave,
+  });
+}
+
+export async function toggleRead(c: Context, read: boolean) {
+  const saveId = c.req.param("saveId");
+
+  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+
+  const db = getDB(c);
+
+  const [updatedSave] = await db
+    .update(saves)
+    .set({
+      is_read: read,
+      read_at: read ? sql`CURRENT_TIMESTAMP` : null,
+    })
+    .where(eq(saves.id, saveId))
+    .limit(1)
+    .returning({ save: saves });
+
+  if (!updatedSave) throw new HTTPException(404, { message: "Save not found" });
+
+  return c.json({
+    message: read ? "Save marked as read" : "Save marked as unread",
+    updatedSave: updatedSave.save,
   });
 }

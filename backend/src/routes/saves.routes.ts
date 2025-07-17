@@ -7,6 +7,7 @@ import {
   postSave,
   toggleArchived,
   toggleFavorite,
+  toggleRead,
 } from "@/controllers/saves.controller";
 
 const savesRouter = new Hono<{ Bindings: Env }>();
@@ -19,5 +20,7 @@ savesRouter.patch("/:saveId/unarchive", async (c) => toggleArchived(c, false));
 savesRouter.patch("/:saveId/favorite", async (c) => toggleFavorite(c, true));
 savesRouter.patch("/:saveId/unfavorite", async (c) => toggleFavorite(c, false));
 savesRouter.delete("/:saveId", deleteSave);
+savesRouter.patch("/:saveId/mark-read", async (c) => toggleRead(c, true));
+savesRouter.patch("/:saveId/mark-unread", async (c) => toggleRead(c, false));
 
 export default savesRouter;
