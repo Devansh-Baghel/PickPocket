@@ -1,4 +1,4 @@
-import { useThemeStore } from "@/stores/themeStore";
+import { Theme, useThemeStore } from "@/stores/themeStore";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useThemeStore();
@@ -9,7 +9,7 @@ export function ThemeToggle() {
       <select
         id="theme"
         value={theme}
-        onChange={(e) => setTheme(e.target.value as any)}
+        onChange={(e) => setTheme(e.target.value as Theme)}
         className="border p-1 rounded"
       >
         <option value="solar">Solar</option>
