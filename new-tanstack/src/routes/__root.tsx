@@ -3,14 +3,22 @@
 import type { ReactNode } from "react";
 import {
   Outlet,
-  createRootRoute,
+  createRootRouteWithContext,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { type QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
+import { NotFound } from "@/components/NotFound";
 
 import appCss from "@/styles/app.css?url";
+import { seo } from "@/utils/seo";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
       {
@@ -20,9 +28,11 @@ export const Route = createRootRoute({
         name: "viewport",
         content: "width=device-width, initial-scale=1",
       },
-      {
-        title: "TanStack Start Starter",
-      },
+      ...seo({
+        title:
+          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
+        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+      }),
     ],
 
     links: [
@@ -33,6 +43,8 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
+  errorComponent: DefaultCatchBoundary,
+  notFoundComponent: () => <NotFound />,
 });
 
 function RootComponent() {
@@ -65,6 +77,8 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         {children}
+        <TanStackRouterDevtools position="bottom-right" />
+        <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
       </body>
     </html>
