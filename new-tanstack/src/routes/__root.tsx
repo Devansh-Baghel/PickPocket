@@ -18,6 +18,7 @@ import { seo } from "@/utils/seo";
 import CheckAuth from "@/components/CheckAuth";
 import React from "react";
 import { useAuthStore } from "@/stores/authStore";
+import { ThemeProvider } from "@/providers/providers";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -85,7 +86,9 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         />
       </head>
       <body>
-        <CheckAuth>{children}</CheckAuth>
+        <ThemeProvider>
+          <CheckAuth>{children}</CheckAuth>
+        </ThemeProvider>
         {/* {children} */}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />

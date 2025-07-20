@@ -11,6 +11,7 @@
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SinkRouteImport } from './routes/sink'
 import { Route as SavesRouteImport } from './routes/saves'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/
 
 const rootServerRouteImport = createServerRootRoute()
 
+const SinkRoute = SinkRouteImport.update({
+  id: '/sink',
+  path: '/sink',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavesRoute = SavesRouteImport.update({
   id: '/saves',
   path: '/saves',
@@ -43,30 +49,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/saves': typeof SavesRoute
+  '/sink': typeof SinkRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/saves': typeof SavesRoute
+  '/sink': typeof SinkRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/saves': typeof SavesRoute
+  '/sink': typeof SinkRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/saves'
+  fullPaths: '/' | '/login' | '/saves' | '/sink'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/saves'
-  id: '__root__' | '/' | '/login' | '/saves'
+  to: '/' | '/login' | '/saves' | '/sink'
+  id: '__root__' | '/' | '/login' | '/saves' | '/sink'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   SavesRoute: typeof SavesRoute
+  SinkRoute: typeof SinkRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
@@ -92,6 +102,13 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sink': {
+      id: '/sink'
+      path: '/sink'
+      fullPath: '/sink'
+      preLoaderRoute: typeof SinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/saves': {
       id: '/saves'
       path: '/saves'
@@ -131,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   SavesRoute: SavesRoute,
+  SinkRoute: SinkRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

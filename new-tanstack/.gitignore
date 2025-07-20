@@ -20,3 +20,4 @@ sqlite.db
 /blob-report/
 /playwright/.cache/
 .tanstack
+.vite
