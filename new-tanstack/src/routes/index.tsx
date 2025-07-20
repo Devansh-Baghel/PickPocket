@@ -1,15 +1,24 @@
-import { LoginForm } from "@/components/login-form";
+import Saves from "@/components/SavesView";
+import { useAuthStore } from "@/stores/authStore";
 import { createFileRoute } from "@tanstack/react-router";
-// src/routes/index.tsx
 
 export const Route = createFileRoute("/")({
   component: Home,
 });
 
 function Home() {
+  const signOut = useAuthStore((state) => state.signOut);
+
   return (
-    <section className="max-w-96 mx-auto mt-20">
-      <LoginForm />
-    </section>
+    <div className="p-2">
+      <h1>Dashboard</h1>
+      <p>Welcome to your dashboard!</p>
+      <button onClick={signOut}>Log Out</button>
+      <br />
+      <br />
+      <div>
+        <Saves />
+      </div>
+    </div>
   );
 }

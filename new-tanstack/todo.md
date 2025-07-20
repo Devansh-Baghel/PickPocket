@@ -1,6 +1,6 @@
 # Redo Entire Frontend
 
-- [ ] add react query
-- [ ] better auth
-- [ ] handle auth checks
-- [ ] add default error boundaries
+- [x] add react query
+- [x] better auth
+- [x] add default error boundaries
+- [x] handle auth checks

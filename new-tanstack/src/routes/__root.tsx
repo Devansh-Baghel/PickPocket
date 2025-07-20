@@ -15,6 +15,9 @@ import { NotFound } from "@/components/NotFound";
 
 import appCss from "@/styles/app.css?url";
 import { seo } from "@/utils/seo";
+import CheckAuth from "@/components/CheckAuth";
+import React from "react";
+import { useAuthStore } from "@/stores/authStore";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -56,6 +59,12 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const getSession = useAuthStore((state) => state.getSession);
+
+  React.useEffect(() => {
+    getSession();
+  }, [getSession]);
+
   return (
     <html>
       <head>
@@ -76,7 +85,8 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         />
       </head>
       <body>
-        {children}
+        <CheckAuth>{children}</CheckAuth>
+        {/* {children} */}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
