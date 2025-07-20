@@ -12,13 +12,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
-
-import appCss from "@/styles/app.css?url";
 import { seo } from "@/utils/seo";
 import CheckAuth from "@/components/CheckAuth";
 import React from "react";
 import { useAuthStore } from "@/stores/authStore";
 import { ThemeProvider } from "@/providers/providers";
+
+import appCss from "@/styles/app.css?url";
+import fontCss from "@/styles/fonts.css?url";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -43,6 +44,10 @@ export const Route = createRootRouteWithContext<{
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "stylesheet",
+        href: fontCss,
       },
     ],
   }),
@@ -76,14 +81,14 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           href="https://fonts.gstatic.com"
           crossOrigin="use-credentials"
         />
-        <link
+        {/* <link
           href="https://fonts.googleapis.com/css2?family=Roboto%20Mono&display=swap"
           rel="stylesheet"
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Work%20Sans&display=swap"
           rel="stylesheet"
-        />
+        /> */}
       </head>
       <body>
         <ThemeProvider>

@@ -1,23 +1,12 @@
 @import "tailwindcss" source("../");
 @import "tw-animate-css";
 
-/* @custom-variant dark (&:is(.dark *));
+/* ========= Fonts ========= */
 
-:root {
-  --display-family: "Roboto Mono", "monospace";
-  --display-weight: 400;
-  --text-family: "Work Sans", "sans-serif";
-  --text-weight: 400;
-}
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap');
 
-.font-display {
-  font-family: var(--display-family);
-  font-weight: var(--display-weight);
-}
-.font-text {
-  font-family: var(--text-family);
-  font-weight: var(--text-weight);
-} */
+
 
 /* ======== Solar (base) ======== */
 
