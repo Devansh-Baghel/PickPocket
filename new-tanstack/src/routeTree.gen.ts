@@ -13,8 +13,10 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SinkRouteImport } from './routes/sink'
 import { Route as SavesRouteImport } from './routes/saves'
-import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppLoginRouteImport } from './routes/app/login'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -29,15 +31,25 @@ const SavesRoute = SavesRouteImport.update({
   path: '/saves',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLoginRoute = AppLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AppRoute,
 } as any)
 const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
   id: '/api/auth/$',
@@ -47,34 +59,39 @@ const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/app': typeof AppRouteWithChildren
   '/saves': typeof SavesRoute
   '/sink': typeof SinkRoute
+  '/app/login': typeof AppLoginRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/saves': typeof SavesRoute
   '/sink': typeof SinkRoute
+  '/app/login': typeof AppLoginRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/app': typeof AppRouteWithChildren
   '/saves': typeof SavesRoute
   '/sink': typeof SinkRoute
+  '/app/login': typeof AppLoginRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/saves' | '/sink'
+  fullPaths: '/' | '/app' | '/saves' | '/sink' | '/app/login' | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/saves' | '/sink'
-  id: '__root__' | '/' | '/login' | '/saves' | '/sink'
+  to: '/' | '/saves' | '/sink' | '/app/login' | '/app'
+  id: '__root__' | '/' | '/app' | '/saves' | '/sink' | '/app/login' | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
+  AppRoute: typeof AppRouteWithChildren
   SavesRoute: typeof SavesRoute
   SinkRoute: typeof SinkRoute
 }
@@ -116,11 +133,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SavesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -129,6 +146,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/login': {
+      id: '/app/login'
+      path: '/login'
+      fullPath: '/app/login'
+      preLoaderRoute: typeof AppLoginRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
@@ -144,9 +175,21 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface AppRouteChildren {
+  AppLoginRoute: typeof AppLoginRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppLoginRoute: AppLoginRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
+  AppRoute: AppRouteWithChildren,
   SavesRoute: SavesRoute,
   SinkRoute: SinkRoute,
 }

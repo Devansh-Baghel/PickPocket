@@ -7,7 +7,7 @@ export default function CheckAuth({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   if (loading) return <div>Loading Auth Status...</div>;
-  if (!session) navigate({ to: "/login" });
+  if (!session) navigate({ to: "/app/login" });
 
   return <>{children}</>;
 }

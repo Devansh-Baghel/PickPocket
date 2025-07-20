@@ -24,18 +24,21 @@
 
 ## Frontend 
 - [ ] reading progress bar
-- [ ] sepia reading theme
-- [ ] light mode reading theme
+- [x] light mode reading theme
 - [ ] dark mode reading theme
-- [ ] font options
+- [x] font options
 - [ ] render articles properly
 - [ ] list view option to see all saves
 - [ ] grid view option to see all saves
 - [ ] compact view option to see all saves
 - [ ] convert article to pdf
-- [ ] setup a landing page / other static pages on the "/" route
-- [ ] move all dynamic web app features to /app
-- [ ] remove global CheckAuth from __root and add it to /app
+- [x] setup a landing page and other static pages on the "/" route
+- [x] move all dynamic web app features to /app
+- [x] remove global CheckAuth from __root and add it to /app
+- [x] remove global useEffect to load initial auth session from __root and add it to /app
+
+    ### Auth
+    - [ ] support magic links
 
     ### Themes
     - [x] Solar light theme
@@ -43,6 +46,8 @@
     - [x] add a theme store
     - [x] add a theme selector / toggle
     - [ ] use the shadcn select component instead of the native browser one
+    - [ ] sepia reading theme
+    - [ ] dark themes (citrus dark, solar dark)
 
     ### Fonts
     - [x] option for user to change UI font (fonts aren't synced to themes, user can mix and match both).

@@ -13,10 +13,6 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
 import { seo } from "@/utils/seo";
-import CheckAuth from "@/components/CheckAuth";
-import React from "react";
-import { useAuthStore } from "@/stores/authStore";
-import { ThemeProvider } from "@/providers/providers";
 
 import appCss from "@/styles/app.css?url";
 import fontCss from "@/styles/fonts.css?url";
@@ -65,11 +61,7 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  const getSession = useAuthStore((state) => state.getSession);
 
-  React.useEffect(() => {
-    getSession();
-  }, [getSession]);
 
   return (
     <html>
@@ -91,10 +83,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         /> */}
       </head>
       <body>
-        <ThemeProvider>
-          <CheckAuth>{children}</CheckAuth>
-        </ThemeProvider>
-        {/* {children} */}
+        {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />

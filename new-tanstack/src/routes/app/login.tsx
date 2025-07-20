@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useAuthStore } from "@/stores/authStore";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/app/login")({
   component: RouteComponent,
 });
 
