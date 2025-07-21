@@ -3,6 +3,7 @@
 - [ ] save to obsidian feature
 
 ## Bugs
+- [ ] UI in /app/login doesn't show up initially as user's selected UI font. (only the ui in /sink changes font)
 - [ ] fix the controller pattern hono ts problem 
     problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible
     solution:- https://chatgpt.com/s/t_68728a9e28008191bb20f055cec25c17

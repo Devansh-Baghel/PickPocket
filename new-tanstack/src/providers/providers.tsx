@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useThemeStore } from "@/stores/themeStore";
+import { fontFamilies, useFontStore } from "@/stores/fontStore";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = useThemeStore((state) => state.theme);
@@ -16,6 +17,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.add(theme);
     }
   }, [theme]);
+
+  return <>{children}</>;
+}
+
+export function FontProvider({ children }: { children: React.ReactNode }) {
+  const font = useFontStore((state) => state.font);
+
+  useEffect(() => {
+    document.body.style.fontFamily = fontFamilies[font];
+  }, [font]);
 
   return <>{children}</>;
 }

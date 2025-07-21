@@ -6,6 +6,7 @@ import {
   createRootRouteWithContext,
   HeadContent,
   Scripts,
+  Link,
 } from "@tanstack/react-router";
 import { type QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -61,8 +62,6 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-
-
   return (
     <html>
       <head>
@@ -83,6 +82,13 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         /> */}
       </head>
       <body>
+        {/* TEMP TOPBAR */}
+        <div className="flex w-full justify-around mt-4">
+          <Link to="/">Home</Link>
+          <Link to="/app">App</Link>
+          <Link to="/app/login">Login</Link>
+          <Link to="/sink">Sink</Link>
+        </div>
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />

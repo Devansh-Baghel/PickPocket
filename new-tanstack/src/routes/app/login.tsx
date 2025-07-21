@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@tanstack/react-router";
+import { PocketIcon } from "@/utils/icons";
 
 export const Route = createFileRoute("/app/login")({
   component: RouteComponent,
@@ -20,12 +21,15 @@ export function LoginPage({
           <div>
             <Link to="/" aria-label="go home">
               {/* <LogoIcon /> */}
-              Logo Here
+              <PocketIcon />
+              PickPocket
             </Link>
             <h1 className="mb-1 mt-4 text-xl font-semibold">
-              Create a Tailark Account
+              Sign in to PickPocket
             </h1>
-            <p>Welcome! Create an account to get started</p>
+            <p className="text-muted-foreground">
+              Save articles and read them distraction-free, anytime.
+            </p>
           </div>
 
           <div className="mt-6">
@@ -53,14 +57,14 @@ export function LoginPage({
                   d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
                 ></path>
               </svg>
-              <span>Google</span>
+              <span className="ml-2">Continue with Google</span>
             </Button>
           </div>
 
           <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
             <hr className="border-dashed" />
             <span className="text-muted-foreground text-xs">
-              Or continue With
+              Or sign in with email
             </span>
             <hr className="border-dashed" />
           </div>
@@ -68,9 +72,15 @@ export function LoginPage({
           <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="block text-sm">
-                Email
+                Email address
               </Label>
-              <Input type="email" required name="email" id="email" />
+              <Input
+                type="email"
+                required
+                name="email"
+                id="email"
+                placeholder="you@example.com"
+              />
             </div>
 
             <Button className="w-full">Continue</Button>
@@ -78,9 +88,9 @@ export function LoginPage({
         </div>
 
         <p className="text-accent-foreground text-center text-sm">
-          Have an account ?
+          Already have an account?
           <Button asChild variant="link" className="px-2">
-            <Link to=".">Sign In</Link>
+            <Link to=".">Sign in</Link>
           </Button>
         </p>
       </form>
@@ -88,7 +98,7 @@ export function LoginPage({
   );
 }
 
-function LoggedIn() {
+export function LoggedIn() {
   const signOut = useAuthStore((state) => state.signOut);
 
   return (
@@ -96,33 +106,38 @@ function LoggedIn() {
       <div className="max-w-92 m-auto h-fit w-full">
         <div className="p-6">
           <div>
-            <Link to="/" aria-label="go home">
-              {/* <LogoIcon /> */}
-              Logo Here
+            <Link
+              to="/"
+              aria-label="go home"
+              className="text-lg font-extrabold flex items-center gap-2"
+            >
+              Pick
+              <PocketIcon />
+              Pocket
             </Link>
             <h1 className="mb-1 mt-4 text-xl font-semibold">
-              You're already logged in!
+              You’re already signed in!
             </h1>
             <p className="text-muted-foreground">
-              You're already signed in to your account.
+              Start saving articles or keep reading.
             </p>
           </div>
           <div className="mt-6">
             <Button asChild className="w-full">
-              <Link to="/app">Go to Dashboard</Link>
+              <Link to="/app">Go to your Saves</Link>
             </Button>
           </div>
+          <p className="text-accent-foreground text-center text-sm mt-4">
+            Need to switch accounts?
+            <Button
+              variant="link"
+              className="px-2 hover:cursor-pointer"
+              onClick={signOut}
+            >
+              Sign out
+            </Button>
+          </p>
         </div>
-        <p className="text-accent-foreground text-center text-sm">
-          Need to switch accounts?
-          <Button
-            variant="link"
-            className="px-2 hover:cursor-pointer"
-            onClick={signOut}
-          >
-            Sign Out
-          </Button>
-        </p>
       </div>
     </section>
   );

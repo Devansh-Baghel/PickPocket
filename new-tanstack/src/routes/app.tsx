@@ -1,4 +1,5 @@
 import CheckAuth from "@/components/CheckAuth";
+import { FontProvider, ThemeProvider } from "@/providers/providers";
 import { useAuthStore } from "@/stores/authStore";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -15,8 +16,12 @@ function RouteComponent() {
   }, [getSession]);
 
   return (
-    <CheckAuth>
-      <Outlet />
-    </CheckAuth>
+    <ThemeProvider>
+      <FontProvider>
+        <CheckAuth>
+          <Outlet />
+        </CheckAuth>
+      </FontProvider>
+    </ThemeProvider>
   );
 }
