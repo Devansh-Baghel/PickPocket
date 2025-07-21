@@ -115,8 +115,12 @@ function LoggedIn() {
         </div>
         <p className="text-accent-foreground text-center text-sm">
           Need to switch accounts?
-          <Button asChild variant="link" className="px-2 hover:cursor-pointer" onClick={signOut}>
-            <span>Sign Out</span>
+          <Button
+            variant="link"
+            className="px-2 hover:cursor-pointer"
+            onClick={signOut}
+          >
+            Sign Out
           </Button>
         </p>
       </div>

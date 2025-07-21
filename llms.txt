@@ -1,3 +1,106 @@
+
+# PickPocket LLM Context
+
+## Project Overview
+
+PickPocket is a read-it-later application, similar to Mozilla Pocket. It allows users to save articles and blogs from the web and read them in a clean, modern, and clutter-free UI. The target audience is technical developers and avid readers.
+
+The project is a monorepo with two main parts: a `backend` and a `new-tanstack` frontend.
+
+## Backend
+
+The backend is a Cloudflare Worker built with Hono. It provides a RESTful API for managing articles and saves.
+
+### Technologies
+
+- **Framework:** Hono
+- **Database:** Cloudflare D1
+- **ORM:** Drizzle ORM
+- **Deployment:** Cloudflare Workers
+
+### Database Schema
+
+#### `articles` table
+
+- `id` (text, primary key)
+- `url` (text, not null, unique)
+- `title` (text, not null)
+- `content` (text, not null)
+- `excerpt` (text, not null)
+- `lang` (text, default: 'en')
+- `publishedTime` (text)
+- `siteName` (text, not null)
+- `timestamp` (text, default: current_timestamp)
+
+#### `saves` table
+
+- `id` (text, primary key)
+- `made_by` (text, not null)
+- `is_archived` (integer, boolean, default: false)
+- `is_favorite` (integer, boolean, default: false)
+- `is_read` (integer, boolean, default: false)
+- `read_at` (text)
+- `article_id` (text, not null, foreign key to `articles.id`)
+- `timestamp` (text, not null, default: current_timestamp)
+
+### API Endpoints
+
+All endpoints are prefixed with `/` and require authentication.
+
+#### Saves (`/saves`)
+
+- `GET /`: Get all saves.
+- `GET /:userId`: Get all saves for a specific user.
+- `POST /:userId`: Create a new save for a user.
+- `PATCH /:saveId/archive`: Archive a save.
+- `PATCH /:saveId/unarchive`: Unarchive a save.
+- `PATCH /:saveId/favorite`: Favorite a save.
+- `PATCH /:saveId/unfavorite`: Unfavorite a save.
+- `DELETE /:saveId`: Delete a save.
+- `PATCH /:saveId/mark-read`: Mark a save as read.
+- `PATCH /:saveId/mark-unread`: Mark a save as unread.
+
+#### Articles (`/articles`)
+
+- `GET /:articleId`: Get an article by its ID.
+- `PATCH /:articleId`: Refresh the content of an article.
+
+## Frontend
+
+The frontend is a React application built with TanStack Router and Vite.
+
+### Technologies
+
+- **Framework:** React
+- **Router:** TanStack Router
+- **State Management:** Zustand
+- **UI:** Shadcn UI
+- **Build Tool:** Vite
+- **Authentication:** better-auth
+
+### Routes
+
+- `/`: Landing page.
+- `/app`: Main application, protected route.
+  - `/app/login`: Login page.
+  - `/app/`: Dashboard/home page for authenticated users.
+- `/saves`: View all saved articles.
+- `/sink`: A catch-all route.
+
+### Key Components
+
+- `SavesView.tsx`: Renders the list of saved articles.
+- `login-form.tsx`: The login form component.
+- `CheckAuth.tsx`: A component that checks if the user is authenticated before rendering its children.
+- `ThemeToggle.tsx`: A component to toggle between light and dark themes.
+- `FontToggle.tsx`: A component to change the UI font.
+
+### State Management (Zustand)
+
+- `authStore.ts`: Manages the user's authentication state, including the session, loading state, and functions for signing in, signing out, and getting the current session.
+
+## Todo
+
 - [ ] add APIerror response type
 - [ ] add APIresponse type
 - [ ] save to obsidian feature
@@ -40,9 +143,6 @@
     ### Auth
     - [ ] support magic links
     - [ ] remove Logo Here text with actual logo in /login
-    - [ ] add google login support
-    - [ ] make google login ui req to google login and github login ui req to github login
-    - [ ] replace the Loading Auth Status text with a skeleton of the entire app
 
     ### Themes
     - [x] Solar light theme
@@ -119,4 +219,3 @@
 
 ## Maybe some day
 - [ ] bump.sh integration
-- [ ] 
