@@ -39,6 +39,7 @@
 
     ### Auth
     - [ ] support magic links
+    - [ ] remove Logo Here text with actual logo in /login
 
     ### Themes
     - [x] Solar light theme
