@@ -1,18 +1,16 @@
 - [ ] add APIerror response type
 - [ ] add APIresponse type
 - [ ] save to obsidian feature
+- [ ] import all saves from pocket feature
+
 
 ## Bugs
-- [ ] UI in /app/login doesn't show up initially as user's selected UI font. (only the ui in /sink changes font)
-- [ ] fix the controller pattern hono ts problem 
+- [x] UI in /app/login doesn't show up initially as user's selected UI font. (only the ui in /sink changes font)
+- [x] fix the controller pattern hono ts problem 
     problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible
-    solution:- https://chatgpt.com/s/t_68728a9e28008191bb20f055cec25c17
-    - [ ] fix for getSaves
-    - [ ] fix for getSavesByUser
-    - [ ] fix for postSave
-    - [ ] fix for toggleArchived
-    - [ ] fix for toggleFavorite
-    - [ ] fix for getArticle
+    - [x] fix for /saves
+    - [x] fix for /articles
+    - [x] fix for /highlights
 
     ### Doesn't exist bugs
     - [x] GET to /articles/nonArticleId should return 404
@@ -24,19 +22,22 @@
 
 
 ## Frontend 
-- [ ] reading progress bar
 - [x] light mode reading theme
-- [ ] dark mode reading theme
 - [x] font options
+- [x] setup a landing page and other static pages on the "/" route
+- [x] move all dynamic web app features to /app
+- [x] remove global CheckAuth from __root and add it to /app
+- [x] remove global useEffect to load initial auth session from __root and add it to /app
+- [ ] reading progress bar
+- [ ] dark mode reading theme
 - [ ] render articles properly
 - [ ] list view option to see all saves
 - [ ] grid view option to see all saves
 - [ ] compact view option to see all saves
 - [ ] convert article to pdf
-- [x] setup a landing page and other static pages on the "/" route
-- [x] move all dynamic web app features to /app
-- [x] remove global CheckAuth from __root and add it to /app
-- [x] remove global useEffect to load initial auth session from __root and add it to /app
+- [ ] add a proper tsconfig settings
+- [ ] add auto import sorter prettier plugin
+- [ ] add auto tailwind class sorter plugin
 
     ### Auth
     - [ ] support magic links
@@ -78,7 +79,17 @@
 - [x] add global auth middleware
 - [ ] learn the web standards cache api and add hono cache middleware 
 - [ ] add caching to the /articles/:articleId endpoint
-- [ ] rewrite verifyAuth middleware to use the factory pattern
+- [ ] add a proper tsconfig settings
+- [ ] add auto import sorter prettier plugin
+
+    ### Error Handling
+    - [x] add error handling in parseArticle util
+    - [ ] add global default error handling with hono app.onError()
+
+    ### Zod Validations
+    - [x] /saves
+    - [x] /articles
+    - [x] /highlights
 
     ### Endpoints
     #### Saves
@@ -114,8 +125,10 @@
     - [ ] get all tags by user
 
     #### Highlights
-    - [ ] get all highlights
-    - [ ] get all highlights by user
+    - [x] get all highlights by user
+    - [x] get all highlights by user by article
+    - [x] create highlight
+    - [x] delete highlight
 
 
 ## Maybe some day

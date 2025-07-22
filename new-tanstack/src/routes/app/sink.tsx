@@ -3,7 +3,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { createFileRoute } from "@tanstack/react-router";
 import { LoggedIn, LoginPage } from "@/routes/app/login";
 
-export const Route = createFileRoute("/sink")({
+export const Route = createFileRoute("/app/sink")({
   component: RouteComponent,
 });
 

@@ -9,6 +9,7 @@ import { verifyAuth } from "./middlewares/verifyAuth";
 
 import savesRouter from "./routes/saves.routes";
 import articleRouter from "./routes/articles.routes";
+import highlightsRouter from "./routes/highlights.routes";
 
 export interface Env extends CloudflareBindings {
   DB: D1Database;
@@ -35,5 +36,6 @@ app.use(verifyAuth);
 // Routes
 app.route("/saves", savesRouter);
 app.route("/articles", articleRouter);
+app.route("/highlights", highlightsRouter);
 
 export default app;
