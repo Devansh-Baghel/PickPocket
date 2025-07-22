@@ -16,6 +16,7 @@ function RouteComponent() {
   }, [getSession]);
 
   return (
+    // Having font and theme providers here means, that any font/theme options user chooses doesn't affect the look of the landing page at /
     <ThemeProvider>
       <FontProvider>
         <CheckAuth>

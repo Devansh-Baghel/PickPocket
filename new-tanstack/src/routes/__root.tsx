@@ -87,7 +87,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           <Link to="/">Home</Link>
           <Link to="/app">App</Link>
           <Link to="/app/login">Login</Link>
-          <Link to="/sink">Sink</Link>
+          <Link to="/app/sink">Sink</Link>
         </div>
         {children}
         <TanStackRouterDevtools position="bottom-right" />
