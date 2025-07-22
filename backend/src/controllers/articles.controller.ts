@@ -6,10 +6,7 @@ import { eq } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 
 export async function getArticle(c: Context) {
-  const articleId = c.req.param("articleId");
-
-  if (!articleId)
-    throw new HTTPException(400, { message: "articleId is required" });
+  const { articleId } = c.req.valid("param");
 
   const db = getDB(c);
   const [article] = await db
@@ -24,10 +21,7 @@ export async function getArticle(c: Context) {
 }
 
 export async function refreshArticle(c: Context) {
-  const articleId = c.req.param("articleId");
-
-  if (!articleId)
-    throw new HTTPException(400, { message: "articleId is required" });
+  const { articleId } = c.req.valid("param");
 
   const db = getDB(c);
 

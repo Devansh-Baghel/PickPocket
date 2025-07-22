@@ -8,39 +8,32 @@ import { HTTPException } from "hono/http-exception";
 
 export async function getSaves(c: Context) {
   const db = getDB(c);
+  const { page, limit } = c.req.valid("query");
 
   // Parse `page` and `limit` from query params
-  const page = parseInt(c.req.query("page") || "1", 10);
-  const limit = parseInt(c.req.query("limit") || "10", 10);
+  const pageNumber = parseInt(page, 10);
+  const limitNumber = parseInt(limit, 10);
 
-  // Validate
-  const safePage = page > 0 ? page : 1;
-  const safeLimit = limit > 0 && limit <= 100 ? limit : 10;
+  const offset = (pageNumber - 1) * limitNumber;
 
-  const offset = (safePage - 1) * safeLimit;
-
-  const result = await db.select().from(saves).limit(safeLimit).offset(offset);
+  const result = await db.select().from(saves).limit(limitNumber).offset(offset);
 
   return c.json({
-    page: safePage,
-    limit: safeLimit,
+    page: pageNumber,
+    limit: limitNumber,
     data: result,
   });
 }
 
 export async function getSavesByUser(c: Context) {
-  const userId = c.req.param("userId");
-  if (!userId) throw new HTTPException(400, { message: "userId is required" });
+  const { userId } = c.req.valid("param");
+  const { page, limit } = c.req.valid("query");
 
   // Parse `page` and `limit` from query params
-  const page = parseInt(c.req.query("page") || "1", 10);
-  const limit = parseInt(c.req.query("limit") || "10", 10);
+  const pageNumber = parseInt(page, 10);
+  const limitNumber = parseInt(limit, 10);
 
-  // Validate
-  const safePage = page > 0 ? page : 1;
-  const safeLimit = limit > 0 && limit <= 100 ? limit : 10;
-
-  const offset = (safePage - 1) * safeLimit;
+  const offset = (pageNumber - 1) * limitNumber;
 
   // Exclude article `content`
   const { content, ...rest } = getTableColumns(articles);
@@ -52,22 +45,19 @@ export async function getSavesByUser(c: Context) {
     .from(saves)
     .leftJoin(articles, eq(saves.article_id, articles.id))
     .where(eq(saves.made_by, userId))
-    .limit(safeLimit)
+    .limit(limitNumber)
     .offset(offset);
 
   return c.json({
-    page: safePage,
-    limit: safeLimit,
+    page: pageNumber,
+    limit: limitNumber,
     data: result,
   });
 }
 
 export async function postSave(c: Context) {
-  const userId = c.req.param("userId");
-  const { url } = await c.req.json<{ url: string }>();
-
-  if (!url) throw new HTTPException(400, { message: "url is required" });
-  if (!userId) throw new HTTPException(400, { message: "userId is required" });
+  const { userId } = c.req.valid("param");
+  const { url } = c.req.valid("json");
 
   const db = getDB(c);
 
@@ -146,9 +136,7 @@ export async function postSave(c: Context) {
 }
 
 export async function toggleArchived(c: Context, archived: boolean) {
-  const saveId = c.req.param("saveId");
-
-  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+  const { saveId } = c.req.valid("param");
 
   const db = getDB(c);
 
@@ -168,9 +156,7 @@ export async function toggleArchived(c: Context, archived: boolean) {
 }
 
 export async function toggleFavorite(c: Context, favorite: boolean) {
-  const saveId = c.req.param("saveId");
-
-  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+  const { saveId } = c.req.valid("param");
 
   const db = getDB(c);
 
@@ -192,9 +178,7 @@ export async function toggleFavorite(c: Context, favorite: boolean) {
 }
 
 export async function deleteSave(c: Context) {
-  const saveId = c.req.param("saveId");
-
-  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+  const { saveId } = c.req.valid("param");
 
   const db = getDB(c);
 
@@ -214,9 +198,7 @@ export async function deleteSave(c: Context) {
 }
 
 export async function toggleRead(c: Context, read: boolean) {
-  const saveId = c.req.param("saveId");
-
-  if (!saveId) throw new HTTPException(400, { message: "saveId is required" });
+  const { saveId } = c.req.valid("param");
 
   const db = getDB(c);
 
