@@ -44,8 +44,7 @@ highlightsRouter.get(
 
 highlightsRouter.get(
   "/:userId/:articleId",
-  zValidator("param", articleIdSchema),
-  zValidator("param", userIdSchema),
+  zValidator("param", userIdSchema.extend(articleIdSchema.shape)),
   zValidator("query", getHighlightsSchema),
   async (c) => {
     const { userId, articleId } = c.req.valid("param");
