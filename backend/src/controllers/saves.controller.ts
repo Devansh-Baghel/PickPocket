@@ -10,17 +10,13 @@ export async function getSaves(c: Context) {
   const db = getDB(c);
   const { page, limit } = c.req.valid("query");
 
-  // Parse `page` and `limit` from query params
-  const pageNumber = parseInt(page, 10);
-  const limitNumber = parseInt(limit, 10);
+  const offset = (page - 1) * limit;
 
-  const offset = (pageNumber - 1) * limitNumber;
-
-  const result = await db.select().from(saves).limit(limitNumber).offset(offset);
+  const result = await db.select().from(saves).limit(limit).offset(offset);
 
   return c.json({
-    page: pageNumber,
-    limit: limitNumber,
+    page: page,
+    limit: limit,
     data: result,
   });
 }
@@ -29,11 +25,7 @@ export async function getSavesByUser(c: Context) {
   const { userId } = c.req.valid("param");
   const { page, limit } = c.req.valid("query");
 
-  // Parse `page` and `limit` from query params
-  const pageNumber = parseInt(page, 10);
-  const limitNumber = parseInt(limit, 10);
-
-  const offset = (pageNumber - 1) * limitNumber;
+  const offset = (page - 1) * limit;
 
   // Exclude article `content`
   const { content, ...rest } = getTableColumns(articles);
@@ -45,12 +37,12 @@ export async function getSavesByUser(c: Context) {
     .from(saves)
     .leftJoin(articles, eq(saves.article_id, articles.id))
     .where(eq(saves.made_by, userId))
-    .limit(limitNumber)
+    .limit(limit)
     .offset(offset);
 
   return c.json({
-    page: pageNumber,
-    limit: limitNumber,
+    page: page,
+    limit: limit,
     data: result,
   });
 }

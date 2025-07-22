@@ -5,8 +5,8 @@ export const postSaveSchema = z.object({
 });
 
 export const getSavesSchema = z.object({
-    page: z.string().optional().default("1"),
-    limit: z.string().optional().default("10"),
+    page: z.coerce.number().int().min(1).optional().default(1),
+    limit: z.coerce.number().int().min(1).max(100).optional().default(10),
 });
 
 export const userIdSchema = z.object({
