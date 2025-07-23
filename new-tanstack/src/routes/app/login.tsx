@@ -37,7 +37,7 @@ export function LoginPage({
             </Button>
 
             <Button type="button" variant="outline" className="w-full">
-              <GithubIcon className="size-[18px]"/>
+              <GithubIcon className="size-[19px]"/>
               <span className="ml-2">Continue with Github</span>
             </Button>
           </div>

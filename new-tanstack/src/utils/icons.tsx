@@ -10,6 +10,8 @@ export function GoogleIcon() {
       width="0.98em"
       height="1em"
       viewBox="0 0 256 262"
+      role="img"
+      aria-label="Google logo"
     >
       <path
         fill="#4285f4"
