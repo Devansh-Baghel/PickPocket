@@ -5,6 +5,7 @@
 
 
 ## Bugs
+- [x] in create highlight route, we aren't checking if the article id exists before, fix that.
 - [x] UI in /app/login doesn't show up initially as user's selected UI font. (only the ui in /sink changes font)
 - [x] fix the controller pattern hono ts problem 
     problem:- https://hono.dev/docs/guides/best-practices#don-t-make-controllers-when-possible

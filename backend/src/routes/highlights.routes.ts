@@ -12,6 +12,7 @@ import { getDB } from "@/db/db";
 import { highlights } from "@/db/schemas/highlights";
 import { and, eq, InferInsertModel } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
+import { articles } from "@/db/schemas/articles";
 
 const highlightsRouter = new Hono<{ Bindings: Env }>();
 
@@ -83,6 +84,16 @@ highlightsRouter.post(
     const { content, prefix, suffix, article_id } = c.req.valid("json");
 
     const db = getDB(c);
+
+    const articleExists = await db
+      .select({ id: articles.id })
+      .from(articles)
+      .where(eq(articles.id, article_id))
+      .limit(1);
+
+    if (articleExists.length === 0) {
+      throw new HTTPException(404, { message: "Article not found" });
+    }
 
     const highlightData: InferInsertModel<typeof highlights> = {
       id: crypto.randomUUID(),
