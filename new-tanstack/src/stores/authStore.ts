@@ -6,7 +6,8 @@ interface AuthState {
   session: any | null;
   loading: boolean;
   getSession: () => Promise<void>;
-  signIn: () => void;
+  signInGithub: () => void;
+  signInGoogle: () => void;
   signOut: () => void;
 }
 
@@ -22,8 +23,12 @@ export const useAuthStore = create<AuthState>()(
         set({ session: data, loading: false });
       },
 
-      signIn: () => {
+      signInGithub: () => {
         authClient.signIn.social({ provider: "github", callbackURL: "/app" });
+      },
+
+      signInGoogle: () => {
+        authClient.signIn.social({ provider: "google", callbackURL: "/app" });
       },
 
       signOut: async () => {

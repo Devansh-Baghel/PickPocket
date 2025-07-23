@@ -46,6 +46,13 @@ export const Route = createRootRouteWithContext<{
         rel: "stylesheet",
         href: fontCss,
       },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon.png",
+      },
+      { rel: "icon", href: "/favicon.ico" },
     ],
   }),
   component: RootComponent,
@@ -83,12 +90,12 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         {/* TEMP TOPBAR */}
-        <div className="flex w-full justify-around mt-4">
+        {/* <div className="flex w-full justify-around mt-4">
           <Link to="/">Home</Link>
           <Link to="/app">App</Link>
           <Link to="/app/login">Login</Link>
           <Link to="/app/sink">Sink</Link>
-        </div>
+        </div> */}
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />

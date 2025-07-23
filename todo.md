@@ -3,6 +3,9 @@
 - [ ] save to obsidian feature
 - [ ] import all saves from pocket feature
 
+### UI Reference
+https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
+
 
 ## Bugs
 - [x] in create highlight route, we aren't checking if the article id exists before, fix that.
