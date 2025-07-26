@@ -24,11 +24,17 @@ export const useAuthStore = create<AuthState>()(
       },
 
       signInGithub: () => {
-        authClient.signIn.social({ provider: "github", callbackURL: "/app" });
+        authClient.signIn.social({
+          provider: "github",
+          callbackURL: "http://localhost:3000/app",
+        });
       },
 
       signInGoogle: () => {
-        authClient.signIn.social({ provider: "google", callbackURL: "/app" });
+        authClient.signIn.social({
+          provider: "google",
+          callbackURL: "http://localhost:3000/app",
+        });
       },
 
       signOut: async () => {
