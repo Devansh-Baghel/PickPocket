@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "compatibility_date": "2025-07-26",
   "dev": {
-    "port": 8080 // Runs on port 8080 for the auth sevrer
+    "port": 8080 // Runs on port 8080 for the auth server
   }
   // "compatibility_flags": [
   //   "nodejs_compat"
