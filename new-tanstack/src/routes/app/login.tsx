@@ -14,6 +14,9 @@ export function LoginPage({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const signInGithub = useAuthStore((state) => state.signInGithub);
+  const signInGoogle = useAuthStore((state) => state.signInGoogle);
+
   return (
     <section className="flex min-h-screen bg-background px-4 py-16 md:py-32 dark:bg-transparent">
       <form action="" className="max-w-92 mx-auto h-fit w-full">
@@ -31,13 +34,23 @@ export function LoginPage({
           </div>
 
           <div className="mt-6 flex flex-col gap-4">
-            <Button type="button" variant="outline" className="w-full">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full cursor-pointer"
+              onClick={signInGoogle}
+            >
               <GoogleIcon />
               <span className="ml-2">Continue with Google</span>
             </Button>
 
-            <Button type="button" variant="outline" className="w-full">
-              <GithubIcon className="size-[19px]"/>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full cursor-pointer"
+              onClick={signInGithub}
+            >
+              <GithubIcon className="size-[19px]" />
               <span className="ml-2">Continue with Github</span>
             </Button>
           </div>
@@ -80,7 +93,7 @@ export function LoggedIn() {
 
   return (
     <section className="flex min-h-screen px-4 py-16 md:py-32 dark:bg-transparent">
-      <div className="max-w-92 m-auto h-fit w-full">
+      <div className="max-w-92 mt-20 mx-auto h-fit w-full">
         <div className="p-6">
           <div>
             <Link
