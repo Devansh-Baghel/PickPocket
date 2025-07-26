@@ -9,12 +9,12 @@ export const betterAuthOptions: BetterAuthOptions = {
   /**
    * The name of the application.
    */
-  appName: 'PickPocket',
+  appName: "PickPocket",
   /**
    * Base path for Better Auth.
    * @default "/api/auth"
    */
-//   basePath: '/api',
+  basePath: "/api",
 
   // .... More options
 };
