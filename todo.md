@@ -71,6 +71,10 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] add search by highlight
     - [ ] add search by collection
 
+    ### Profile Page
+    - [ ] mock profile ui
+    - [ ] replace with real ui
+
 
 ## Backend 
 - [x] add hono/logger
@@ -85,6 +89,11 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [ ] add caching to the /articles/:articleId endpoint
 - [ ] add a proper tsconfig settings
 - [ ] add auto import sorter prettier plugin
+
+    ### Auth
+    - [x] add custom auth server
+    - [x] configure sso for custom auth server
+    - [x] remove legacy auth setup 
 
     ### Error Handling
     - [x] add error handling in parseArticle util

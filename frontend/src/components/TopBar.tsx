@@ -191,7 +191,7 @@ function ProfileMenu() {
 
 export function TopBar() {
   return (
-    <nav className="md:hidden flex justify-between text-2xl py-4 px-6 items-center">
+    <nav className="md:hidden fixed top-0 left-0 right-0 z-50 flex justify-between text-2xl py-4 px-6 items-center bg-background/95 backdrop-blur-sm border-b border-border">
       <HamburgerMenu />
       <Link className="flex items-center gap-2 font-extrabold" to="/app">
         <PocketIcon className="size-6" />

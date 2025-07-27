@@ -21,3 +21,56 @@ export const getSaves = createServerFn({
 }).handler(async () => {
   return (await axiosInstance.get("/saves")).data.data;
 });
+
+// Profile Statistics Server Function
+export const getProfileStats = createServerFn({
+  method: "GET",
+})
+  .validator((data: { userId: string }) => data)
+  .handler(async ({ data }) => {
+    const response = await axiosInstance.get(`/profile/${data.userId}/stats`);
+    return response.data;
+  });
+
+// Profile Preferences Server Function
+export const getProfilePreferences = createServerFn({
+  method: "GET",
+})
+  .validator((data: { userId: string }) => data)
+  .handler(async ({ data }) => {
+    const response = await axiosInstance.get(`/profile/${data.userId}/preferences`);
+    return response.data;
+  });
+
+// Update Profile Preferences Server Function
+export const updateProfilePreferences = createServerFn({
+  method: "POST",
+})
+  .validator((data: {
+    userId: string;
+    preferences: {
+      autoArchive: boolean;
+      emailNotifications: boolean;
+      readingReminders: boolean;
+    };
+  }) => data)
+  .handler(async ({ data }) => {
+    const response = await axiosInstance.put(`/profile/${data.userId}/preferences`, data.preferences);
+    return response.data;
+  });
+
+// Update Profile Information Server Function
+export const updateProfile = createServerFn({
+  method: "POST",
+})
+  .validator((data: {
+    userId: string;
+    profile: {
+      name: string;
+      email: string;
+    };
+  }) => data)
+  .handler(async ({ data }) => {
+    const response = await axiosInstance.put(`/profile/${data.userId}`, data.profile);
+    return response.data;
+  });

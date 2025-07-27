@@ -1,4 +1,5 @@
 import { BetterAuthOptions } from 'better-auth';
+import { magicLink } from 'better-auth/plugins';
 
 /**
  * Custom options for Better Auth
@@ -15,6 +16,12 @@ export const betterAuthOptions: BetterAuthOptions = {
    * @default "/api/auth"
    */
   basePath: "/api",
-
+  plugins: [
+    magicLink({
+      sendMagicLink: async ({ email, token, url }, request) => {
+        // send email to user
+      },
+    }),
+  ],
   // .... More options
 };

@@ -13,7 +13,8 @@ function Dashboard({ children }: { children: React.ReactNode }) {
   return (
     <main className="bg-accent min-h-screen">
       <TopBar />
-      <div>{children}</div>
+      {/* Add padding-top to account for the fixed TopBar */}
+      <div className="pt-20">{children}</div>
     </main>
   );
 }
