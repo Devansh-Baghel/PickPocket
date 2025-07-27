@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAuthStore } from "@/stores/authStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -22,12 +21,7 @@ export const Route = createFileRoute("/app/profile")({
 });
 
 function ProfilePage() {
-  const { session } = useAuthStore();
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    name: session?.user?.name || "",
-    email: session?.user?.email || "",
-  });
+  const session = useAuthStore((state) => state.session);
 
   // Preferences state
   const [preferences, setPreferences] = useState({
@@ -46,20 +40,6 @@ function ProfilePage() {
     joinDate: "March 2024",
     readingStreak: 7,
     thisWeekReads: 14,
-  };
-
-  const handleSave = () => {
-    // TODO: Implement profile update API call
-    console.log("Saving profile:", formData);
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setFormData({
-      name: session?.user?.name || "",
-      email: session?.user?.email || "",
-    });
-    setIsEditing(false);
   };
 
   const handlePreferenceChange = (
@@ -85,77 +65,19 @@ function ProfilePage() {
               <UserIcon className="size-8 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              {!isEditing ? (
-                <div className="space-y-2">
-                  <h2 className="text-xl font-semibold truncate">
-                    {session?.user?.name}
-                  </h2>
-                  <p className="text-muted-foreground flex items-center gap-2 text-sm">
-                    <MailIcon className="size-4 flex-shrink-0" />
-                    <span className="truncate">{session?.user?.email}</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-2">
-                    <CalendarIcon className="size-4 flex-shrink-0" />
-                    Member since {profileStats.joinDate}
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <div>
-                    <Label htmlFor="name" className="text-sm">
-                      Full Name
-                    </Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder="Enter your full name"
-                      className="mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email" className="text-sm">
-                      Email Address
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      placeholder="Enter your email"
-                      className="mt-1"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-              {!isEditing ? (
-                <Button
-                  variant="outline"
-                  onClick={() => setIsEditing(true)}
-                  className="w-full sm:w-auto"
-                >
-                  Edit Profile
-                </Button>
-              ) : (
-                <>
-                  <Button
-                    variant="outline"
-                    onClick={handleCancel}
-                    className="w-full sm:w-auto"
-                  >
-                    Cancel
-                  </Button>
-                  <Button onClick={handleSave} className="w-full sm:w-auto">
-                    Save Changes
-                  </Button>
-                </>
-              )}
+              <div className="space-y-2">
+                <h2 className="text-xl font-semibold truncate">
+                  {session?.user?.name}
+                </h2>
+                <p className="text-muted-foreground flex items-center gap-2 text-sm">
+                  <MailIcon className="size-4 flex-shrink-0" />
+                  <span className="truncate">{session?.user?.email}</span>
+                </p>
+                <p className="text-sm text-muted-foreground flex items-center gap-2">
+                  <CalendarIcon className="size-4 flex-shrink-0" />
+                  Member since {profileStats.joinDate}
+                </p>
+              </div>
             </div>
           </div>
         </CardContent>
