@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SavesRouteImport } from './routes/saves'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
@@ -17,11 +16,6 @@ import { Route as AppSinkRouteImport } from './routes/app/sink'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppLoginRouteImport } from './routes/app/login'
 
-const SavesRoute = SavesRouteImport.update({
-  id: '/saves',
-  path: '/saves',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
@@ -56,7 +50,6 @@ const AppLoginRoute = AppLoginRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/saves': typeof SavesRoute
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
   '/app/sink': typeof AppSinkRoute
@@ -64,7 +57,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/saves': typeof SavesRoute
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
   '/app/sink': typeof AppSinkRoute
@@ -74,7 +66,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/saves': typeof SavesRoute
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
   '/app/sink': typeof AppSinkRoute
@@ -85,18 +76,16 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
-    | '/saves'
     | '/app/login'
     | '/app/profile'
     | '/app/sink'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/saves' | '/app/login' | '/app/profile' | '/app/sink' | '/app'
+  to: '/' | '/app/login' | '/app/profile' | '/app/sink' | '/app'
   id:
     | '__root__'
     | '/'
     | '/app'
-    | '/saves'
     | '/app/login'
     | '/app/profile'
     | '/app/sink'
@@ -106,18 +95,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
-  SavesRoute: typeof SavesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/saves': {
-      id: '/saves'
-      path: '/saves'
-      fullPath: '/saves'
-      preLoaderRoute: typeof SavesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/app': {
       id: '/app'
       path: '/app'
@@ -182,7 +163,6 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
-  SavesRoute: SavesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
