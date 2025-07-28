@@ -27,8 +27,36 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Mock data for development
-const mockSaves = [
+// Define proper TypeScript interfaces
+interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  url: string;
+  siteName: string;
+  publishedTime: string;
+  lang: string;
+}
+
+interface Save {
+  id: string;
+  made_by: string;
+  is_archived: boolean;
+  is_favorite: boolean;
+  is_read: boolean;
+  read_at: string | null;
+  article_id: string;
+  timestamp: string;
+}
+
+interface SaveWithArticle {
+  id: string;
+  article: Article;
+  save: Save;
+}
+
+// Mock data for development with proper typing
+const mockSaves: SaveWithArticle[] = [
   {
     id: "1",
     article: {
@@ -163,7 +191,7 @@ function SaveItem({
   onToggleArchive,
   onMarkRead,
 }: {
-  save: (typeof mockSaves)[0];
+  save: SaveWithArticle;
   onToggleFavorite: (id: string) => void;
   onToggleArchive: (id: string) => void;
   onMarkRead: (id: string) => void;
@@ -397,7 +425,7 @@ function RouteComponent() {
   const { filter, view, search } = Route.useSearch();
   const navigate = Route.useNavigate();
 
-  const [saves, setSaves] = useState(mockSaves);
+  const [saves, setSaves] = useState<SaveWithArticle[]>(mockSaves);
   const [searchQuery, setSearchQuery] = useState(search);
 
   // Calculate stats
@@ -466,7 +494,10 @@ function RouteComponent() {
         save.id === id
           ? {
               ...save,
-              save: { ...save.save, is_favorite: !save.save.is_favorite },
+              save: {
+                ...save.save,
+                is_favorite: !save.save.is_favorite,
+              },
             }
           : save
       )
@@ -479,7 +510,10 @@ function RouteComponent() {
         save.id === id
           ? {
               ...save,
-              save: { ...save.save, is_archived: !save.save.is_archived },
+              save: {
+                ...save.save,
+                is_archived: !save.save.is_archived,
+              },
             }
           : save
       )
