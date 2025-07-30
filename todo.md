@@ -45,6 +45,13 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [ ] add auto import sorter prettier plugin
 - [ ] add auto tailwind class sorter plugin
 
+
+- [ ] replace /app mock ui page filter options with separate pages for filters:
+    - [ ] /app/saves
+    - [ ] /app/archived
+    - [ ] /app/favorite
+    - [ ] /app/search?q=
+
     ### Auth
     - [ ] support magic links
     - [ ] remove Logo Here text with actual logo in /login
