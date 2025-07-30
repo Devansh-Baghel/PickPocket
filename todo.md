@@ -58,15 +58,19 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] Sky Dark theme
     - [x] add a theme store
     - [x] add a theme selector / toggle
-    - [ ] use the shadcn select component instead of the native browser one
+    - [x] better theme switching component like https://monkeytype.com/settings?highlight=theme
     - [ ] sepia reading theme
     - [ ] dark themes (citrus dark, solar dark)
+    - [ ] don't load all themes css for themes up front, load them dynamically through js.
 
     ### Fonts
     - [x] option for user to change UI font (fonts aren't synced to themes, user can mix and match both).
     - [x] font toggle component
     - [x] font store
     - [ ] option for user to change Article font
+    - [x] better font switching component like https://monkeytype.com/settings?highlight=fontFamily
+    - [ ] Support custom reading font like https://monkeytype.com/settings?highlight=fontFamily
+    - [ ] don't load all fonts css for themes up front, load them dynamically through js.
 
     ### Search 
     - [ ] add search bar

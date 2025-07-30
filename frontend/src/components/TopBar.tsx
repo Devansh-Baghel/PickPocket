@@ -49,7 +49,7 @@ function HamburgerMenu() {
           </SheetTitle>
         </SheetHeader>
 
-        <div className="ml-8 flex flex-col gap-2">
+        <div className="mx-8 flex flex-col gap-2">
           {/* Main Navigation */}
           <Link
             to="/app"

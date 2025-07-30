@@ -11,7 +11,7 @@ export const Route = createFileRoute("/app")({
 
 function Dashboard({ children }: { children: React.ReactNode }) {
   return (
-    <main className="bg-accent min-h-screen">
+    <main className="bg-background min-h-screen">
       <TopBar />
       {/* Add padding-top to account for the fixed TopBar */}
       <div className="pt-20">{children}</div>

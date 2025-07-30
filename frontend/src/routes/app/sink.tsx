@@ -1,4 +1,4 @@
-import { FontToggle } from "@/components/FontToggle";
+import { FontSelector, FontToggle } from "@/components/FontToggle";
 import { ThemeSelector } from "@/components/ThemeToggle";
 import { createFileRoute } from "@tanstack/react-router";
 import { LoggedIn, LoginPage } from "@/routes/app/login";
@@ -12,7 +12,8 @@ function RouteComponent() {
     <section className="max-w-4xl mx-auto mt-20 flex flex-col gap-10 px-4">
       <div className="space-y-8">
         <ThemeSelector />
-        <FontToggle />
+        {/* <FontToggle /> */}
+        <FontSelector />
       </div>
 
       <div className="border-t pt-8">
