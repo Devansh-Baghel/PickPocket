@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Theme = "solar" | "citrus" | "emerald" | "sky";
+export type Theme = "solar" | "citrus" | "emerald" | "sky" | "sky-dark";
 
 interface ThemeStore {
   theme: Theme;

@@ -16,6 +16,7 @@ export function ThemeToggle() {
         <option value="citrus">Citrus</option>
         <option value="emerald">Emerald</option>
         <option value="sky">Sky</option>
+        <option value="sky-dark">Sky Dark</option>
       </select>
     </div>
   );

@@ -53,6 +53,9 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     ### Themes
     - [x] Solar light theme
     - [x] Citrus light theme
+    - [x] Emerald light theme
+    - [x] Sky light theme
+    - [x] Sky Dark theme
     - [x] add a theme store
     - [x] add a theme selector / toggle
     - [ ] use the shadcn select component instead of the native browser one

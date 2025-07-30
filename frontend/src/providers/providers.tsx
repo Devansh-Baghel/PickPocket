@@ -5,7 +5,7 @@ import { fontFamilies, useFontStore } from "@/stores/fontStore";
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = useThemeStore((state) => state.theme);
 
-  const THEME_CLASSES = ["citrus", "emerald", "sky"] as const;
+  const THEME_CLASSES = ["citrus", "emerald", "sky", "sky-dark"] as const;
 
   useEffect(() => {
     const root = document.documentElement;
