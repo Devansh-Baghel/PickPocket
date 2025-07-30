@@ -17,6 +17,7 @@ import { seo } from "@/utils/seo";
 
 import appCss from "@/styles/app.css?url";
 import fontCss from "@/styles/fonts.css?url";
+import { useThemeStore } from "@/stores/themeStore";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -69,6 +70,8 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const theme = useThemeStore(state => state.theme);
+
   return (
     <html>
       <head>
@@ -88,7 +91,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           rel="stylesheet"
         /> */}
       </head>
-      <body>
+      <body className={theme}>
         {/* TEMP TOPBAR */}
         {/* <div className="flex w-full justify-around mt-4">
           <Link to="/">Home</Link>
