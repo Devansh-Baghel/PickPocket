@@ -88,9 +88,13 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] add search by collection
 
     ### Profile Page
-    - [ ] mock profile ui
+    - [x] mock profile ui
+    - [x] remove settings ui from profile
     - [ ] replace with real ui
 
+    ### Settings Page
+    - [x] mock settings page ui
+    - [ ] replace with real ui
 
 ## Backend 
 - [x] add hono/logger

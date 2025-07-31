@@ -9,7 +9,7 @@ export const Route = createFileRoute("/app/sink")({
 
 function RouteComponent() {
   return (
-    <section className="max-w-4xl mx-auto mt-20 flex flex-col gap-10 px-4">
+    <section className="max-w-4xl mx-auto mt-10 flex flex-col gap-10 px-4">
       <div className="space-y-8">
         <ThemeSelector />
         {/* <FontToggle /> */}

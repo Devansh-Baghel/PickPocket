@@ -12,7 +12,7 @@ export const Route = createFileRoute("/app")({
 
 function Dashboard({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pt-14 md:pt-0">
       {/* Mobile TopBar */}
       <TopBar />
 

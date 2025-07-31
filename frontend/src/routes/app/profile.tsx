@@ -2,274 +2,440 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAuthStore } from "@/stores/authStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 import {
   UserIcon,
-  MailIcon,
   CalendarIcon,
-  BookmarkIcon,
+  BookOpenIcon,
+  StarIcon,
   TrendingUpIcon,
   ClockIcon,
   ArchiveIcon,
   HeartIcon,
+  ShareIcon,
+  AwardIcon,
+  TargetIcon,
+  FlameIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/app/profile")({
   component: ProfilePage,
 });
 
-function ProfilePage() {
+function ProfileHeader() {
   const session = useAuthStore((state) => state.session);
-
-  // Preferences state
-  const [preferences, setPreferences] = useState({
-    autoArchive: true,
-    emailNotifications: false,
-    readingReminders: true,
-  });
-
-  // Mock data - in real app, these would come from API calls
-  const profileStats = {
-    totalSaves: 247,
-    articlesRead: 189,
-    favorites: 34,
-    archived: 78,
-    avgReadingTime: "12 min",
-    joinDate: "March 2024",
-    readingStreak: 7,
-    thisWeekReads: 14,
-  };
-
-  const handlePreferenceChange = (
-    key: keyof typeof preferences,
-    checked: boolean
-  ) => {
-    setPreferences((prev) => ({ ...prev, [key]: checked }));
+  
+  // Mock data - in real app, this would come from your API
+  const userStats = {
+    joinDate: "January 2024",
+    articlesRead: 127,
+    currentStreak: 8,
+    longestStreak: 23,
+    totalReadingTime: "45h 32m",
+    favoriteArticles: 34,
   };
 
   return (
-    <div className="px-4 py-6 space-y-6 max-w-4xl mx-auto">
-      {/* Profile Header */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <UserIcon className="size-5" />
-            Profile Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="size-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <UserIcon className="size-8 text-primary" />
+    <Card className="mb-6">
+      <CardContent className="p-6">
+        <div className="flex flex-col sm:flex-row items-start gap-6">
+          {/* Profile Picture */}
+          <div className="relative">
+            <div className="size-24 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <UserIcon className="size-12 text-primary" />
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="space-y-2">
-                <h2 className="text-xl font-semibold truncate">
-                  {session?.user?.name}
-                </h2>
-                <p className="text-muted-foreground flex items-center gap-2 text-sm">
-                  <MailIcon className="size-4 flex-shrink-0" />
-                  <span className="truncate">{session?.user?.email}</span>
-                </p>
-                <p className="text-sm text-muted-foreground flex items-center gap-2">
-                  <CalendarIcon className="size-4 flex-shrink-0" />
-                  Member since {profileStats.joinDate}
-                </p>
+            <div className="absolute -bottom-1 -right-1 size-6 rounded-full bg-green-500 border-2 border-background flex items-center justify-center">
+              <div className="size-2 rounded-full bg-white" />
+            </div>
+          </div>
+
+          {/* Profile Info */}
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+              <div>
+                <h1 className="text-2xl font-bold mb-1">{session?.user?.name}</h1>
+                <p className="text-muted-foreground mb-2">{session?.user?.email}</p>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <CalendarIcon className="size-4" />
+                  <span>Joined {userStats.joinDate}</span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">
+                  <ShareIcon className="size-4" />
+                  Share Profile
+                </Button>
+                <Button asChild size="sm">
+                  <Link to="/app/settings">
+                    Edit Profile
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">{userStats.articlesRead}</div>
+                <div className="text-xs text-muted-foreground">Articles Read</div>
+              </div>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1">
+                  <FlameIcon className="size-4 text-orange-500" />
+                  <span className="text-2xl font-bold text-orange-500">{userStats.currentStreak}</span>
+                </div>
+                <div className="text-xs text-muted-foreground">Day Streak</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">{userStats.longestStreak}</div>
+                <div className="text-xs text-muted-foreground">Best Streak</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">{userStats.totalReadingTime}</div>
+                <div className="text-xs text-muted-foreground">Reading Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">{userStats.favoriteArticles}</div>
+                <div className="text-xs text-muted-foreground">Favorites</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-600">12</div>
+                <div className="text-xs text-muted-foreground">Tags Used</div>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
-      {/* Reading Statistics */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <TrendingUpIcon className="size-5" />
-            Reading Statistics
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            <div className="text-center p-3 sm:p-4 rounded-lg bg-accent">
-              <BookmarkIcon className="size-5 sm:size-6 mx-auto mb-2 text-primary" />
-              <div className="text-lg sm:text-2xl font-bold">
-                {profileStats.totalSaves}
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">
-                Total Saves
-              </div>
-            </div>
-            <div className="text-center p-3 sm:p-4 rounded-lg bg-accent">
-              <ClockIcon className="size-5 sm:size-6 mx-auto mb-2 text-secondary" />
-              <div className="text-lg sm:text-2xl font-bold">
-                {profileStats.articlesRead}
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">
-                Articles Read
-              </div>
-            </div>
-            <div className="text-center p-3 sm:p-4 rounded-lg bg-accent">
-              <HeartIcon className="size-5 sm:size-6 mx-auto mb-2 text-red-500" />
-              <div className="text-lg sm:text-2xl font-bold">
-                {profileStats.favorites}
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">
-                Favorited
-              </div>
-            </div>
-            <div className="text-center p-3 sm:p-4 rounded-lg bg-accent">
-              <ArchiveIcon className="size-5 sm:size-6 mx-auto mb-2 text-base-600" />
-              <div className="text-lg sm:text-2xl font-bold">
-                {profileStats.archived}
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">
-                Archived
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+function ReadingActivity() {
+  // Mock data for reading activity
+  const weeklyActivity = [
+    { day: "Mon", articles: 3, time: "45m" },
+    { day: "Tue", articles: 2, time: "32m" },
+    { day: "Wed", articles: 5, time: "78m" },
+    { day: "Thu", articles: 1, time: "15m" },
+    { day: "Fri", articles: 4, time: "62m" },
+    { day: "Sat", articles: 2, time: "28m" },
+    { day: "Sun", articles: 6, time: "95m" },
+  ];
 
-      {/* Reading Habits */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Reading Habits</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">
-                Average Reading Time
-              </span>
-              <span className="font-semibold">
-                {profileStats.avgReadingTime}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">
-                Current Streak
-              </span>
-              <span className="font-semibold">
-                {profileStats.readingStreak} days
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">This Week</span>
-              <span className="font-semibold">
-                {profileStats.thisWeekReads} articles
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+  const maxArticles = Math.max(...weeklyActivity.map(d => d.articles));
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Reading Preferences</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="auto-archive"
-                  checked={preferences.autoArchive}
-                  onCheckedChange={(checked) =>
-                    handlePreferenceChange("autoArchive", checked as boolean)
-                  }
-                  className="mt-0.5"
-                />
-                <div className="grid gap-1.5 leading-none flex-1">
-                  <Label
-                    htmlFor="auto-archive"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Auto-archive read articles
-                  </Label>
-                  <p className="text-xs text-muted-foreground">
-                    Automatically move articles to archive after reading
-                  </p>
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <TrendingUpIcon className="size-5" />
+          This Week's Activity
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {weeklyActivity.map((day, index) => (
+            <div key={day.day} className="flex items-center gap-4">
+              <div className="w-10 text-sm text-muted-foreground">{day.day}</div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <div 
+                    className="bg-primary/20 rounded-full h-2 transition-all"
+                    style={{ width: `${(day.articles / maxArticles) * 100}%` }}
+                  />
+                  <span className="text-sm font-medium">{day.articles} articles</span>
                 </div>
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="email-notifications"
-                  checked={preferences.emailNotifications}
-                  onCheckedChange={(checked) =>
-                    handlePreferenceChange(
-                      "emailNotifications",
-                      checked as boolean
-                    )
-                  }
-                  className="mt-0.5"
-                />
-                <div className="grid gap-1.5 leading-none flex-1">
-                  <Label
-                    htmlFor="email-notifications"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Email notifications
-                  </Label>
-                  <p className="text-xs text-muted-foreground">
-                    Receive weekly reading digest and updates
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="reading-reminders"
-                  checked={preferences.readingReminders}
-                  onCheckedChange={(checked) =>
-                    handlePreferenceChange(
-                      "readingReminders",
-                      checked as boolean
-                    )
-                  }
-                  className="mt-0.5"
-                />
-                <div className="grid gap-1.5 leading-none flex-1">
-                  <Label
-                    htmlFor="reading-reminders"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Daily reading reminders
-                  </Label>
-                  <p className="text-xs text-muted-foreground">
-                    Get notified to maintain your reading streak
-                  </p>
+                <div className="text-xs text-muted-foreground flex items-center gap-1">
+                  <ClockIcon className="size-3" />
+                  {day.time} reading time
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function Achievements() {
+  const achievements = [
+    {
+      id: 1,
+      title: "First Article",
+      description: "Read your first article",
+      earned: true,
+      earnedDate: "Jan 15, 2024",
+      icon: BookOpenIcon,
+      color: "text-blue-600"
+    },
+    {
+      id: 2,
+      title: "Week Warrior",
+      description: "Maintained a 7-day reading streak",
+      earned: true,
+      earnedDate: "Feb 2, 2024",
+      icon: FlameIcon,
+      color: "text-orange-500"
+    },
+    {
+      id: 3,
+      title: "Century Club",
+      description: "Read 100 articles",
+      earned: true,
+      earnedDate: "Mar 10, 2024",
+      icon: AwardIcon,
+      color: "text-purple-600"
+    },
+    {
+      id: 4,
+      title: "Speed Reader",
+      description: "Read 10 articles in a single day",
+      earned: false,
+      description2: "Progress: 6/10",
+      icon: TargetIcon,
+      color: "text-gray-400"
+    },
+    {
+      id: 5,
+      title: "Knowledge Seeker",
+      description: "Read articles from 20 different domains",
+      earned: false,
+      description2: "Progress: 14/20",
+      icon: StarIcon,
+      color: "text-gray-400"
+    },
+  ];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <AwardIcon className="size-5" />
+          Achievements
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-4">
+          {achievements.map((achievement) => {
+            const Icon = achievement.icon;
+            return (
+              <div 
+                key={achievement.id}
+                className={`flex items-start gap-3 p-3 rounded-lg border transition-colors ${
+                  achievement.earned 
+                    ? "bg-accent/50 border-accent" 
+                    : "bg-muted/30 border-muted"
+                }`}
+              >
+                <div className={`size-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                  achievement.earned ? "bg-accent" : "bg-muted"
+                }`}>
+                  <Icon className={`size-5 ${achievement.color}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h4 className="font-medium text-sm">{achievement.title}</h4>
+                    {achievement.earned && (
+                      <Badge variant="secondary" className="text-xs">
+                        Earned
+                      </Badge>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-1">
+                    {achievement.description}
+                  </p>
+                  {achievement.earned ? (
+                    <p className="text-xs text-muted-foreground">
+                      Earned on {achievement.earnedDate}
+                    </p>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">
+                      {achievement.description2}
+                    </p>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function ReadingGoals() {
+  const goals = [
+    {
+      title: "Daily Reading Goal",
+      current: 3,
+      target: 5,
+      unit: "articles",
+      color: "bg-blue-500",
+    },
+    {
+      title: "Weekly Time Goal",
+      current: 4.2,
+      target: 7,
+      unit: "hours",
+      color: "bg-green-500",
+    },
+    {
+      title: "Monthly Articles",
+      current: 47,
+      target: 60,
+      unit: "articles",
+      color: "bg-purple-500",
+    },
+  ];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <TargetIcon className="size-5" />
+          Reading Goals
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6">
+          {goals.map((goal, index) => {
+            const percentage = Math.min((goal.current / goal.target) * 100, 100);
+            return (
+              <div key={index} className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">{goal.title}</span>
+                  <span className="text-muted-foreground">
+                    {goal.current} / {goal.target} {goal.unit}
+                  </span>
+                </div>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div
+                    className={`h-2 rounded-full transition-all duration-300 ${goal.color}`}
+                    style={{ width: `${percentage}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>{percentage.toFixed(0)}% complete</span>
+                  <span>
+                    {goal.target - goal.current > 0 
+                      ? `${goal.target - goal.current} ${goal.unit} to go`
+                      : "Goal achieved! 🎉"
+                    }
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="pt-4 border-t mt-6">
+          <Button variant="outline" size="sm" className="w-full sm:w-auto">
+            <Link to="/app/settings" className="flex items-center gap-2">
+              <TargetIcon className="size-4" />
+              Customize Goals
+            </Link>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function RecentActivity() {
+  const recentActivities = [
+    {
+      type: "read",
+      title: "The Future of AI in Healthcare",
+      domain: "techcrunch.com",
+      timestamp: "2 hours ago",
+      icon: BookOpenIcon,
+      color: "text-blue-600"
+    },
+    {
+      type: "favorite",
+      title: "Understanding React Server Components",
+      domain: "vercel.com",
+      timestamp: "5 hours ago",
+      icon: HeartIcon,
+      color: "text-red-500"
+    },
+    {
+      type: "archive",
+      title: "10 Tips for Better Code Reviews",
+      domain: "github.blog",
+      timestamp: "1 day ago",
+      icon: ArchiveIcon,
+      color: "text-gray-600"
+    },
+    {
+      type: "read",
+      title: "The Art of Database Design",
+      domain: "planetscale.com",
+      timestamp: "2 days ago",
+      icon: BookOpenIcon,
+      color: "text-blue-600"
+    },
+  ];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <ClockIcon className="size-5" />
+          Recent Activity
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {recentActivities.map((activity, index) => {
+            const Icon = activity.icon;
+            return (
+              <div key={index} className="flex items-start gap-3">
+                <div className="size-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-1">
+                  <Icon className={`size-4 ${activity.color}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium line-clamp-1">
+                    {activity.title}
+                  </p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-xs text-muted-foreground">
+                      {activity.domain}
+                    </span>
+                    <span className="text-xs text-muted-foreground">•</span>
+                    <span className="text-xs text-muted-foreground">
+                      {activity.timestamp}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function ProfilePage() {
+  return (
+    <div className="px-4 py-6 space-y-6 max-w-6xl mx-auto">
+      <ProfileHeader />
+      
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Left Column */}
+        <div className="space-y-6">
+          <ReadingActivity />
+          <ReadingGoals />
+        </div>
+        
+        {/* Right Column */}
+        <div className="space-y-6">
+          <Achievements />
+          <RecentActivity />
+        </div>
       </div>
-
-      {/* Account Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Account Management</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid gap-3 sm:grid-cols-3">
-            <Button variant="outline" className="w-full">
-              Export My Data
-            </Button>
-            <Button variant="outline" className="w-full">
-              Download History
-            </Button>
-            <Button variant="destructive" className="w-full">
-              Delete Account
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Export includes all your saved articles, highlights, and reading
-            statistics. Account deletion is permanent and cannot be undone.
-          </p>
-        </CardContent>
-      </Card>
     </div>
   );
 }

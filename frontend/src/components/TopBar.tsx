@@ -2,7 +2,6 @@ import { MenuIcon, PocketIcon, ProfileIcon } from "@/utils/icons";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -166,7 +165,7 @@ function ProfileMenu() {
         {/* General Settings */}
         <DropdownMenuItem asChild>
           <Link
-            to="/app/sink"
+            to="/app/settings"
             className="flex items-center gap-2 cursor-pointer"
           >
             <SettingsIcon className="size-4" />
