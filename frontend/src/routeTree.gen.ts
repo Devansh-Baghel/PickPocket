@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppSinkRouteImport } from './routes/app/sink'
+import { Route as AppSettingsRouteImport } from './routes/app/settings'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppLoginRouteImport } from './routes/app/login'
 
@@ -36,6 +37,11 @@ const AppSinkRoute = AppSinkRouteImport.update({
   path: '/sink',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
   '/app/': typeof AppIndexRoute
 }
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
   '/app': typeof AppIndexRoute
 }
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
   '/app/': typeof AppIndexRoute
 }
@@ -78,16 +87,24 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/login'
     | '/app/profile'
+    | '/app/settings'
     | '/app/sink'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/login' | '/app/profile' | '/app/sink' | '/app'
+  to:
+    | '/'
+    | '/app/login'
+    | '/app/profile'
+    | '/app/settings'
+    | '/app/sink'
+    | '/app'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/app/login'
     | '/app/profile'
+    | '/app/settings'
     | '/app/sink'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -127,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSinkRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/profile': {
       id: '/app/profile'
       path: '/profile'
@@ -147,6 +171,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppLoginRoute: typeof AppLoginRoute
   AppProfileRoute: typeof AppProfileRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppSinkRoute: typeof AppSinkRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -154,6 +179,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppLoginRoute: AppLoginRoute,
   AppProfileRoute: AppProfileRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppSinkRoute: AppSinkRoute,
   AppIndexRoute: AppIndexRoute,
 }
