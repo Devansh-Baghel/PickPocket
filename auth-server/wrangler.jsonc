@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "pickpocket_auth_server",
+  "name": "auth-server",
   "main": "src/index.ts",
   "compatibility_date": "2025-07-26",
   "dev": {
