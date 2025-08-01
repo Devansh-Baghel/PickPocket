@@ -8,6 +8,7 @@ import { getDB } from "@/db/db";
 import { articles } from "@/db/schemas/articles";
 import { parseArticle } from "@/utils/utils";
 import { articleIdSchema } from "@/validators/articles";
+import { cache } from "hono/cache";
 
 const articleRouter = new Hono<{ Bindings: Env }>();
 
@@ -15,6 +16,17 @@ const articleRouter = new Hono<{ Bindings: Env }>();
 articleRouter.get(
   "/:articleId",
   zValidator("param", articleIdSchema),
+  cache({
+    cacheName: "articles-cache",
+    cacheControl: "max-age=86400, public", // 24 hours
+    keyGenerator: (c) => {
+      const articleId = c.req.param("articleId");
+      return `/articles/${articleId}`; // Clean, predictable cache keys
+    },
+    cacheableStatusCodes: [200, 404], // Cache successful fetches and not-found
+    vary: ["Accept-Encoding"], // Respect compression preferences
+    wait: false, // Cloudflare Workers default
+  }),
   async (c) => {
     const { articleId } = c.req.valid("param");
     const db = getDB(c);
