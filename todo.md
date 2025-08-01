@@ -53,11 +53,12 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] /app/search?q=
 
     ### Auth
-    - [ ] support magic links
-    - [ ] remove Logo Here text with actual logo in /login
-    - [ ] add google login support
-    - [ ] make google login ui req to google login and github login ui req to github login
+    - [x] support magic links
+    - [x] remove Logo Here text with actual logo in /login
+    - [x] add google login support
+    - [x] make google login ui req to google login and github login ui req to github login
     - [ ] replace the Loading Auth Status text with a skeleton of the entire app
+    - [ ] after signup add a custom welcome message like /welcome
 
     ### Themes
     - [x] Solar light theme
@@ -68,6 +69,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] add a theme store
     - [x] add a theme selector / toggle
     - [x] better theme switching component like https://monkeytype.com/settings?highlight=theme
+    - [x] toggle themes in a better way without ThemeProvider/useEffect
     - [ ] sepia reading theme
     - [ ] dark themes (citrus dark, solar dark)
     - [ ] don't load all themes css for themes up front, load them dynamically through js.
@@ -76,8 +78,9 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] option for user to change UI font (fonts aren't synced to themes, user can mix and match both).
     - [x] font toggle component
     - [x] font store
-    - [ ] option for user to change Article font
     - [x] better font switching component like https://monkeytype.com/settings?highlight=fontFamily
+    - [x] toggle fonts in a better way without FontsProvider/useEffect
+    - [ ] option for user to change Article font
     - [ ] Support custom reading font like https://monkeytype.com/settings?highlight=fontFamily
     - [ ] don't load all fonts css for themes up front, load them dynamically through js.
 

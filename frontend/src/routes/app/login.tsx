@@ -5,10 +5,57 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@tanstack/react-router";
 import { GithubIcon, GoogleIcon, PocketIcon } from "@/utils/icons";
+import { useState } from "react";
 
 export const Route = createFileRoute("/app/login")({
   component: RouteComponent,
 });
+
+function MagicLinkSent({ email }: { email: string }) {
+  return (
+    <section className="flex min-h-screen bg-background px-4 py-16 md:py-32 dark:bg-transparent">
+      <div className="max-w-92 mx-auto h-fit w-full">
+        <div className="p-6 text-center">
+          <div className="mb-6">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+              <svg
+                className="h-6 w-6 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <h1 className="mb-2 text-xl font-semibold">Check your email</h1>
+            <p className="text-muted-foreground">
+              We've sent a verification link to <strong>{email}</strong>
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="rounded-lg border bg-muted/50 p-4">
+              <p className="text-sm text-muted-foreground">
+                Click the <strong>verify</strong> button in the email to sign in
+                to your account. The link will expire in{" "}
+                <strong>10 minutes</strong>.
+              </p>
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              Didn't receive the email? Check your spam folder or try again.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export function LoginPage({
   className,
@@ -16,10 +63,24 @@ export function LoginPage({
 }: React.ComponentProps<"div">) {
   const signInGithub = useAuthStore((state) => state.signInGithub);
   const signInGoogle = useAuthStore((state) => state.signInGoogle);
+  const signInMagicLink = useAuthStore((state) => state.signInMagicLink);
+  const [email, setEmail] = useState("");
+  const [isEmailSent, setIsEmailSent] = useState(false);
+
+  const handleMagicLinkSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsEmailSent(true);
+
+    await signInMagicLink(email);
+  };
+
+  if (isEmailSent) return <MagicLinkSent email={email} />;
 
   return (
     <section className="flex min-h-screen bg-background px-4 py-16 md:py-32 dark:bg-transparent">
-      <form action="" className="max-w-92 mx-auto h-fit w-full">
+      <div className="max-w-92 mx-auto h-fit w-full">
         <div className="p-6">
           <div>
             <h1 className="mb-1 mt-4 text-xl font-semibold">
@@ -63,7 +124,7 @@ export function LoginPage({
             <hr className="border-dashed" />
           </div>
 
-          <div className="space-y-6">
+          <form onSubmit={handleMagicLinkSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="block text-sm">
                 Email address
@@ -74,16 +135,15 @@ export function LoginPage({
                 name="email"
                 id="email"
                 placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
             <Button className="w-full">Continue</Button>
-          </div>
-          {/* <p className="text-accent-foreground text-center text-sm mt-6">
-            We’ll sign you in or create an account.
-          </p> */}
+          </form>
         </div>
-      </form>
+      </div>
     </section>
   );
 }
