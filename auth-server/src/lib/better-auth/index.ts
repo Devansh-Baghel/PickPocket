@@ -2,13 +2,14 @@ import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { betterAuth } from 'better-auth';
-import { betterAuthOptions } from './options';
+import { betterAuthOptions, sendMagicLinkEmail } from "./options";
 import { user, account, session, verification } from "../../db/schema";
+import { magicLink } from "better-auth/plugins";
 
-/**
- * Better Auth Instance
- */
-export const auth = (env: CloudflareBindings): ReturnType<typeof betterAuth> => {
+// Better Auth Instance
+export const auth = (
+  env: CloudflareBindings
+): ReturnType<typeof betterAuth> => {
   const sql = neon(env.DATABASE_URL);
   const db = drizzle(sql);
 
@@ -35,6 +36,14 @@ export const auth = (env: CloudflareBindings): ReturnType<typeof betterAuth> => 
         clientSecret: env.GOOGLE_CLIENT_SECRET,
       },
     },
+    plugins: [
+      magicLink({
+        sendMagicLink: async ({ email, token, url }, request) => {
+          await sendMagicLinkEmail(email, url, env.RESEND_API_KEY);
+        },
+        expiresIn: 10 * 60, // 10 minutes
+      }),
+    ],
     trustedOrigins: ["http://localhost:3000"],
 
     // Additional options that depend on env ...

@@ -1,12 +1,12 @@
-import { BetterAuthOptions } from 'better-auth';
-import { magicLink } from 'better-auth/plugins';
+import { BetterAuthOptions } from "better-auth";
 import { Resend } from "resend";
 
-/**
- * Send magic link email using Resend
- */
-async function sendMagicLinkEmail(email: string, url: string, token: string) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+export async function sendMagicLinkEmail(
+  email: string,
+  url: string,
+  resendKey: string
+) {
+  const resend = new Resend(resendKey);
 
   const emailHtml = `
     <!DOCTYPE html>
@@ -56,7 +56,7 @@ async function sendMagicLinkEmail(email: string, url: string, token: string) {
         .button {
           display: inline-block;
           background-color: #2563eb;
-          color: white;
+          color: white !important;
           text-decoration: none;
           padding: 16px 32px;
           border-radius: 8px;
@@ -189,18 +189,8 @@ async function sendMagicLinkEmail(email: string, url: string, token: string) {
   }
 }
 
-/**
- * Custom options for Better Auth
- */
+// Custom options for Better Auth
 export const betterAuthOptions: BetterAuthOptions = {
   appName: "PickPocket",
   basePath: "/api",
-  plugins: [
-    magicLink({
-      sendMagicLink: async ({ email, token, url }, request) => {
-        await sendMagicLinkEmail(email, url, token);
-      },
-      expiresIn: 10 * 60, // 10 minutes
-    }),
-  ],
 };
