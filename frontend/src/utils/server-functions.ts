@@ -18,9 +18,12 @@ export const getUsers = createServerFn({
 
 export const getSaves = createServerFn({
   method: "GET",
-}).handler(async () => {
-  return (await axiosInstance.get("/saves")).data.data;
-});
+})
+  .validator((data: string) => data)
+  .handler(async ({ data }) => {
+    const response = await axiosInstance.get(`/saves/${data}`);
+    return response.data;
+  });
 
 // Profile Statistics Server Function
 export const getProfileStats = createServerFn({

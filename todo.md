@@ -47,7 +47,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 
 
 - [ ] replace /app mock ui page filter options with separate pages for filters:
-    - [ ] /app/saves
+    - [x] /app/saves
     - [ ] /app/archived
     - [ ] /app/favorite
     - [ ] /app/search?q=
