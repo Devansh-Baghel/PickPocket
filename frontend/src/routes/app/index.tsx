@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { BookmarkIcon, CheckIcon } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { getSaves } from "@/utils/server-functions";
+import { AddArticle } from "@/components/AddArticle";
 
 export const Route = createFileRoute("/app/")({
   component: RouteComponent,
@@ -53,6 +54,8 @@ function RouteComponent() {
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">
+      <AddArticle />
+
       {/* Search Bar */}
       <div className="relative">
         <Input

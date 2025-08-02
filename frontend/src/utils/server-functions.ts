@@ -34,6 +34,18 @@ export const getSaveWithArticle = createServerFn({
     return response.data;
   });
 
+export const postSave = createServerFn({
+  method: "POST",
+})
+  .validator((data: { userId: string; url: string }) => data)
+  .handler(async ({ data }) => {
+    const response = await axiosInstance.post(`/saves/${data.userId}`, {
+      url: data.url,
+    });
+    return response.data;
+  });
+
+
 // Profile Statistics Server Function
 export const getProfileStats = createServerFn({
   method: "GET",
