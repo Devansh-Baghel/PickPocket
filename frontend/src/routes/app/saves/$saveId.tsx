@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import "@/styles/reader.css";
 
 interface Save {
   id: string;
@@ -211,7 +212,7 @@ function Article() {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-lg max-w-none dark:prose-invert">
+            <div className="reader-mode prose prose-lg max-w-none dark:prose-invert">
               <div dangerouslySetInnerHTML={{ __html: article.content }} />
             </div>
           </div>

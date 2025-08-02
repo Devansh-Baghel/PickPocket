@@ -100,7 +100,7 @@ function RouteComponent() {
           </Card>
         ) : (
           filteredSaves.map((save: any) => (
-            <SaveItem key={save.id} save={save} />
+            <SaveItem key={save.save.id} save={save} />
           ))
         )}
       </div>
