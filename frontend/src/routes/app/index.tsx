@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -137,7 +137,9 @@ function SaveItem({ save }: { save: any }) {
               )}
             </div>
             <h3 className="font-semibold text-lg leading-tight mb-2 group-hover:text-primary transition-colors">
-              {save.article.title}
+              <Link to={`/app/saves/${save.save.id}`}>
+                {save.article.title}
+              </Link>
             </h3>
             <p className="text-muted-foreground text-sm line-clamp-2 mb-3">
               {save.article.excerpt}

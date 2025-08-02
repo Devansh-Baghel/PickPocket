@@ -20,8 +20,17 @@ export const getSaves = createServerFn({
   method: "GET",
 })
   .validator((data: string) => data)
+  .handler(async ({ data: userId }) => {
+    const response = await axiosInstance.get(`/saves/${userId}`);
+    return response.data;
+  });
+
+export const getSaveWithArticle = createServerFn({
+  method: "GET",
+})
+  .validator((data: string) => data)
   .handler(async ({ data }) => {
-    const response = await axiosInstance.get(`/saves/${data}`);
+    const response = await axiosInstance.get(`/articles/save/${data}`);
     return response.data;
   });
 

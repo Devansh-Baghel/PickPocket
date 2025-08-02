@@ -16,6 +16,7 @@ import { Route as AppSinkRouteImport } from './routes/app/sink'
 import { Route as AppSettingsRouteImport } from './routes/app/settings'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppLoginRouteImport } from './routes/app/login'
+import { Route as AppSavesSaveIdRouteImport } from './routes/app/saves/$saveId'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -52,6 +53,11 @@ const AppLoginRoute = AppLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSavesSaveIdRoute = AppSavesSaveIdRouteImport.update({
+  id: '/saves/$saveId',
+  path: '/saves/$saveId',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
   '/app/': typeof AppIndexRoute
+  '/app/saves/$saveId': typeof AppSavesSaveIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
   '/app': typeof AppIndexRoute
+  '/app/saves/$saveId': typeof AppSavesSaveIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
   '/app/': typeof AppIndexRoute
+  '/app/saves/$saveId': typeof AppSavesSaveIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/app/settings'
     | '/app/sink'
     | '/app/'
+    | '/app/saves/$saveId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/app/settings'
     | '/app/sink'
     | '/app'
+    | '/app/saves/$saveId'
   id:
     | '__root__'
     | '/'
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/app/settings'
     | '/app/sink'
     | '/app/'
+    | '/app/saves/$saveId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -165,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLoginRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/saves/$saveId': {
+      id: '/app/saves/$saveId'
+      path: '/saves/$saveId'
+      fullPath: '/app/saves/$saveId'
+      preLoaderRoute: typeof AppSavesSaveIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -174,6 +193,7 @@ interface AppRouteChildren {
   AppSettingsRoute: typeof AppSettingsRoute
   AppSinkRoute: typeof AppSinkRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppSavesSaveIdRoute: typeof AppSavesSaveIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -182,6 +202,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppSettingsRoute: AppSettingsRoute,
   AppSinkRoute: AppSinkRoute,
   AppIndexRoute: AppIndexRoute,
+  AppSavesSaveIdRoute: AppSavesSaveIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
