@@ -29,7 +29,13 @@ app.use(
 app.use(secureHeaders());
 app.use(logger(customLogger));
 app.use(trimTrailingSlash());
-app.use(timeout(8000));
+app.use("*", (c, next) => {
+  // Skip timeout for import endpoints
+  if (c.req.path.includes("/import")) {
+    return next();
+  }
+  return timeout(8000)(c, next);
+});
 
 // Global auth middleware
 app.use(verifyAuth);

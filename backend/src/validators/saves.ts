@@ -16,3 +16,7 @@ export const userIdSchema = z.object({
 export const saveIdSchema = z.object({
     saveId: z.string(),
 });
+
+export const importPocketSchema = z.object({
+  csvContent: z.string().min(1, "CSV content cannot be empty"),
+});

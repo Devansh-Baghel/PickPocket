@@ -21,6 +21,12 @@ import {
   saveIdSchema,
   userIdSchema,
 } from "@/validators/saves";
+import {
+  parsePocketCsv,
+  convertUnixTimestamp,
+  type PocketCsvRow,
+} from "@/utils/csvImport";
+import { importPocketSchema } from "@/validators/saves";
 
 const savesRouter = new Hono<{ Bindings: Env }>();
 
@@ -60,7 +66,6 @@ savesRouter.get(
       .leftJoin(articles, eq(saves.article_id, articles.id))
       .where(eq(saves.made_by, userId))
       .orderBy(desc(saves.timestamp)) // Sort by most recently created
-
       .limit(limit)
       .offset(offset);
 
@@ -327,5 +332,165 @@ savesRouter.delete("/:saveId", zValidator("param", saveIdSchema), async (c) => {
     deletedSave,
   });
 });
+
+// POST import from Pocket CSV
+savesRouter.post(
+  "/:userId/import",
+  zValidator("param", userIdSchema),
+  zValidator("json", importPocketSchema),
+  async (c) => {
+    const { userId } = c.req.valid("param");
+    const { csvContent } = c.req.valid("json");
+    const db = getDB(c);
+
+    try {
+      // Parse the CSV content
+      const pocketData = parsePocketCsv(csvContent);
+
+      if (pocketData.length === 0) {
+        throw new HTTPException(400, { message: "No valid data found in CSV" });
+      }
+
+      let importedCount = 0;
+      let skippedCount = 0;
+      const errors: string[] = [];
+
+      // Process each row
+      for (const row of pocketData) {
+        try {
+          // Check if article already exists
+          const [existingArticle] = await db
+            .select()
+            .from(articles)
+            .where(eq(articles.url, row.url));
+
+          let articleId: string;
+
+          if (existingArticle) {
+            articleId = existingArticle.id;
+          } else {
+            // Try to parse the article from the URL
+            try {
+              const parsedArticle = await parseArticle(row.url);
+
+              if (!parsedArticle?.title || !parsedArticle?.content) {
+                // If parsing fails, use the data from CSV
+                const articleData: InferInsertModel<typeof articles> = {
+                  id: crypto.randomUUID(),
+                  url: row.url,
+                  title: row.title || "Untitled",
+                  content: `<p>Original article content could not be retrieved.</p><p><a href="${row.url}" target="_blank">View original article</a></p>`,
+                  excerpt: row.title || "No excerpt available",
+                  lang: "en",
+                  publishedTime: null,
+                  siteName: new URL(row.url).hostname,
+                };
+
+                const [newArticle] = await db
+                  .insert(articles)
+                  .values(articleData)
+                  .returning({ id: articles.id });
+
+                articleId = newArticle.id;
+              } else {
+                // Use parsed article data
+                const articleData: InferInsertModel<typeof articles> = {
+                  id: crypto.randomUUID(),
+                  url: row.url,
+                  title: parsedArticle.title,
+                  content: parsedArticle.content,
+                  excerpt: parsedArticle.excerpt || "",
+                  lang: parsedArticle.lang,
+                  publishedTime: parsedArticle.publishedTime,
+                  siteName: parsedArticle.siteName || new URL(row.url).hostname,
+                };
+
+                const [newArticle] = await db
+                  .insert(articles)
+                  .values(articleData)
+                  .returning({ id: articles.id });
+
+                articleId = newArticle.id;
+              }
+            } catch (articleError) {
+              // Fallback: create article with CSV data
+              const articleData: InferInsertModel<typeof articles> = {
+                id: crypto.randomUUID(),
+                url: row.url,
+                title: row.title || "Untitled",
+                content: `<p>Original article content could not be retrieved.</p><p><a href="${row.url}" target="_blank">View original article</a></p>`,
+                excerpt: row.title || "No excerpt available",
+                lang: "en",
+                publishedTime: null,
+                siteName: new URL(row.url).hostname,
+              };
+
+              const [newArticle] = await db
+                .insert(articles)
+                .values(articleData)
+                .returning({ id: articles.id });
+
+              articleId = newArticle.id;
+            }
+          }
+
+          // Check if user already has this article saved
+          const [existingSave] = await db
+            .select()
+            .from(saves)
+            .where(
+              and(eq(saves.made_by, userId), eq(saves.article_id, articleId))
+            );
+
+          if (existingSave) {
+            skippedCount++;
+            continue;
+          }
+
+          // Create the save record
+          const saveData: InferInsertModel<typeof saves> = {
+            id: crypto.randomUUID(),
+            made_by: userId,
+            article_id: articleId,
+            is_archived: row.status === "archive",
+            is_favorite: false, // Pocket CSV doesn't include favorite status
+            is_read: row.status === "archive", // Assume archived items were read
+            read_at:
+              row.status === "archive"
+                ? convertUnixTimestamp(row.time_added)
+                : null,
+            timestamp: convertUnixTimestamp(row.time_added),
+          };
+
+          await db.insert(saves).values(saveData);
+          importedCount++;
+        } catch (rowError) {
+          console.error(`Error processing row for URL ${row.url}:`, rowError);
+          errors.push(`Failed to import: ${row.title || row.url}`);
+        }
+      }
+
+      return c.json({
+        success: true,
+        message: `Import completed successfully!`,
+        stats: {
+          total: pocketData.length,
+          imported: importedCount,
+          skipped: skippedCount,
+          errors: errors.length,
+        },
+        errors: errors.slice(0, 10), // Return first 10 errors
+      });
+    } catch (error) {
+      console.error("Import error:", error);
+      if (error instanceof HTTPException) {
+        throw error;
+      }
+      throw new HTTPException(500, {
+        message: "Failed to process import. Please try again.",
+      });
+    }
+  }
+);
 
 export default savesRouter;
