@@ -34,9 +34,9 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [x] remove global useEffect to load initial auth session from __root and add it to /app
 - [x] add navigation (sidebar) for screens bigger than md:
 - [x] dark mode reading theme
+- [x] render articles properly
 - [ ] use shadcn/ui sidebar component to make the sidebar collapsible.
 - [ ] reading progress bar
-- [ ] render articles properly
 - [ ] list view option to see all saves
 - [ ] grid view option to see all saves
 - [ ] compact view option to see all saves

@@ -1,7 +1,14 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { HTTPException } from "hono/http-exception";
-import { and, eq, getTableColumns, InferInsertModel, sql } from "drizzle-orm";
+import {
+  and,
+  desc,
+  eq,
+  getTableColumns,
+  InferInsertModel,
+  sql,
+} from "drizzle-orm";
 
 import { Env } from "..";
 import { getDB } from "@/db/db";
@@ -52,6 +59,8 @@ savesRouter.get(
       .from(saves)
       .leftJoin(articles, eq(saves.article_id, articles.id))
       .where(eq(saves.made_by, userId))
+      .orderBy(desc(saves.timestamp)) // Sort by most recently created
+
       .limit(limit)
       .offset(offset);
 
