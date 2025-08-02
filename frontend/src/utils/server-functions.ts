@@ -45,6 +45,16 @@ export const postSave = createServerFn({
     return response.data;
   });
 
+export const importPocketData = createServerFn({
+  method: "POST",
+})
+  .validator((data: { userId: string; csvContent: string }) => data)
+  .handler(async ({ data }) => {
+    const response = await axiosInstance.post(`/saves/${data.userId}/import`, {
+      csvContent: data.csvContent,
+    });
+    return response.data;
+  });
 
 // Profile Statistics Server Function
 export const getProfileStats = createServerFn({

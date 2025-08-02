@@ -1,7 +1,8 @@
 - [ ] add APIerror response type
 - [ ] add APIresponse type
 - [ ] save to obsidian feature
-- [ ] import all saves from pocket feature
+- [x] import all saves from pocket feature
+- [ ] generate tldr for this article ai feature, use cloudflare ai gateway
 
 ### UI Reference
 https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
@@ -51,6 +52,11 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] /app/archived
     - [ ] /app/favorite
     - [ ] /app/search?q=
+
+    ### Mock UI (UIs made with AI for testing features, replace this with real better uis later)
+    - [x] save new article ui
+    - [x] article reading view ui /app/saves/saveId
+    - [x] import from pocket ui
 
     ### Auth
     - [x] support magic links
@@ -113,6 +119,11 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [ ] add a proper tsconfig settings
 - [ ] add auto import sorter prettier plugin
 
+    ### Import from pocket
+    - [x] csv parsing
+    - [x] new route for uploading csv
+    - [ ] better handling for this (current setup will hit 10ms CPU time limit)
+
     ### Auth
     - [x] add custom auth server
     - [x] configure sso for custom auth server
@@ -143,6 +154,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] pagination
         - [x] paginate all saves
         - [x] paginate all saves by user
+    - [x] get saves metadata and article data with content both in a single endpoint
 
     #### Articles
     - [x] get article by id
