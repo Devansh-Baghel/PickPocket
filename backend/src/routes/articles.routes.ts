@@ -9,6 +9,8 @@ import { articles } from "@/db/schemas/articles";
 import { parseArticle } from "@/utils/utils";
 import { articleIdSchema } from "@/validators/articles";
 import { cache } from "hono/cache";
+import { saveIdSchema } from "@/validators/saves";
+import { saves } from "@/db/schemas/saves";
 
 const articleRouter = new Hono<{ Bindings: Env }>();
 
@@ -88,6 +90,49 @@ articleRouter.patch(
       .returning();
 
     return c.json(updatedArticle);
+  }
+);
+
+articleRouter.get(
+  "/save/:saveId",
+  zValidator("param", saveIdSchema),
+  // cache({
+  //   cacheName: "saves-articles-cache",
+  //   cacheControl: "max-age=86400, public", // 24 hours
+  //   keyGenerator: (c) => {
+  //     const saveId = c.req.param("saveId");
+  //     return `/saves/${saveId}/article`;
+  //   },
+  //   cacheableStatusCodes: [200, 404],
+  //   vary: ["Accept-Encoding"],
+  //   wait: false,
+  // }),
+  async (c) => {
+    const { saveId } = c.req.valid("param");
+    const db = getDB(c);
+
+    // First, fetch the save metadata
+    const [save] = await db.select().from(saves).where(eq(saves.id, saveId));
+
+    if (!save) {
+      throw new HTTPException(404, { message: "Save not found" });
+    }
+
+    // Then, fetch the article using the articleId from the save
+    const [article] = await db
+      .select()
+      .from(articles)
+      .where(eq(articles.id, save.article_id));
+
+    if (!article) {
+      throw new HTTPException(404, { message: "Article not found" });
+    }
+
+    // Return both save metadata and article data
+    return c.json({
+      save,
+      article,
+    });
   }
 );
 
