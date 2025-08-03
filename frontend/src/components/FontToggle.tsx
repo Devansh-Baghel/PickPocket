@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useFontStore, fontFamilies, Font } from "@/stores/fontStore";
+import { useFontStore, fontFamilies, fontConfig } from "@/stores/fontStore";
 import { CheckIcon } from "lucide-react";
 
 export function FontSelector() {
@@ -9,37 +9,24 @@ export function FontSelector() {
     document.body.style.fontFamily = fontFamilies[currentFont];
   }, [currentFont]);
 
-  const fonts: Array<{
-    key: Font;
-    name: string;
-    preview: string;
-  }> = [
-    {
-      key: "Alexandria",
-      name: "Alexandria",
-      preview: "The quick brown fox jumps over the lazy dog",
-    },
-    {
-      key: "Geist",
-      name: "Geist",
-      preview: "The quick brown fox jumps over the lazy dog",
-    },
-  ];
+  // Generate fonts array from the config
+  const fonts = Object.entries(fontConfig).map(([key, config]) => ({
+    key: key as keyof typeof fontConfig,
+    name: config.name,
+    preview: config.preview,
+  }));
 
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-semibold mb-2">Choose Font</h3>
-        <p className="text-sm text-muted-foreground mb-4">
-          Select your preferred application font
-        </p>
+        <h3 className="text-lg font-semibold mb-4">Choose Font</h3>
       </div>
 
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {fonts.map((fontOption) => (
           <div
             key={fontOption.key}
-            className={`relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-[1.02] bg-background text-accent-foreground
+            className={`relative cursor-pointer rounded-lg border-2 p-3 transition-all hover:scale-[1.02] bg-background text-accent-foreground
               ${
                 currentFont === fontOption.key
                   ? "border-primary ring-2 ring-primary/20"
@@ -55,34 +42,21 @@ export function FontSelector() {
               </div>
             )}
 
-            <div className="space-y-3">
+            <div className="space-y-2">
               {/* Font name */}
               <h4
-                className="font-semibold text-sm"
+                className="font-semibold text-sm text-center"
                 style={{ fontFamily: fontFamilies[fontOption.key] }}
               >
                 {fontOption.name}
               </h4>
 
-              {/* Font preview */}
+              {/* Font sample */}
               <div
-                className="text-sm text-muted-foreground leading-relaxed"
+                className="text-xs text-muted-foreground text-center"
                 style={{ fontFamily: fontFamilies[fontOption.key] }}
               >
-                {fontOption.preview}
-              </div>
-
-              {/* Font details */}
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span style={{ fontFamily: fontFamilies[fontOption.key] }}>
-                  AaBbCc 123
-                </span>
-                <span
-                  className="opacity-60"
-                  style={{ fontFamily: fontFamilies[fontOption.key] }}
-                >
-                  {fontOption.key}
-                </span>
+                AaBbCc 123
               </div>
             </div>
           </div>
