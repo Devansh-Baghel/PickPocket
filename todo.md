@@ -100,10 +100,10 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] toggle fonts in a better way without FontsProvider/useEffect
     - [x] combine fonts arr from fontStore and FontToggle files, so that you don't have to make the same change in both the files
     - [x] simplify the FontToggle component
-    - [x] add 10 more reading themes 
+    - [x] add 10 more reading fonts
+    - [x] don't load all fonts css up front, load them dynamically through js.
     - [ ] option for user to change Article font
     - [ ] Support custom reading font like https://monkeytype.com/settings?highlight=fontFamily
-    - [ ] don't load all fonts css for themes up front, load them dynamically through js.
 
     ### Search 
     - [ ] add search bar

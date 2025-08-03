@@ -2,13 +2,8 @@
 @import "tw-animate-css";
 
 /* ========= Fonts ========= */
-
-/* UI Fonts */
+/* Default Font */
 @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap');
-
-/* Article Fonts */
-/* Add font here */
 
 /* Font for PickPocket logo */
 @import url('https://fonts.googleapis.com/css2?family=Gravitas+One&display=swap');
@@ -16,7 +11,6 @@
 @theme {
   --font-gravitas: "Gravitas One", "sans-serif";
 }
-
 
 
 /* ======== Solar (base) ======== */

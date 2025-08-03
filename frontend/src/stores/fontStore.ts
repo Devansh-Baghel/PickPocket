@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { loadFont, type FontKey } from "@/utils/fontLoader";
 
 // Central font configuration - single source of truth
 export const fontConfig = {
@@ -11,10 +12,10 @@ export const fontConfig = {
   },
   Geist: {
     fontFamily: '"Geist", sans-serif',
-    name: "Geist", 
+    name: "Geist",
     preview: "The quick brown fox jumps over the lazy dog",
   },
-  
+
   // Reading Fonts - Sans Serif
   Inter: {
     fontFamily: '"Inter", sans-serif',
@@ -33,10 +34,10 @@ export const fontConfig = {
   },
   WorkSans: {
     fontFamily: '"Work Sans", sans-serif',
-    name: "Work Sans", 
+    name: "Work Sans",
     preview: "Designed specifically for on-screen text at medium sizes",
   },
-  
+
   // Reading Fonts - Serif
   Merriweather: {
     fontFamily: '"Merriweather", serif',
@@ -60,14 +61,14 @@ export const fontConfig = {
   },
   LibreBaskerville: {
     fontFamily: '"Libre Baskerville", serif',
-    name: "Libre Baskerville", 
+    name: "Libre Baskerville",
     preview: "Classical serif with exceptional screen legibility",
   },
   Bitter: {
     fontFamily: '"Bitter", serif',
     name: "Bitter",
     preview: "Contemporary slab serif optimized for screen reading",
-  }
+  },
 } as const;
 
 // Derive types and objects from the config
@@ -79,15 +80,36 @@ export const fontFamilies: Record<Font, string> = Object.fromEntries(
 
 interface FontState {
   font: Font;
-  setFont: (font: Font) => void;
+  loading: boolean;
+  setFont: (font: Font) => Promise<void>;
 }
 
 export const useFontStore = create<FontState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       font: "Alexandria",
-      setFont: (font) => set({ font }),
+      loading: false,
+      setFont: async (font: Font) => {
+        // Don't reload if already the current font
+        if (get().font === font) return;
+
+        set({ loading: true });
+
+        try {
+          // Load font dynamically before setting
+          await loadFont(font as FontKey);
+          set({ font, loading: false });
+        } catch (error) {
+          console.error(`Failed to set font: ${font}`, error);
+          set({ loading: false });
+          // Don't change the font if loading failed
+        }
+      },
     }),
-    { name: "app-font" }
+    {
+      name: "app-font",
+      // Don't persist loading state
+      partialize: (state) => ({ font: state.font }),
+    }
   )
 );

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useFontStore, fontFamilies, fontConfig } from "@/stores/fontStore";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, LoaderIcon } from "lucide-react";
 
 export function FontSelector() {
-  const { font: currentFont, setFont } = useFontStore();
+  const { font: currentFont, loading, setFont } = useFontStore();
 
   useEffect(() => {
     document.body.style.fontFamily = fontFamilies[currentFont];
@@ -20,6 +20,12 @@ export function FontSelector() {
     <div className="space-y-4">
       <div>
         <h3 className="text-lg font-semibold mb-4">Choose Font</h3>
+        {loading && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+            <LoaderIcon className="size-4 animate-spin" />
+            Loading font...
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -32,8 +38,9 @@ export function FontSelector() {
                   ? "border-primary ring-2 ring-primary/20"
                   : "border-border hover:border-primary/50"
               }
+              ${loading ? "opacity-50 pointer-events-none" : ""}
             `}
-            onClick={() => setFont(fontOption.key)}
+            onClick={() => !loading && setFont(fontOption.key)}
           >
             {/* Selected indicator */}
             {currentFont === fontOption.key && (

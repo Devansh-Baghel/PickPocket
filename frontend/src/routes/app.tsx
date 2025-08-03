@@ -35,7 +35,6 @@ function RouteComponent() {
   }, [getSession]);
 
   return (
-    // Having font provider here means, that any font options user chooses doesn't affect the look of the landing page at /
     <FontProvider>
       <CheckAuth>
         <Dashboard>
