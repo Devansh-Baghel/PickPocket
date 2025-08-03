@@ -1,8 +1,14 @@
 import { themes, useThemeStore } from "@/stores/themeStore";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, LoaderIcon, AlertCircleIcon } from "lucide-react";
 
 export function ThemeSelector() {
-  const { theme: currentTheme, setTheme } = useThemeStore();
+  const {
+    theme: currentTheme,
+    loading,
+    error,
+    setTheme,
+    clearError,
+  } = useThemeStore();
 
   return (
     <div className="space-y-4">
@@ -11,6 +17,28 @@ export function ThemeSelector() {
         <p className="text-sm text-muted-foreground mb-4">
           Select your preferred color scheme
         </p>
+
+        {/* Loading indicator */}
+        {loading && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+            <LoaderIcon className="size-4 animate-spin" />
+            Loading theme...
+          </div>
+        )}
+
+        {/* Error message */}
+        {error && (
+          <div className="flex items-center gap-2 text-sm text-destructive mb-2 p-2 bg-destructive/10 rounded">
+            <AlertCircleIcon className="size-4" />
+            <span>{error}</span>
+            <button
+              onClick={clearError}
+              className="ml-auto text-xs underline hover:no-underline"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -24,8 +52,9 @@ export function ThemeSelector() {
                   ? "border-primary ring-2 ring-primary/20"
                   : "border-border hover:border-primary/50"
               }
+              ${loading ? "opacity-50 pointer-events-none" : ""}
             `}
-            onClick={() => setTheme(themeOption.key)}
+            onClick={() => !loading && setTheme(themeOption.key)}
           >
             {/* Selected indicator */}
             {currentTheme === themeOption.key && (
@@ -34,11 +63,19 @@ export function ThemeSelector() {
               </div>
             )}
 
-            <div className="flex justify-between">
-              <h4 className="font-semibold text-sm mb-1">{themeOption.name}</h4>
+            <div className="space-y-2">
+              {/* Theme name */}
+              <h4 className="font-semibold text-sm">{themeOption.name}</h4>
+
+              {/* Theme description */}
+              {themeOption.description && (
+                <p className="text-xs text-muted-foreground">
+                  {themeOption.description}
+                </p>
+              )}
 
               {/* Color swatches */}
-              <div className="flex gap-1 mt-2">
+              <div className="flex gap-1">
                 <div
                   className="size-3 rounded-full border border-gray-300 bg-primary"
                   title="Primary"

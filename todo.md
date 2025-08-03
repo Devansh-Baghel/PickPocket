@@ -87,10 +87,13 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] Dracula theme from monkeytype
     - [x] Catppuccin theme from monkeytype
     - [x] Create a setup to add any theme from monkeytype at will
+    - [x] don't load all themes css for themes up front, load them dynamically through js.
+    - [x] seperate themeName.css files
+    - [ ] load the theme from localStorage upfront on page refresh/initial page load.
+    - [ ] make the theme preview in ThemeToggle component work again.
     - [ ] Move theme info { key: "theme-classname", value: "Theme Display Name" } from ts file to json and load the json into the themeStore
     - [ ] sepia reading theme
     - [ ] dark themes (citrus dark, solar dark)
-    - [ ] don't load all themes css for themes up front, load them dynamically through js.
 
     ### Fonts
     - [x] option for user to change UI font (fonts aren't synced to themes, user can mix and match both).
@@ -102,6 +105,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] simplify the FontToggle component
     - [x] add 10 more reading fonts
     - [x] don't load all fonts css up front, load them dynamically through js.
+    - [ ] better loading component for dynamically loading a font, loading spinner shifts the ui down for just a sec
     - [ ] option for user to change Article font
     - [ ] Support custom reading font like https://monkeytype.com/settings?highlight=fontFamily
 

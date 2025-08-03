@@ -1,0 +1,59 @@
+.gruvbox-dark {
+  --base-50: #fbf1c7;
+  --base-100: #f9f5d7;
+  --base-200: #f2e5bc;
+  --base-300: #ebdbb2;
+  --base-400: #d5c4a1;
+  --base-500: #bdae93;
+  --base-600: #a89984;
+  --base-700: #928374;
+  --base-800: #7c6f64;
+  --base-900: #665c54;
+  --base-950: #504945;
+  --base-1000: #282828;
+
+  --primary-50: #fdf6e3;
+  --primary-100: #fbedc7;
+  --primary-200: #f7db8f;
+  --primary-300: #f3c957;
+  --primary-400: #efb71f;
+  --primary-500: #d79921;
+  --primary-600: #c1871e;
+  --primary-700: #ab751b;
+  --primary-800: #956318;
+  --primary-900: #7f5115;
+  --primary-950: #693f12;
+  --primary-1000: #532d0f;
+
+  --secondary-50: #f4f1ec;
+  --secondary-100: #e9e3d9;
+  --secondary-200: #d3c7b3;
+  --secondary-300: #bdab8d;
+  --secondary-400: #a78f67;
+  --secondary-500: #665c54;
+  --secondary-600: #5d534a;
+  --secondary-700: #544a40;
+  --secondary-800: #4b4136;
+  --secondary-900: #42382c;
+  --secondary-950: #392f22;
+  --secondary-1000: #302618;
+
+  --background: #282828;
+  --foreground: #ebdbb2;
+  --card: #3c3836;
+  --card-foreground: #ebdbb2;
+  --popover: #3c3836;
+  --popover-foreground: #ebdbb2;
+  --primary: #d79921;
+  --primary-foreground: #000000;
+  --secondary: #665c54;
+  --secondary-foreground: #ebdbb2;
+  --muted: #504945;
+  --muted-foreground: #a89984;
+  --accent: #504945;
+  --accent-foreground: #ebdbb2;
+  --destructive: #cc241d;
+  --border: #665c54;
+  --input: #665c54;
+  --ring: #d79921;
+}

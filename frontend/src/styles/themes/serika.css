@@ -1,0 +1,59 @@
+.serika {
+  --base-50: #ffffff;
+  --base-100: #f8f8f8;
+  --base-200: #f0f0f0;
+  --base-300: #e8e8e8;
+  --base-400: #d0d0d0;
+  --base-500: #b8b8b8;
+  --base-600: #a0a0a0;
+  --base-700: #888888;
+  --base-800: #707070;
+  --base-900: #585858;
+  --base-950: #404040;
+  --base-1000: #323437;
+
+  --primary-50: #fffcf0;
+  --primary-100: #fef9e1;
+  --primary-200: #fdf3c3;
+  --primary-300: #fceda5;
+  --primary-400: #fbe787;
+  --primary-500: #e2b714;
+  --primary-600: #cba512;
+  --primary-700: #b49310;
+  --primary-800: #9d810e;
+  --primary-900: #866f0c;
+  --primary-950: #6f5d0a;
+  --primary-1000: #584b08;
+
+  --secondary-50: #f5f6f7;
+  --secondary-100: #ebedef;
+  --secondary-200: #d7dbdf;
+  --secondary-300: #c3c9cf;
+  --secondary-400: #afb7bf;
+  --secondary-500: #aaaeb3;
+  --secondary-600: #9ca0a5;
+  --secondary-700: #8e9297;
+  --secondary-800: #808489;
+  --secondary-900: #72767b;
+  --secondary-950: #64686d;
+  --secondary-1000: #565a5f;
+
+  --background: #e1e1e3;
+  --foreground: #323437;
+  --card: #ffffff;
+  --card-foreground: #323437;
+  --popover: #ffffff;
+  --popover-foreground: #323437;
+  --primary: #e2b714;
+  --primary-foreground: #000000;
+  --secondary: #aaaeb3;
+  --secondary-foreground: #000000;
+  --muted: #f0f0f0;
+  --muted-foreground: #666666;
+  --accent: #f0f0f0;
+  --accent-foreground: #323437;
+  --destructive: #dc3545;
+  --border: #d0d0d0;
+  --input: #d0d0d0;
+  --ring: #e2b714;
+}
