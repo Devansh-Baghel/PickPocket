@@ -76,6 +76,10 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] add a theme selector / toggle
     - [x] better theme switching component like https://monkeytype.com/settings?highlight=theme
     - [x] toggle themes in a better way without ThemeProvider/useEffect
+    - [x] Lavender theme
+    - [x] Mint theme
+    - [x] Midnight theme
+    - [x] Charcoal theme
     - [ ] sepia reading theme
     - [ ] dark themes (citrus dark, solar dark)
     - [ ] don't load all themes css for themes up front, load them dynamically through js.

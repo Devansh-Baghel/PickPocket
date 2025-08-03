@@ -11,6 +11,7 @@ import {
   SettingsIcon,
   UserIcon,
 } from "lucide-react";
+import { FaSink as SinkIcon } from "react-icons/fa6";
 import { PocketIcon } from "@/utils/icons";
 import { useAuthStore } from "@/stores/authStore";
 import { Button } from "@/components/ui/button";
@@ -123,10 +124,16 @@ export function Sidebar() {
           isActive: isActive("/app", "all"),
         },
         {
-          href: "/saves", // You may need to create this route
+          href: "/app", // You may need to create this route
           label: "All Saves",
           icon: BookmarkIcon,
           isActive: isActive("/saves"),
+        },
+        {
+          href: "/app/sink", // FIXME: temp route, remove this later
+          label: "UI Sink",
+          icon: SinkIcon,
+          isActive: isActive("/app/sink"),
         },
       ],
     },

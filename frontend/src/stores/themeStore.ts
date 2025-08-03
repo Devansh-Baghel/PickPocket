@@ -1,7 +1,16 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Theme = "solar" | "citrus" | "emerald" | "sky" | "sky-dark";
+export type Theme =
+  | "solar"
+  | "citrus"
+  | "emerald"
+  | "sky"
+  | "sky-dark"
+  | "lavender"
+  | "mint"
+  | "midnight"
+  | "charcoal";
 
 export const themes: Array<{
   key: Theme;
@@ -24,8 +33,24 @@ export const themes: Array<{
     name: "Sky",
   },
   {
+    key: "lavender",
+    name: "Lavender",
+  },
+  {
+    key: "mint",
+    name: "Mint",
+  },
+  {
     key: "sky-dark",
     name: "Sky Dark",
+  },
+  {
+    key: "midnight",
+    name: "Midnight",
+  },
+  {
+    key: "charcoal",
+    name: "Charcoal",
   },
 ];
 
