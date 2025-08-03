@@ -86,7 +86,8 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] Gruvbox dark theme from monkeytype
     - [x] Dracula theme from monkeytype
     - [x] Catppuccin theme from monkeytype
-    - [ ] add all themes that monkeytype has
+    - [x] Create a setup to add any theme from monkeytype at will
+    - [ ] Move theme info { key: "theme-classname", value: "Theme Display Name" } from ts file to json and load the json into the themeStore
     - [ ] sepia reading theme
     - [ ] dark themes (citrus dark, solar dark)
     - [ ] don't load all themes css for themes up front, load them dynamically through js.

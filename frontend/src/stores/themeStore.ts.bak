@@ -1,0 +1,982 @@
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
+export type Theme =
+  | "solar"
+  | "citrus"
+  | "emerald"
+  | "sky"
+  | "sky-dark"
+  | "lavender"
+  | "mint"
+  | "midnight"
+  | "charcoal"
+  // Monkeytype-inspired themes
+  | "theme-8008"
+  | "theme-9009"
+  | "dark-note"
+  | "viridescent"
+  | "dark"
+  | "phantom"
+  | "muted"
+  | "dark-magic-girl"
+  | "carbon"
+  | "vesper"
+  | "our-theme"
+  | "dots"
+  | "nautilus"
+  | "serika"
+  | "serika-dark"
+  | "bushido"
+  | "red-samurai"
+  | "rgb"
+  | "oblivion"
+  | "magic-girl"
+  | "metropolis"
+  | "mountain"
+  | "laser"
+  | "retro"
+  | "dracula"
+  | "nord"
+  | "mr-sleeves"
+  | "olivia"
+  | "bliss"
+  | "mizu"
+  | "metaverse"
+  | "shadow"
+  | "miami"
+  | "miami-nights"
+  | "modern-dolch"
+  | "botanical"
+  | "bingsu"
+  | "terminal"
+  | "taro"
+  | "striker"
+  | "gruvbox-dark"
+  | "gruvbox-light"
+  | "monokai"
+  | "sonokai"
+  | "camping"
+  | "voc"
+  | "vaporwave"
+  | "pulse"
+  | "matrix"
+  | "olive"
+  | "strawberry"
+  | "night-runner"
+  | "cyberspace"
+  | "joker"
+  | "dualshot"
+  | "solarized-dark"
+  | "solarized-light"
+  | "solarized-osaka"
+  | "terra"
+  | "red-dragon"
+  | "hammerhead"
+  | "future-funk"
+  | "milkshake"
+  | "aether"
+  | "froyo"
+  | "retrocast"
+  | "luna"
+  | "graen"
+  | "bento"
+  | "watermelon"
+  | "menthol"
+  | "ishtar"
+  | "mashu"
+  | "deku"
+  | "honey"
+  | "shoko"
+  | "norse"
+  | "matcha-moccha"
+  | "cafe"
+  | "alpine"
+  | "superuser"
+  | "ms-cupcakes"
+  | "dollar"
+  | "lime"
+  | "sweden"
+  | "wavez"
+  | "nebula"
+  | "lil-dragon"
+  | "pastel"
+  | "alduin"
+  | "paper"
+  | "fundamentals"
+  | "drowning"
+  | "iceberg-dark"
+  | "iceberg-light"
+  | "onedark"
+  | "darling"
+  | "repose-dark"
+  | "repose-light"
+  | "horizon"
+  | "rudy"
+  | "stealth"
+  | "theme-80s-after-dark"
+  | "arch"
+  | "rose-pine"
+  | "rose-pine-moon"
+  | "rose-pine-dawn"
+  | "copper"
+  | "grand-prix"
+  | "peaches"
+  | "bouquet"
+  | "blueberry-light"
+  | "blueberry-dark"
+  | "fledgling"
+  | "ez-mode"
+  | "vscode"
+  | "material"
+  | "godspeed"
+  | "witch-girl"
+  | "terror-below"
+  | "sewing-tin"
+  | "soaring-skies"
+  | "sewing-tin-light"
+  | "chaos-theory"
+  | "hanok"
+  | "comfy"
+  | "tiramisu"
+  | "diner"
+  | "modern-ink"
+  | "dev"
+  | "moonlight"
+  | "pink-lemonade"
+  | "creamsicle"
+  | "beach"
+  | "desert-oasis"
+  | "frozen-llama"
+  | "ryujinscales"
+  | "trackday"
+  | "fruit-chew"
+  | "evil-eye"
+  | "trance"
+  | "fire"
+  | "aurora"
+  | "leather"
+  | "fleuriste"
+  | "dmg"
+  | "catppuccin"
+  | "snes"
+  | "passion-fruit"
+  | "blue-dolphin"
+  | "mexican"
+  | "husqy"
+  | "peach-blossom"
+  | "dino"
+  | "tron-orange"
+  | "hedge"
+  | "modern-dolch-light"
+  | "iv-spade"
+  | "iv-clover"
+  | "cheesecake"
+  | "earthsong"
+  | "purpleish"
+  | "nord-light"
+  | "slambook"
+  | "breeze"
+  | "cherry-blossom"
+  | "everblush"
+  | "grape"
+  | "rainbow-trail"
+  | "tangerine"
+  | "macroblank"
+  | "anti-hero"
+  | "incognito"
+  | "discord"
+  | "cy-red"
+  | "floret"
+  | "lilac-mist"
+  | "terrazzo"
+  | "suisei"
+  | "github"
+  | "sunset";
+
+export const themes: Array<{
+  key: Theme;
+  name: string;
+}> = [
+  // Original themes
+  {
+    key: "solar",
+    name: "Solar",
+  },
+  {
+    key: "citrus",
+    name: "Citrus",
+  },
+  {
+    key: "emerald",
+    name: "Emerald",
+  },
+  {
+    key: "sky",
+    name: "Sky",
+  },
+  {
+    key: "lavender",
+    name: "Lavender",
+  },
+  {
+    key: "mint",
+    name: "Mint",
+  },
+  {
+    key: "sky-dark",
+    name: "Sky Dark",
+  },
+  {
+    key: "midnight",
+    name: "Midnight",
+  },
+  {
+    key: "charcoal",
+    name: "Charcoal",
+  },
+
+  // Monkeytype-inspired themes
+  {
+    key: "theme-8008",
+    name: "8008",
+  },
+  {
+    key: "theme-9009",
+    name: "9009",
+  },
+  {
+    key: "dark-note",
+    name: "Dark Note",
+  },
+  {
+    key: "viridescent",
+    name: "Viridescent",
+  },
+  {
+    key: "dark",
+    name: "Dark",
+  },
+  {
+    key: "phantom",
+    name: "Phantom",
+  },
+  {
+    key: "muted",
+    name: "Muted",
+  },
+  {
+    key: "dark-magic-girl",
+    name: "Dark Magic Girl",
+  },
+  {
+    key: "carbon",
+    name: "Carbon",
+  },
+  {
+    key: "vesper",
+    name: "Vesper",
+  },
+  {
+    key: "our-theme",
+    name: "Our Theme",
+  },
+  {
+    key: "dots",
+    name: "Dots",
+  },
+  {
+    key: "nautilus",
+    name: "Nautilus",
+  },
+  {
+    key: "serika",
+    name: "Serika",
+  },
+  {
+    key: "serika-dark",
+    name: "Serika Dark",
+  },
+  {
+    key: "bushido",
+    name: "Bushido",
+  },
+  {
+    key: "red-samurai",
+    name: "Red Samurai",
+  },
+  {
+    key: "rgb",
+    name: "RGB",
+  },
+  {
+    key: "oblivion",
+    name: "Oblivion",
+  },
+  {
+    key: "magic-girl",
+    name: "Magic Girl",
+  },
+  {
+    key: "metropolis",
+    name: "Metropolis",
+  },
+  {
+    key: "mountain",
+    name: "Mountain",
+  },
+  {
+    key: "laser",
+    name: "Laser",
+  },
+  {
+    key: "retro",
+    name: "Retro",
+  },
+  {
+    key: "dracula",
+    name: "Dracula",
+  },
+  {
+    key: "nord",
+    name: "Nord",
+  },
+  {
+    key: "mr-sleeves",
+    name: "Mr Sleeves",
+  },
+  {
+    key: "olivia",
+    name: "Olivia",
+  },
+  {
+    key: "bliss",
+    name: "Bliss",
+  },
+  {
+    key: "mizu",
+    name: "Mizu",
+  },
+  {
+    key: "metaverse",
+    name: "Metaverse",
+  },
+  {
+    key: "shadow",
+    name: "Shadow",
+  },
+  {
+    key: "miami",
+    name: "Miami",
+  },
+  {
+    key: "miami-nights",
+    name: "Miami Nights",
+  },
+  {
+    key: "modern-dolch",
+    name: "Modern Dolch",
+  },
+  {
+    key: "botanical",
+    name: "Botanical",
+  },
+  {
+    key: "bingsu",
+    name: "Bingsu",
+  },
+  {
+    key: "terminal",
+    name: "Terminal",
+  },
+  {
+    key: "taro",
+    name: "Taro",
+  },
+  {
+    key: "striker",
+    name: "Striker",
+  },
+  {
+    key: "gruvbox-dark",
+    name: "Gruvbox Dark",
+  },
+  {
+    key: "gruvbox-light",
+    name: "Gruvbox Light",
+  },
+  {
+    key: "monokai",
+    name: "Monokai",
+  },
+  {
+    key: "sonokai",
+    name: "Sonokai",
+  },
+  {
+    key: "camping",
+    name: "Camping",
+  },
+  {
+    key: "voc",
+    name: "VOC",
+  },
+  {
+    key: "vaporwave",
+    name: "Vaporwave",
+  },
+  {
+    key: "pulse",
+    name: "Pulse",
+  },
+  {
+    key: "matrix",
+    name: "Matrix",
+  },
+  {
+    key: "olive",
+    name: "Olive",
+  },
+  {
+    key: "strawberry",
+    name: "Strawberry",
+  },
+  {
+    key: "night-runner",
+    name: "Night Runner",
+  },
+  {
+    key: "cyberspace",
+    name: "Cyberspace",
+  },
+  {
+    key: "joker",
+    name: "Joker",
+  },
+  {
+    key: "dualshot",
+    name: "Dualshot",
+  },
+  {
+    key: "solarized-dark",
+    name: "Solarized Dark",
+  },
+  {
+    key: "solarized-light",
+    name: "Solarized Light",
+  },
+  {
+    key: "solarized-osaka",
+    name: "Solarized Osaka",
+  },
+  {
+    key: "terra",
+    name: "Terra",
+  },
+  {
+    key: "red-dragon",
+    name: "Red Dragon",
+  },
+  {
+    key: "hammerhead",
+    name: "Hammerhead",
+  },
+  {
+    key: "future-funk",
+    name: "Future Funk",
+  },
+  {
+    key: "milkshake",
+    name: "Milkshake",
+  },
+  {
+    key: "aether",
+    name: "Aether",
+  },
+  {
+    key: "froyo",
+    name: "Froyo",
+  },
+  {
+    key: "retrocast",
+    name: "Retrocast",
+  },
+  {
+    key: "luna",
+    name: "Luna",
+  },
+  {
+    key: "graen",
+    name: "Graen",
+  },
+  {
+    key: "bento",
+    name: "Bento",
+  },
+  {
+    key: "watermelon",
+    name: "Watermelon",
+  },
+  {
+    key: "menthol",
+    name: "Menthol",
+  },
+  {
+    key: "ishtar",
+    name: "Ishtar",
+  },
+  {
+    key: "mashu",
+    name: "Mashu",
+  },
+  {
+    key: "deku",
+    name: "Deku",
+  },
+  {
+    key: "honey",
+    name: "Honey",
+  },
+  {
+    key: "shoko",
+    name: "Shoko",
+  },
+  {
+    key: "norse",
+    name: "Norse",
+  },
+  {
+    key: "matcha-moccha",
+    name: "Matcha Moccha",
+  },
+  {
+    key: "cafe",
+    name: "Cafe",
+  },
+  {
+    key: "alpine",
+    name: "Alpine",
+  },
+  {
+    key: "superuser",
+    name: "Superuser",
+  },
+  {
+    key: "ms-cupcakes",
+    name: "Ms Cupcakes",
+  },
+  {
+    key: "dollar",
+    name: "Dollar",
+  },
+  {
+    key: "lime",
+    name: "Lime",
+  },
+  {
+    key: "sweden",
+    name: "Sweden",
+  },
+  {
+    key: "wavez",
+    name: "Wavez",
+  },
+  {
+    key: "nebula",
+    name: "Nebula",
+  },
+  {
+    key: "lil-dragon",
+    name: "Lil Dragon",
+  },
+  {
+    key: "pastel",
+    name: "Pastel",
+  },
+  {
+    key: "alduin",
+    name: "Alduin",
+  },
+  {
+    key: "paper",
+    name: "Paper",
+  },
+  {
+    key: "fundamentals",
+    name: "Fundamentals",
+  },
+  {
+    key: "drowning",
+    name: "Drowning",
+  },
+  {
+    key: "iceberg-dark",
+    name: "Iceberg Dark",
+  },
+  {
+    key: "iceberg-light",
+    name: "Iceberg Light",
+  },
+  {
+    key: "onedark",
+    name: "OneDark",
+  },
+  {
+    key: "darling",
+    name: "Darling",
+  },
+  {
+    key: "repose-dark",
+    name: "Repose Dark",
+  },
+  {
+    key: "repose-light",
+    name: "Repose Light",
+  },
+  {
+    key: "horizon",
+    name: "Horizon",
+  },
+  {
+    key: "rudy",
+    name: "Rudy",
+  },
+  {
+    key: "stealth",
+    name: "Stealth",
+  },
+  {
+    key: "theme-80s-after-dark",
+    name: "80s After Dark",
+  },
+  {
+    key: "arch",
+    name: "Arch",
+  },
+  {
+    key: "rose-pine",
+    name: "Rose Pine",
+  },
+  {
+    key: "rose-pine-moon",
+    name: "Rose Pine Moon",
+  },
+  {
+    key: "rose-pine-dawn",
+    name: "Rose Pine Dawn",
+  },
+  {
+    key: "copper",
+    name: "Copper",
+  },
+  {
+    key: "grand-prix",
+    name: "Grand Prix",
+  },
+  {
+    key: "peaches",
+    name: "Peaches",
+  },
+  {
+    key: "bouquet",
+    name: "Bouquet",
+  },
+  {
+    key: "blueberry-light",
+    name: "Blueberry Light",
+  },
+  {
+    key: "blueberry-dark",
+    name: "Blueberry Dark",
+  },
+  {
+    key: "fledgling",
+    name: "Fledgling",
+  },
+  {
+    key: "ez-mode",
+    name: "EZ Mode",
+  },
+  {
+    key: "vscode",
+    name: "VS Code",
+  },
+  {
+    key: "material",
+    name: "Material",
+  },
+  {
+    key: "godspeed",
+    name: "Godspeed",
+  },
+  {
+    key: "witch-girl",
+    name: "Witch Girl",
+  },
+  {
+    key: "terror-below",
+    name: "Terror Below",
+  },
+  {
+    key: "sewing-tin",
+    name: "Sewing Tin",
+  },
+  {
+    key: "soaring-skies",
+    name: "Soaring Skies",
+  },
+  {
+    key: "sewing-tin-light",
+    name: "Sewing Tin Light",
+  },
+  {
+    key: "chaos-theory",
+    name: "Chaos Theory",
+  },
+  {
+    key: "hanok",
+    name: "Hanok",
+  },
+  {
+    key: "comfy",
+    name: "Comfy",
+  },
+  {
+    key: "tiramisu",
+    name: "Tiramisu",
+  },
+  {
+    key: "diner",
+    name: "Diner",
+  },
+  {
+    key: "modern-ink",
+    name: "Modern Ink",
+  },
+  {
+    key: "dev",
+    name: "Dev",
+  },
+  {
+    key: "moonlight",
+    name: "Moonlight",
+  },
+  {
+    key: "pink-lemonade",
+    name: "Pink Lemonade",
+  },
+  {
+    key: "creamsicle",
+    name: "Creamsicle",
+  },
+  {
+    key: "beach",
+    name: "Beach",
+  },
+  {
+    key: "desert-oasis",
+    name: "Desert Oasis",
+  },
+  {
+    key: "frozen-llama",
+    name: "Frozen Llama",
+  },
+  {
+    key: "ryujinscales",
+    name: "Ryujinscales",
+  },
+  {
+    key: "trackday",
+    name: "Trackday",
+  },
+  {
+    key: "fruit-chew",
+    name: "Fruit Chew",
+  },
+  {
+    key: "evil-eye",
+    name: "Evil Eye",
+  },
+  {
+    key: "trance",
+    name: "Trance",
+  },
+  {
+    key: "fire",
+    name: "Fire",
+  },
+  {
+    key: "aurora",
+    name: "Aurora",
+  },
+  {
+    key: "leather",
+    name: "Leather",
+  },
+  {
+    key: "fleuriste",
+    name: "Fleuriste",
+  },
+  {
+    key: "dmg",
+    name: "DMG",
+  },
+  {
+    key: "catppuccin",
+    name: "Catppuccin",
+  },
+  {
+    key: "snes",
+    name: "SNES",
+  },
+  {
+    key: "passion-fruit",
+    name: "Passion Fruit",
+  },
+  {
+    key: "blue-dolphin",
+    name: "Blue Dolphin",
+  },
+  {
+    key: "mexican",
+    name: "Mexican",
+  },
+  {
+    key: "husqy",
+    name: "Husqy",
+  },
+  {
+    key: "peach-blossom",
+    name: "Peach Blossom",
+  },
+  {
+    key: "dino",
+    name: "Dino",
+  },
+  {
+    key: "tron-orange",
+    name: "Tron Orange",
+  },
+  {
+    key: "hedge",
+    name: "Hedge",
+  },
+  {
+    key: "modern-dolch-light",
+    name: "Modern Dolch Light",
+  },
+  {
+    key: "iv-spade",
+    name: "IV Spade",
+  },
+  {
+    key: "iv-clover",
+    name: "IV Clover",
+  },
+  {
+    key: "cheesecake",
+    name: "Cheesecake",
+  },
+  {
+    key: "earthsong",
+    name: "Earthsong",
+  },
+  {
+    key: "purpleish",
+    name: "Purpleish",
+  },
+  {
+    key: "nord-light",
+    name: "Nord Light",
+  },
+  {
+    key: "slambook",
+    name: "Slambook",
+  },
+  {
+    key: "breeze",
+    name: "Breeze",
+  },
+  {
+    key: "cherry-blossom",
+    name: "Cherry Blossom",
+  },
+  {
+    key: "everblush",
+    name: "Everblush",
+  },
+  {
+    key: "grape",
+    name: "Grape",
+  },
+  {
+    key: "rainbow-trail",
+    name: "Rainbow Trail",
+  },
+  {
+    key: "tangerine",
+    name: "Tangerine",
+  },
+  {
+    key: "macroblank",
+    name: "Macroblank",
+  },
+  {
+    key: "anti-hero",
+    name: "Anti Hero",
+  },
+  {
+    key: "incognito",
+    name: "Incognito",
+  },
+  {
+    key: "discord",
+    name: "Discord",
+  },
+  {
+    key: "cy-red",
+    name: "CY Red",
+  },
+  {
+    key: "floret",
+    name: "Floret",
+  },
+  {
+    key: "lilac-mist",
+    name: "Lilac Mist",
+  },
+  {
+    key: "terrazzo",
+    name: "Terrazzo",
+  },
+  {
+    key: "suisei",
+    name: "Suisei",
+  },
+  {
+    key: "github",
+    name: "GitHub",
+  },
+  {
+    key: "sunset",
+    name: "Sunset",
+  },
+];
+
+
+interface ThemeStore {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+}
+
+export const useThemeStore = create<ThemeStore>()(
+  persist(
+    (set) => ({
+      theme: "solar",
+      setTheme: (theme) => set({ theme }),
+    }),
+    {
+      name: "theme-storage", // key in localStorage
+    }
+  )
+);
