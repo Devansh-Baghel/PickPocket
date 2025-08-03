@@ -80,6 +80,13 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] Mint theme
     - [x] Midnight theme
     - [x] Charcoal theme
+    - [x] Github theme from monkeytype
+    - [x] Nord theme from monkeytype
+    - [x] Serika theme from monkeytype
+    - [x] Gruvbox dark theme from monkeytype
+    - [x] Dracula theme from monkeytype
+    - [x] Catppuccin theme from monkeytype
+    - [ ] add all themes that monkeytype has
     - [ ] sepia reading theme
     - [ ] dark themes (citrus dark, solar dark)
     - [ ] don't load all themes css for themes up front, load them dynamically through js.

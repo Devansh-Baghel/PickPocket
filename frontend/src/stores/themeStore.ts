@@ -10,12 +10,20 @@ export type Theme =
   | "lavender"
   | "mint"
   | "midnight"
-  | "charcoal";
+  | "charcoal"
+  | "theme-8008"
+  | "serika"
+  | "gruvbox-dark"
+  | "dracula"
+  | "github"
+  | "nord"
+  | "catppuccin";
 
 export const themes: Array<{
   key: Theme;
   name: string;
 }> = [
+  // Original themes
   {
     key: "solar",
     name: "Solar",
@@ -40,6 +48,31 @@ export const themes: Array<{
     key: "mint",
     name: "Mint",
   },
+
+  {
+    key: "nord",
+    name: "Nord",
+  },
+  {
+    key: "catppuccin",
+    name: "Catppuccin",
+  },
+  {
+    key: "github",
+    name: "Github",
+  },
+  {
+    key: "serika",
+    name: "Serika",
+  },
+  {
+    key: "gruvbox-dark",
+    name: "Gruvbox Dark",
+  },
+  {
+    key: "dracula",
+    name: "Dracula",
+  },
   {
     key: "sky-dark",
     name: "Sky Dark",
@@ -53,6 +86,7 @@ export const themes: Array<{
     name: "Charcoal",
   },
 ];
+
 
 interface ThemeStore {
   theme: Theme;
