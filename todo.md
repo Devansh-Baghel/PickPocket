@@ -124,6 +124,12 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] mock settings page ui
     - [ ] replace with real ui
 
+    ### Landing Page
+    - [x] basic mock landing page
+    - [ ] add themes marquee style changing component in landing page like tweakcn.
+    - [ ] replace with real landing page
+    - [ ] shift landing page from "/landing" to "/"
+
 ## Backend 
 - [x] add hono/logger
 - [x] trim trailing slashes
