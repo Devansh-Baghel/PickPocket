@@ -7,8 +7,15 @@ import { Input } from "@/components/ui/input";
 import { BookmarkIcon, CheckIcon } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { getSaves } from "@/utils/server-functions";
-import { AddArticle } from "@/components/AddArticle";
-import { ImportPocket } from "@/components/ImportPocket";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export const Route = createFileRoute("/app/")({
   component: RouteComponent,
@@ -55,10 +62,6 @@ function RouteComponent() {
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">
-      <AddArticle />
-
-      <ImportPocket />
-
       {/* Search Bar */}
       <div className="relative">
         <Input
@@ -81,6 +84,23 @@ function RouteComponent() {
           </p>
         </div>
       </div>
+
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
 
       {/* Saves List */}
       <div className="space-y-4">
@@ -143,7 +163,7 @@ function SaveItem({ save }: { save: any }) {
               )}
             </div>
             <h3 className="font-semibold text-lg leading-tight mb-2 group-hover:text-primary transition-colors">
-              <Link to={`/app/saves/${save.save.id}`}>
+              <Link to="/app/saves/$saveId" params={{ saveId: save.save.id }}>
                 {save.article.title}
               </Link>
             </h3>

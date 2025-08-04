@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as Landing2RouteImport } from './routes/landing2'
 import { Route as LandingRouteImport } from './routes/landing'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
@@ -19,6 +20,11 @@ import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppLoginRouteImport } from './routes/app/login'
 import { Route as AppSavesSaveIdRouteImport } from './routes/app/saves/$saveId'
 
+const Landing2Route = Landing2RouteImport.update({
+  id: '/landing2',
+  path: '/landing2',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LandingRoute = LandingRouteImport.update({
   id: '/landing',
   path: '/landing',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/landing': typeof LandingRoute
+  '/landing2': typeof Landing2Route
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
   '/app/settings': typeof AppSettingsRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/landing': typeof LandingRoute
+  '/landing2': typeof Landing2Route
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
   '/app/settings': typeof AppSettingsRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/landing': typeof LandingRoute
+  '/landing2': typeof Landing2Route
   '/app/login': typeof AppLoginRoute
   '/app/profile': typeof AppProfileRoute
   '/app/settings': typeof AppSettingsRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/landing'
+    | '/landing2'
     | '/app/login'
     | '/app/profile'
     | '/app/settings'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/landing'
+    | '/landing2'
     | '/app/login'
     | '/app/profile'
     | '/app/settings'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/landing'
+    | '/landing2'
     | '/app/login'
     | '/app/profile'
     | '/app/settings'
@@ -137,10 +149,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   LandingRoute: typeof LandingRoute
+  Landing2Route: typeof Landing2Route
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/landing2': {
+      id: '/landing2'
+      path: '/landing2'
+      fullPath: '/landing2'
+      preLoaderRoute: typeof Landing2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/landing': {
       id: '/landing'
       path: '/landing'
@@ -231,6 +251,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   LandingRoute: LandingRoute,
+  Landing2Route: Landing2Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

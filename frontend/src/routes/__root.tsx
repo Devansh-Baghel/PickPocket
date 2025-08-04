@@ -16,7 +16,6 @@ import { NotFound } from "@/components/NotFound";
 import { seo } from "@/utils/seo";
 
 import appCss from "@/styles/app.css?url";
-import fontCss from "@/styles/fonts.css?url";
 // import themeCss from "@/styles/generated-themes.css?url";
 import { useThemeStore } from "@/stores/themeStore";
 
@@ -43,10 +42,6 @@ export const Route = createRootRouteWithContext<{
       {
         rel: "stylesheet",
         href: appCss,
-      },
-      {
-        rel: "stylesheet",
-        href: fontCss,
       },
       // {
       //   rel: "stylesheet",
