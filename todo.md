@@ -89,8 +89,8 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] Create a setup to add any theme from monkeytype at will
     - [x] don't load all themes css for themes up front, load them dynamically through js.
     - [x] seperate themeName.css files
+    - [x] make the theme preview in ThemeToggle component work again.
     - [ ] load the theme from localStorage upfront on page refresh/initial page load.
-    - [ ] make the theme preview in ThemeToggle component work again.
     - [ ] Move theme info { key: "theme-classname", value: "Theme Display Name" } from ts file to json and load the json into the themeStore
     - [ ] sepia reading theme
     - [ ] dark themes (citrus dark, solar dark)

@@ -55,6 +55,7 @@ export function ThemeSelector() {
               ${loading ? "opacity-50 pointer-events-none" : ""}
             `}
             onClick={() => !loading && setTheme(themeOption.key)}
+            style={{ backgroundColor: themeOption.colors.background, color: themeOption.colors.accentForeground}}
           >
             {/* Selected indicator */}
             {currentTheme === themeOption.key && (
@@ -63,29 +64,25 @@ export function ThemeSelector() {
               </div>
             )}
 
-            <div className="space-y-2">
+            <div className="space-y-2 flex items-center justify-between">
               {/* Theme name */}
               <h4 className="font-semibold text-sm">{themeOption.name}</h4>
-
-              {/* Theme description */}
-              {themeOption.description && (
-                <p className="text-xs text-muted-foreground">
-                  {themeOption.description}
-                </p>
-              )}
 
               {/* Color swatches */}
               <div className="flex gap-1">
                 <div
-                  className="size-3 rounded-full border border-gray-300 bg-primary"
+                  className="size-3 rounded-full border border-gray-300"
+                  style={{ backgroundColor: themeOption.colors.primary }}
                   title="Primary"
                 />
                 <div
-                  className="size-3 rounded-full border border-gray-300 bg-secondary"
+                  className="size-3 rounded-full border border-gray-300"
+                  style={{ backgroundColor: themeOption.colors.secondary }}
                   title="Secondary"
                 />
                 <div
-                  className="size-3 rounded-full border border-gray-300 bg-accent"
+                  className="size-3 rounded-full border border-gray-300"
+                  style={{ backgroundColor: themeOption.colors.accent }}
                   title="Accent"
                 />
               </div>
