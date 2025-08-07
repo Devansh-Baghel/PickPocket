@@ -3,6 +3,9 @@
 - [ ] save to obsidian feature
 - [x] import all saves from pocket feature
 - [ ] generate tldr for this article ai feature, use cloudflare ai gateway
+- [ ] settings options to turn off all ai features or turn of ai features that you don't like one by one.
+- [ ] settings option to turn on statistics features.
+- [ ] settings option to turn on gamification features.
 
 ### UI Reference
 https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
@@ -129,6 +132,8 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] add themes marquee style changing component in landing page like tweakcn.
     - [ ] replace with real landing page
     - [ ] shift landing page from "/landing" to "/"
+    - [ ] add import from pocket section in landing page.
+    - [ ] add chrome ext links when ready to landing page
 
 ## Backend 
 - [x] add hono/logger
