@@ -80,10 +80,10 @@ export function LoginPage({
 
   return (
     <section className="flex min-h-screen bg-background px-4 py-16 md:py-32 dark:bg-transparent">
-      <div className="max-w-92 mx-auto h-fit w-full">
+      <div className="mx-auto h-fit w-full max-w-92">
         <div className="p-6">
           <div>
-            <h1 className="mb-1 mt-4 text-xl font-semibold">
+            <h1 className="mt-4 mb-1 text-xl font-semibold">
               Continue to PickPocket
             </h1>
             <p className="text-muted-foreground">
@@ -118,7 +118,7 @@ export function LoginPage({
 
           <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
             <hr className="border-dashed" />
-            <span className="text-muted-foreground text-xs">
+            <span className="text-xs text-muted-foreground">
               Or continue with your email
             </span>
             <hr className="border-dashed" />
@@ -153,18 +153,18 @@ export function LoggedIn() {
 
   return (
     <section className="flex min-h-screen px-4 py-16 md:py-32 dark:bg-transparent">
-      <div className="max-w-92 mt-20 mx-auto h-fit w-full">
+      <div className="mx-auto mt-20 h-fit w-full max-w-92">
         <div className="p-6">
           <div>
             <Link
               to="/"
               aria-label="go home"
-              className="text-2xl font-extrabold flex items-center gap-2"
+              className="flex items-center gap-2 text-2xl font-extrabold"
             >
               <PocketIcon />
               Pick Pocket
             </Link>
-            <h1 className="mb-1 mt-4 text-xl font-semibold">
+            <h1 className="mt-4 mb-1 text-xl font-semibold">
               You’re already signed in!
             </h1>
             <p className="text-muted-foreground">
@@ -176,7 +176,7 @@ export function LoggedIn() {
               <Link to="/app">Go to your Saves</Link>
             </Button>
           </div>
-          <p className="text-accent-foreground text-center text-sm mt-4">
+          <p className="mt-4 text-center text-sm text-accent-foreground">
             Need to switch accounts?
             <Button
               variant="link"
