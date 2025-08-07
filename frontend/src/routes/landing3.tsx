@@ -1,4 +1,3 @@
-// src/routes/index.tsx
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -24,6 +23,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { PocketIcon } from "@/utils/icons";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { ThemeSelector } from "@/components/ThemeToggle";
 
 export const Route = createFileRoute("/landing3")({
   component: LandingPage,
@@ -866,7 +866,9 @@ function Testimonials() {
 function LandingPage() {
   return (
     <div className="min-h-screen">
+      <AnimatedBackground />
       <Hero />
+      <ThemeSelector />
       <Features />
       <HowItWorks />
       <AppScreenshot />

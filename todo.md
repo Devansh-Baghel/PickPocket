@@ -12,6 +12,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 
 
 ## Bugs
+- [ ] Theme doesn't persist on refresh after switching to dynamically load css files.
 - [x] in create highlight route, we aren't checking if the article id exists before, fix that.
 - [x] UI in /app/login doesn't show up initially as user's selected UI font. (only the ui in /sink changes font)
 - [x] fix the controller pattern hono ts problem 
@@ -130,6 +131,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     ### Landing Page
     - [x] basic mock landing page
     - [ ] add themes marquee style changing component in landing page like tweakcn.
+    - [ ] add squiggly underlines in accented text in landing page.
     - [ ] replace with real landing page
     - [ ] shift landing page from "/landing" to "/"
     - [ ] add import from pocket section in landing page.
