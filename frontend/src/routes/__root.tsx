@@ -1,6 +1,6 @@
 // src/routes/__root.tsx
 /// <reference types="vite/client" />
-import type { ReactNode } from "react";
+import { useEffect, useLayoutEffect, type ReactNode } from "react";
 import {
   Outlet,
   createRootRouteWithContext,
@@ -18,6 +18,7 @@ import { seo } from "@/utils/seo";
 import appCss from "@/styles/app.css?url";
 // import themeCss from "@/styles/generated-themes.css?url";
 import { useThemeStore } from "@/stores/themeStore";
+import { isThemeLoaded, loadTheme } from "@/utils/themeLoader";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -70,7 +71,14 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  const theme = useThemeStore(state => state.theme);
+  const theme = useThemeStore((state) => state.theme);
+
+  useEffect(() => {
+    console.log("asd", theme);
+    if (isThemeLoaded(theme)) return;
+
+    loadTheme(theme);
+  }, []);
 
   return (
     <html>

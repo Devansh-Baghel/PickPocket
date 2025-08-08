@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { loadTheme, isThemeLoaded, type ThemeKey } from "@/utils/themeLoader";
 
 export type Theme =
@@ -218,9 +218,6 @@ export const themes: Array<{
   },
 ];
 
-
-
-
 interface ThemeStore {
   theme: Theme;
   loading: boolean;
@@ -229,35 +226,45 @@ interface ThemeStore {
   clearError: () => void;
 }
 
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") return "solar"; // SSR safe
+
+  try {
+    const stored = localStorage.getItem("theme-storage");
+    if (!stored) return "solar";
+
+    const parsed = JSON.parse(stored);
+    const theme = parsed?.state?.theme;
+
+    console.log(theme);
+
+    return theme || "solar";
+  } catch {
+    return "solar";
+  }
+}
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set, get) => ({
-      theme: "solar",
+      theme: "solar", // SSR-safe default. Persist will overwrite after rehydrate.
       loading: false,
       error: null,
 
       setTheme: async (theme: Theme) => {
-        // Don't reload if already the current theme
         if (get().theme === theme) return;
 
         set({ loading: true, error: null });
 
         try {
-          // Check if theme is already loaded to avoid duplicate requests
           if (!isThemeLoaded(theme as ThemeKey)) {
             await loadTheme(theme as ThemeKey);
           }
-
           set({ theme, loading: false });
         } catch (error) {
           const errorMessage =
             error instanceof Error ? error.message : "Failed to load theme";
           console.error(`Failed to set theme: ${theme}`, error);
-          set({
-            loading: false,
-            error: errorMessage,
-          });
-          // Don't change the theme if loading failed
+          set({ loading: false, error: errorMessage });
         }
       },
 
@@ -265,8 +272,19 @@ export const useThemeStore = create<ThemeStore>()(
     }),
     {
       name: "theme-storage",
-      // Don't persist loading state or errors
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ theme: state.theme }),
-    }
-  )
+      // Optional: callback after rehydrate to ensure theme assets are loaded
+      onRehydrateStorage: () => (state) => {
+        // After rehydrate, ensure the theme is really applied
+        const t = state?.theme ?? "solar";
+        if (typeof window !== "undefined") {
+          // Fire and forget: load if not present, but don't block UI
+          if (!isThemeLoaded(t as ThemeKey)) {
+            loadTheme(t as ThemeKey).catch(() => {});
+          }
+        }
+      },
+    },
+  ),
 );

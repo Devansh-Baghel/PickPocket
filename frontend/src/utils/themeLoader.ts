@@ -42,37 +42,37 @@ export async function loadTheme(themeKey: ThemeKey): Promise<void> {
 }
 
 // Preload function for popular themes
-export function preloadTheme(themeKey: ThemeKey): void {
-  if (loadedThemes.has(themeKey) || !themeFiles[themeKey]) {
-    return;
-  }
+// export function preloadTheme(themeKey: ThemeKey): void {
+//   if (loadedThemes.has(themeKey) || !themeFiles[themeKey]) {
+//     return;
+//   }
 
-  // Create a preload link for the theme CSS
-  const link = document.createElement('link');
-  link.rel = 'preload';
-  link.as = 'style';
-  link.href = `./src/styles/themes/${themeKey}.css`;
-  document.head.appendChild(link);
-}
+//   // Create a preload link for the theme CSS
+//   const link = document.createElement('link');
+//   link.rel = 'preload';
+//   link.as = 'style';
+//   link.href = `./src/styles/themes/${themeKey}.css`;
+//   document.head.appendChild(link);
+// }
 
 // Helper to check if theme is loaded
 export function isThemeLoaded(themeKey: ThemeKey): boolean {
   return loadedThemes.has(themeKey);
 }
 
-// Preload popular themes after a delay
-export async function preloadPopularThemes(): Promise<void> {
-  // Wait a bit to not interfere with initial render
-  await new Promise(resolve => setTimeout(resolve, 2000));
+// // Preload popular themes after a delay
+// export async function preloadPopularThemes(): Promise<void> {
+//   // Wait a bit to not interfere with initial render
+//   await new Promise(resolve => setTimeout(resolve, 2000));
   
-  const popularThemes: ThemeKey[] = ['citrus', 'emerald', 'sky', 'dracula', 'nord'];
+//   const popularThemes: ThemeKey[] = ['citrus', 'emerald', 'sky', 'dracula', 'nord'];
   
-  // Load in background without blocking
-  Promise.all(
-    popularThemes.map(theme => 
-      loadTheme(theme).catch(() => {
-        // Silently fail for preloading
-      })
-    )
-  );
-}
+//   // Load in background without blocking
+//   Promise.all(
+//     popularThemes.map(theme => 
+//       loadTheme(theme).catch(() => {
+//         // Silently fail for preloading
+//       })
+//     )
+//   );
+// }

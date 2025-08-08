@@ -12,7 +12,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 
 
 ## Bugs
-- [ ] Theme doesn't persist on refresh after switching to dynamically load css files.
+- [x] Theme doesn't persist on refresh after switching to dynamically load css files.
 - [x] in create highlight route, we aren't checking if the article id exists before, fix that.
 - [x] UI in /app/login doesn't show up initially as user's selected UI font. (only the ui in /sink changes font)
 - [x] fix the controller pattern hono ts problem 
