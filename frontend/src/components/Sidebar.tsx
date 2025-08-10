@@ -188,12 +188,12 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex w-64 flex-col bg-card border-r border-border min-h-screen">
+    <aside className="fixed top-0 left-0 z-40 hidden h-screen w-64 flex-col border-r border-border bg-card md:flex">
       {/* Header */}
-      <div className="p-6 border-b border-border">
+      <div className="border-b border-border p-6">
         <Link
           to="/app"
-          className="flex items-center gap-3 font-extrabold text-xl hover:text-primary transition-colors"
+          className="flex items-center gap-3 text-xl font-extrabold transition-colors hover:text-primary"
         >
           <PocketIcon className="size-6 text-primary" />
           <span>PickPocket</span>
@@ -201,10 +201,10 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
+      <nav className="flex-1 space-y-6 overflow-y-auto p-4">
         {navItems.map((section) => (
           <div key={section.section} className="space-y-2">
-            <h3 className="px-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <h3 className="px-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
               {section.section}
             </h3>
             <div className="space-y-1">
@@ -221,10 +221,10 @@ export function Sidebar() {
                   <LinkComponent
                     key={item.label}
                     {...linkProps}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                       item.isActive
                         ? "bg-primary text-primary-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground"
                     }`}
                   >
                     <item.icon className="size-4 flex-shrink-0" />

@@ -115,6 +115,10 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] option for user to change Article font
     - [ ] Support custom reading font like https://monkeytype.com/settings?highlight=fontFamily
 
+    ### Sidebar
+    - [x] make sidebar static / stay in one place when user scrolls
+    - [ ] add a button to collapse the sidebar into just icons
+
     ### Search 
     - [x] add search bar
     - [ ] add search by tag

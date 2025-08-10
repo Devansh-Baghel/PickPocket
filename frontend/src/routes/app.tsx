@@ -20,8 +20,8 @@ function Dashboard({ children }: { children: React.ReactNode }) {
         {/* Desktop Sidebar */}
         <Sidebar />
 
-        {/* Main Content */}
-        <div className="flex-1 min-h-screen">{children}</div>
+        {/* Main Content - Add left margin to account for fixed sidebar */}
+        <div className="min-h-screen flex-1 md:ml-64">{children}</div>
       </div>
     </main>
   );
