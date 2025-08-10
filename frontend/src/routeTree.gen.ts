@@ -20,6 +20,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppSinkRouteImport } from './routes/app/sink'
 import { Route as AppSettingsRouteImport } from './routes/app/settings'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
+import { Route as AppOnboardingRouteImport } from './routes/app/onboarding'
 import { Route as AppLoginRouteImport } from './routes/app/login'
 import { Route as AppSavesSaveIdRouteImport } from './routes/app/saves/$saveId'
 
@@ -78,6 +79,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
+const AppOnboardingRoute = AppOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppLoginRoute = AppLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/landing4': typeof Landing4Route
   '/landing5': typeof Landing5Route
   '/app/login': typeof AppLoginRoute
+  '/app/onboarding': typeof AppOnboardingRoute
   '/app/profile': typeof AppProfileRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/landing4': typeof Landing4Route
   '/landing5': typeof Landing5Route
   '/app/login': typeof AppLoginRoute
+  '/app/onboarding': typeof AppOnboardingRoute
   '/app/profile': typeof AppProfileRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/landing4': typeof Landing4Route
   '/landing5': typeof Landing5Route
   '/app/login': typeof AppLoginRoute
+  '/app/onboarding': typeof AppOnboardingRoute
   '/app/profile': typeof AppProfileRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/sink': typeof AppSinkRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/landing4'
     | '/landing5'
     | '/app/login'
+    | '/app/onboarding'
     | '/app/profile'
     | '/app/settings'
     | '/app/sink'
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/landing4'
     | '/landing5'
     | '/app/login'
+    | '/app/onboarding'
     | '/app/profile'
     | '/app/settings'
     | '/app/sink'
@@ -174,6 +185,7 @@ export interface FileRouteTypes {
     | '/landing4'
     | '/landing5'
     | '/app/login'
+    | '/app/onboarding'
     | '/app/profile'
     | '/app/settings'
     | '/app/sink'
@@ -270,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/onboarding': {
+      id: '/app/onboarding'
+      path: '/onboarding'
+      fullPath: '/app/onboarding'
+      preLoaderRoute: typeof AppOnboardingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/login': {
       id: '/app/login'
       path: '/login'
@@ -289,6 +308,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppLoginRoute: typeof AppLoginRoute
+  AppOnboardingRoute: typeof AppOnboardingRoute
   AppProfileRoute: typeof AppProfileRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppSinkRoute: typeof AppSinkRoute
@@ -298,6 +318,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppLoginRoute: AppLoginRoute,
+  AppOnboardingRoute: AppOnboardingRoute,
   AppProfileRoute: AppProfileRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppSinkRoute: AppSinkRoute,

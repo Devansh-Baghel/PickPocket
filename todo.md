@@ -40,6 +40,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [x] add navigation (sidebar) for screens bigger than md:
 - [x] dark mode reading theme
 - [x] render articles properly
+- [x] add auto tailwind class sorter plugin
 - [ ] use shadcn/ui sidebar component to make the sidebar collapsible.
 - [ ] reading progress bar
 - [ ] list view option to see all saves
@@ -48,7 +49,6 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [ ] convert article to pdf
 - [ ] add a proper tsconfig settings
 - [ ] add auto import sorter prettier plugin
-- [x] add auto tailwind class sorter plugin
 
 
 - [ ] replace /app mock ui page filter options with separate pages for filters:
@@ -67,8 +67,9 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] remove Logo Here text with actual logo in /login
     - [x] add google login support
     - [x] make google login ui req to google login and github login ui req to github login
-    - [ ] replace the Loading Auth Status text with a skeleton of the entire app
-    - [ ] after signup add a custom welcome message like /welcome
+    - [x] replace the Loading Auth Status text with a skeleton of the entire app
+    - [x] after signup add a custom welcome message like /welcome
+    - [x] on new user signup add a onboarding flow where user can import thier saves from pocket.
 
     ### Themes
     - [x] Solar light theme
@@ -114,7 +115,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] Support custom reading font like https://monkeytype.com/settings?highlight=fontFamily
 
     ### Search 
-    - [ ] add search bar
+    - [x] add search bar
     - [ ] add search by tag
     - [ ] add search by highlight
     - [ ] add search by collection
