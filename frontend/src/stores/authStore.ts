@@ -31,6 +31,7 @@ export const useAuthStore = create<AuthState>()(
         authClient.signIn.social({
           provider: "github",
           callbackURL: "http://localhost:3000/app",
+          newUserCallbackURL: "http://localhost:3000/app/onboarding",
         });
       },
 
@@ -38,6 +39,7 @@ export const useAuthStore = create<AuthState>()(
         authClient.signIn.social({
           provider: "google",
           callbackURL: "http://localhost:3000/app",
+          newUserCallbackURL: "http://localhost:3000/app/onboarding",
         });
       },
 
@@ -47,6 +49,7 @@ export const useAuthStore = create<AuthState>()(
             email,
             name,
             callbackURL: "http://localhost:3000/app",
+            newUserCallbackURL: "http://localhost:3000/app/onboarding",
           });
 
           if (error) {

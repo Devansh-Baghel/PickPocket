@@ -70,6 +70,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [x] replace the Loading Auth Status text with a skeleton of the entire app
     - [x] after signup add a custom welcome message like /welcome
     - [x] on new user signup add a onboarding flow where user can import thier saves from pocket.
+    - [ ] add sign in with apple instead of sign in with github
 
     ### Themes
     - [x] Solar light theme
