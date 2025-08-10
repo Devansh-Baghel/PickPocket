@@ -3,6 +3,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { TopBar } from "@/components/TopBar";
 import { FontProvider } from "@/providers/providers";
 import { useAuthStore } from "@/stores/authStore";
+import { useSidebar } from "@/stores/sidebarStore";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -11,17 +12,20 @@ export const Route = createFileRoute("/app")({
 });
 
 function Dashboard({ children }: { children: React.ReactNode }) {
+  const isCollapsed = useSidebar((s) => s.isCollapsed);
+
   return (
     <main className="min-h-screen pt-14 md:pt-0">
-      {/* Mobile TopBar */}
       <TopBar />
-
       <div className="flex">
-        {/* Desktop Sidebar */}
         <Sidebar />
-
-        {/* Main Content - Add left margin to account for fixed sidebar */}
-        <div className="min-h-screen flex-1 md:ml-64">{children}</div>
+        <div
+          className={`min-h-screen flex-1 transition-all duration-300 ${
+            isCollapsed ? "md:ml-16" : "md:ml-64"
+          }`}
+        >
+          {children}
+        </div>
       </div>
     </main>
   );

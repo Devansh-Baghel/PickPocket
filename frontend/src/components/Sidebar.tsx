@@ -10,6 +10,8 @@ import {
   SearchIcon,
   SettingsIcon,
   UserIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "lucide-react";
 import { FaSink as SinkIcon } from "react-icons/fa6";
 import { PocketIcon } from "@/utils/icons";
@@ -23,27 +25,91 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSidebar } from "@/stores/sidebarStore";
 
-function ProfileSection() {
+function ProfileSection({ isCollapsed }: { isCollapsed: boolean }) {
   const { session, signOut } = useAuthStore();
 
+  if (isCollapsed) {
+    return (
+      <div className="mt-auto border-t border-border">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="h-auto w-full justify-center px-3 py-4 hover:bg-accent"
+            >
+              <div className="flex size-8 items-center justify-center rounded-full bg-primary/10">
+                <UserIcon className="size-4 text-primary" />
+              </div>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="end" side="right">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem asChild>
+              <Link
+                to="/app/profile"
+                className="flex cursor-pointer items-center gap-2"
+              >
+                <UserIcon className="size-4" />
+                Profile
+              </Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Link
+                to="/app/sink"
+                className="flex cursor-pointer items-center gap-2"
+              >
+                <PaletteIcon className="size-4" />
+                Appearance
+              </Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Link
+                to="/app/sink"
+                className="flex cursor-pointer items-center gap-2"
+              >
+                <SettingsIcon className="size-4" />
+                Settings
+              </Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onClick={signOut}
+              className="flex cursor-pointer items-center gap-2 text-destructive focus:text-destructive"
+            >
+              <LogOutIcon className="size-4" />
+              Sign Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    );
+  }
+
   return (
-    <div className="border-t border-border mt-auto">
+    <div className="mt-auto border-t border-border">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="w-full justify-start px-3 py-4 h-auto hover:bg-accent"
+            className="h-auto w-full justify-start px-3 py-4 hover:bg-accent"
           >
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                 <UserIcon className="size-4 text-primary" />
               </div>
-              <div className="flex-1 text-left min-w-0">
-                <div className="font-medium text-sm truncate">
+              <div className="min-w-0 flex-1 text-left">
+                <div className="truncate text-sm font-medium">
                   {session?.user?.name || "User"}
                 </div>
-                <div className="text-xs text-muted-foreground truncate">
+                <div className="truncate text-xs text-muted-foreground">
                   {session?.user?.email}
                 </div>
               </div>
@@ -57,7 +123,7 @@ function ProfileSection() {
           <DropdownMenuItem asChild>
             <Link
               to="/app/profile"
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex cursor-pointer items-center gap-2"
             >
               <UserIcon className="size-4" />
               Profile
@@ -67,7 +133,7 @@ function ProfileSection() {
           <DropdownMenuItem asChild>
             <Link
               to="/app/sink"
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex cursor-pointer items-center gap-2"
             >
               <PaletteIcon className="size-4" />
               Appearance
@@ -77,7 +143,7 @@ function ProfileSection() {
           <DropdownMenuItem asChild>
             <Link
               to="/app/sink"
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex cursor-pointer items-center gap-2"
             >
               <SettingsIcon className="size-4" />
               Settings
@@ -88,7 +154,7 @@ function ProfileSection() {
 
           <DropdownMenuItem
             onClick={signOut}
-            className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive"
+            className="flex cursor-pointer items-center gap-2 text-destructive focus:text-destructive"
           >
             <LogOutIcon className="size-4" />
             Sign Out
@@ -100,6 +166,8 @@ function ProfileSection() {
 }
 
 export function Sidebar() {
+  const isCollapsed = useSidebar((s) => s.isCollapsed);
+  const toggle = useSidebar((s) => s.toggle);
   const router = useRouterState();
   const currentPath = router.location.pathname;
   const searchParams = new URLSearchParams(router.location.search);
@@ -124,13 +192,13 @@ export function Sidebar() {
           isActive: isActive("/app", "all"),
         },
         {
-          href: "/app", // You may need to create this route
+          href: "/app",
           label: "All Saves",
           icon: BookmarkIcon,
           isActive: isActive("/saves"),
         },
         {
-          href: "/app/sink", // FIXME: temp route, remove this later
+          href: "/app/sink",
           label: "UI Sink",
           icon: SinkIcon,
           isActive: isActive("/app/sink"),
@@ -179,7 +247,6 @@ export function Sidebar() {
           icon: SearchIcon,
           isActive: false,
           onClick: () => {
-            // You can implement search functionality here
             console.log("Open search");
           },
         },
@@ -188,25 +255,61 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="fixed top-0 left-0 z-40 hidden h-screen w-64 flex-col border-r border-border bg-card md:flex">
+    <aside
+      className={`fixed top-0 left-0 z-40 hidden h-screen flex-col border-r border-border bg-card transition-all duration-300 md:flex ${
+        isCollapsed ? "w-16" : "w-64"
+      }`}
+    >
       {/* Header */}
-      <div className="border-b border-border p-6">
-        <Link
-          to="/app"
-          className="flex items-center gap-3 text-xl font-extrabold transition-colors hover:text-primary"
+      <div className={`border-b border-border ${isCollapsed ? "p-3" : "p-6"}`}>
+        {isCollapsed ? (
+          <div className="flex justify-center">
+            <PocketIcon className="size-6 text-primary" />
+          </div>
+        ) : (
+          <Link
+            to="/app"
+            className="flex items-center gap-3 text-xl font-extrabold transition-colors hover:text-primary"
+          >
+            <PocketIcon className="size-6 text-primary" />
+            <span>PickPocket</span>
+          </Link>
+        )}
+      </div>
+
+      {/* Collapse Button */}
+      <div
+        className={`border-b border-border ${isCollapsed ? "p-2" : "px-4 py-2"}`}
+      >
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={toggle}
+          className={`${isCollapsed ? "w-full justify-center" : "w-full justify-start"} hover:bg-accent`}
+          title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          <PocketIcon className="size-6 text-primary" />
-          <span>PickPocket</span>
-        </Link>
+          {isCollapsed ? (
+            <ChevronRightIcon className="size-4" />
+          ) : (
+            <>
+              <ChevronLeftIcon className="size-4" />
+              <span className="ml-2">Collapse</span>
+            </>
+          )}
+        </Button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-6 overflow-y-auto p-4">
+      <nav
+        className={`flex-1 overflow-y-auto ${isCollapsed ? "p-2" : "p-4"} space-y-6`}
+      >
         {navItems.map((section) => (
           <div key={section.section} className="space-y-2">
-            <h3 className="px-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-              {section.section}
-            </h3>
+            {!isCollapsed && (
+              <h3 className="px-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+                {section.section}
+              </h3>
+            )}
             <div className="space-y-1">
               {section.items.map((item) => {
                 const LinkComponent = item.onClick ? "button" : Link;
@@ -221,14 +324,19 @@ export function Sidebar() {
                   <LinkComponent
                     key={item.label}
                     {...linkProps}
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                    className={`flex w-full items-center rounded-lg text-sm font-medium transition-all duration-200 ${
+                      isCollapsed
+                        ? "justify-center px-3 py-3"
+                        : "gap-3 px-3 py-2"
+                    } ${
                       item.isActive
                         ? "bg-primary text-primary-foreground shadow-sm"
                         : "text-muted-foreground hover:bg-accent hover:text-foreground"
                     }`}
+                    title={isCollapsed ? item.label : undefined}
                   >
                     <item.icon className="size-4 flex-shrink-0" />
-                    <span>{item.label}</span>
+                    {!isCollapsed && <span>{item.label}</span>}
                   </LinkComponent>
                 );
               })}
@@ -238,7 +346,7 @@ export function Sidebar() {
       </nav>
 
       {/* Profile Section */}
-      <ProfileSection />
+      <ProfileSection isCollapsed={isCollapsed} />
     </aside>
   );
 }

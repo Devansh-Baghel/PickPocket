@@ -117,7 +117,10 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 
     ### Sidebar
     - [x] make sidebar static / stay in one place when user scrolls
-    - [ ] add a button to collapse the sidebar into just icons
+    - [x] add a button to collapse the sidebar into just icons
+    - [ ] move the collapse sidebar button outside the sidebar / next to it and make it just be an icon
+    - [ ] switching sidebar state is janky, fix that
+
 
     ### Search 
     - [x] add search bar
