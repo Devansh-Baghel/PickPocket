@@ -12,6 +12,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 
 
 ## Bugs
+- [ ] Unable to save x.com articles
 - [x] Theme doesn't persist on refresh after switching to dynamically load css files.
 - [x] in create highlight route, we aren't checking if the article id exists before, fix that.
 - [x] UI in /app/login doesn't show up initially as user's selected UI font. (only the ui in /sink changes font)
@@ -222,4 +223,11 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 
 ## Maybe some day
 - [ ] bump.sh integration
+- [ ] kobo integration
+- [ ] amazon kindle integration
+- [ ] integrate x articles into pickpocket
+- [ ] Migrate from Matter feature
+- [ ] Self hosted solution
+- [ ] Local Only support
+- [ ] Proper markdown code block rendering with syntax highlighting support for various programming langs
 - [ ] 
