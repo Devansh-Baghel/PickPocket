@@ -8,10 +8,11 @@
 /* Font for PickPocket logo */
 @import url('https://fonts.googleapis.com/css2?family=Gravitas+One&display=swap');
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --font-gravitas: "Gravitas One", "sans-serif";
 }
-
 
 /* ======== Solar (base) ======== */
 
@@ -98,7 +99,6 @@
 /* ======== Charcoal Theme (override) ======== */
 /* ======== Sky Dark Theme (override) ======== */
 
-
 /* ======== Themes inspired from monkeytype ======== */
 /* ======== Serika Theme ======== */
 /* ======== Dracula Theme ======== */
@@ -106,8 +106,6 @@
 /* ======== Gruvbox Dark Theme ======== */
 /* ======== Catppuccin Theme ======== */
 /* ======== GitHub Theme ======== */
-
-
 
 /* ======== @theme inline ======== */
 

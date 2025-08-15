@@ -6,12 +6,19 @@
 - [ ] settings options to turn off all ai features or turn of ai features that you don't like one by one.
 - [ ] settings option to turn on statistics features.
 - [ ] settings option to turn on gamification features.
+- [ ] parse with ai option to remove any extra noise that might have slipped through in the article
+- [ ] build a demo page where users can preview the ui of the final app.
+- [ ] show time estimate taken to read that article to the user like 10min, 3min etc
+- [ ] show reading progress % in ui to the user
 
 ### UI Reference
-https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
+- https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
+- Matter
+- Readwise Reader
 
 
 ## Bugs
+- [ ] Unable to save peerlist.io articles
 - [ ] Unable to save x.com articles
 - [x] Theme doesn't persist on refresh after switching to dynamically load css files.
 - [x] in create highlight route, we aren't checking if the article id exists before, fix that.
@@ -50,6 +57,12 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [ ] convert article to pdf
 - [ ] add a proper tsconfig settings
 - [ ] add auto import sorter prettier plugin
+- [ ] increase the width of the article page (saves/saveid)
+- [ ] remove the summary from the article page
+- [ ] if no date is available, then don't show the date, not "date unknown" in the ui.
+- [ ] if source is available, then don't show the source, not "source unknown" in the ui.
+- [ ] if language is available, then don't show the language, not "language unknown" in the ui.
+- [ ] remove the save details card from article page.
 
 
 - [ ] replace /app mock ui page filter options with separate pages for filters:
@@ -129,6 +142,10 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     - [ ] add search by highlight
     - [ ] add search by collection
 
+    ### Aritcle Page
+    - [ ] going to the article view puts user into zen mode by default
+    - [ ] add syntax highlighting
+
     ### Profile Page
     - [x] mock profile ui
     - [x] remove settings ui from profile
@@ -137,6 +154,7 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
     ### Settings Page
     - [x] mock settings page ui
     - [ ] replace with real ui
+    - [ ] add different options for syntax highlighting
 
     ### Landing Page
     - [x] basic mock landing page
@@ -230,4 +248,15 @@ https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
 - [ ] Self hosted solution
 - [ ] Local Only support
 - [ ] Proper markdown code block rendering with syntax highlighting support for various programming langs
-- [ ] 
+- [ ] Youtube video support
+- [ ] https://www.lesswrong.com/w/intellectual-progress-via-lesswrong add hover effect like this, shows a preview on hover
+- [ ] support for internationalization in non-english langs.
+
+
+## Launch day
+- [ ] https://hellogithub.com/en post here
+- [ ] launch on peerlist
+- [ ] launch on producthunt
+- [ ] https://www.launch-list.org/?ref=peerlist&utm_source=peerlist use this to see all places to launch
+- [ ] https://www.uneed.best/
+- [ ] https://www.uneed.best/free-tools/product-launch-checklist launch checklist
