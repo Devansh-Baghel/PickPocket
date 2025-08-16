@@ -1,21 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BookmarkIcon, CheckIcon } from "lucide-react";
+import { BookmarkIcon, CheckIcon, LoaderIcon } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { getSaves } from "@/utils/server-functions";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 
 export const Route = createFileRoute("/app/")({
   component: RouteComponent,
@@ -26,36 +17,77 @@ function RouteComponent() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const {
-    data: savesData,
-    isLoading,
+    data,
     error,
-  } = useQuery({
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
     queryKey: ["saves", session?.user?.id],
-    queryFn: () => getSaves({ data: { userId: session.user.id } }),
+    queryFn: ({ pageParam = 1 }) => 
+      getSaves({ 
+        data: { 
+          userId: session.user.id, 
+          page: pageParam,
+          limit: 10 
+        } 
+      }),
+    getNextPageParam: (lastPage, allPages) => {
+      // If the last page has fewer items than the limit, there are no more pages
+      if (!lastPage.hasMore) return undefined;
+      return lastPage.page + 1;
+    },
+    initialPageParam: 1,
     enabled: !!session?.user?.id,
   });
 
-  const saves = savesData?.data || [];
+  // Flatten all pages into a single array
+  const saves = data?.pages.flatMap(page => page.data) || [];
 
-  // Simple search without complex filtering
+  // Simple search filtering (client-side for now)
   const filteredSaves = saves.filter(
     (save: any) =>
       save.article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       save.article.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (isLoading) {
+  // Infinite scroll handler
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop
+      >= document.documentElement.offsetHeight - 1000 // Load when 1000px from bottom
+    ) {
+      if (hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  if (status === 'pending') {
     return (
       <div className="container mx-auto px-4 py-6 max-w-4xl">
-        <div className="text-center">Loading your saves...</div>
+        <div className="space-y-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <SaveItemSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   }
 
-  if (error) {
+  if (status === 'error') {
     return (
       <div className="container mx-auto px-4 py-6 max-w-4xl">
-        <div className="text-center text-red-500">Error loading saves</div>
+        <div className="text-center text-red-500">
+          Error loading saves: {error?.message}
+        </div>
       </div>
     );
   }
@@ -105,29 +137,82 @@ function RouteComponent() {
             </CardContent>
           </Card>
         ) : (
-          filteredSaves.map((save: any) => (
-            <SaveItem key={save.save.id} save={save} />
-          ))
+          <>
+            {filteredSaves.map((save: any) => (
+              <SaveItem key={save.save.id} save={save} />
+            ))}
+            
+            {/* Loading indicator for next page */}
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-4">
+                <div className="flex items-center gap-2">
+                  <LoaderIcon className="size-4 animate-spin" />
+                  <span className="text-sm text-muted-foreground">
+                    Loading more articles...
+                  </span>
+                </div>
+              </div>
+            )}
+            
+            {/* Load more button (fallback for manual loading) */}
+            {hasNextPage && !isFetchingNextPage && (
+              <div className="flex justify-center py-4">
+                <Button 
+                  variant="outline" 
+                  onClick={() => fetchNextPage()}
+                  disabled={isFetchingNextPage}
+                >
+                  Load More Articles
+                </Button>
+              </div>
+            )}
+            
+            {/* End of results indicator */}
+            {!hasNextPage && saves.length > 0 && (
+              <div className="text-center py-4 text-sm text-muted-foreground">
+                You've reached the end of your saves
+              </div>
+            )}
+          </>
         )}
       </div>
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {/* Background loading indicator */}
+      {isFetching && !isFetchingNextPage && (
+        <div className="fixed bottom-4 right-4 bg-primary text-primary-foreground px-3 py-2 rounded-md shadow-lg">
+          <div className="flex items-center gap-2">
+            <LoaderIcon className="size-4 animate-spin" />
+            <span className="text-sm">Updating...</span>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+// Skeleton component for loading state
+function SaveItemSkeleton() {
+  return (
+    <Card className="border-l-4 border-l-transparent">
+      <CardContent className="p-4">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0 space-y-3">
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-20 bg-accent rounded animate-pulse" />
+              <div className="h-4 w-16 bg-accent rounded animate-pulse" />
+            </div>
+            <div className="space-y-2">
+              <div className="h-5 w-full bg-accent rounded animate-pulse" />
+              <div className="h-5 w-4/5 bg-accent rounded animate-pulse" />
+            </div>
+            <div className="space-y-2">
+              <div className="h-4 w-full bg-accent rounded animate-pulse" />
+              <div className="h-4 w-3/4 bg-accent rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 

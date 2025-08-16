@@ -71,7 +71,12 @@ export const getSaves = createServerFn({ method: "GET" })
         throw new Error(`Failed to fetch saves: ${response.status}`);
       });
 
-    return response.data;
+    return {
+      data: response.data.data,
+      page: response.data.page,
+      limit: response.data.limit,
+      hasMore: response.data.data.length === limit, // Assume there's more if we got a full page
+    };
   });
 
 
