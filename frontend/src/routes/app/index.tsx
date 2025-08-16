@@ -31,7 +31,7 @@ function RouteComponent() {
     error,
   } = useQuery({
     queryKey: ["saves", session?.user?.id],
-    queryFn: () => getSaves({ data: session.user.id }),
+    queryFn: () => getSaves({ data: { userId: session.user.id } }),
     enabled: !!session?.user?.id,
   });
 

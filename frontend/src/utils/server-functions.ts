@@ -16,14 +16,64 @@ export const getUsers = createServerFn({
     .data;
 });
 
-export const getSaves = createServerFn({
-  method: "GET",
-})
-  .validator((data: string) => data)
-  .handler(async ({ data: userId }) => {
-    const response = await axiosInstance.get(`/saves/${userId}`);
+interface GetSavesInput {
+  userId: string
+  page?: number
+  limit?: number
+  search?: string
+}
+
+interface GetSavesResponse {
+  page: number
+  limit: number
+  data: Array<{
+    save: {
+      id: string
+      made_by: string
+      is_archived: boolean
+      is_favorite: boolean
+      is_read: boolean
+      read_at?: string
+      article_id: string
+      timestamp: string
+    }
+    article: {
+      id: string
+      url: string
+      title: string
+      excerpt: string
+      lang: string
+      publishedTime?: string
+      siteName: string
+      timestamp: string
+    }
+  }>
+}
+
+export const getSaves = createServerFn({ method: "GET" })
+  .validator((input: GetSavesInput) => input)
+  .handler(async ({ data }) => {
+    const { userId, page = 1, limit = 10, search } = data;
+
+    console.log(userId, page, limit)
+
+    // Build query parameters
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+      ...(search && { search }),
+    });
+
+    // Make the API request to your backend
+    const response = await axiosInstance
+      .get(`/saves/${userId}?${params}`)
+      .catch((error) => {
+        throw new Error(`Failed to fetch saves: ${response.status}`);
+      });
+
     return response.data;
   });
+
 
 export const getSaveWithArticle = createServerFn({
   method: "GET",

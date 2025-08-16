@@ -10,6 +10,7 @@
 - [ ] build a demo page where users can preview the ui of the final app.
 - [ ] show time estimate taken to read that article to the user like 10min, 3min etc
 - [ ] show reading progress % in ui to the user
+- [ ] support for lazy loaded images in articles http://localhost:3000/app/saves/504919ff-f65d-4a66-b455-49f5d3e79bf7 images in this article are broken.
 
 ### UI Reference
 - https://blog.mozilla.org/wp-content/blogs.dir/278/files/2023/05/09_pocket.gif
@@ -178,6 +179,7 @@
 - [ ] add caching to the /articles/:articleId endpoint
 - [ ] add a proper tsconfig settings
 - [ ] add auto import sorter prettier plugin
+- [ ] https://github.com/postlight/parser use this parser instead of the other one
 
     ### Import from pocket
     - [x] csv parsing
