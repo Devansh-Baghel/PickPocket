@@ -76,7 +76,7 @@ function Article() {
 
   console.log(saveData);
 
-  const { save, article } = saveData;
+  const { article } = saveData;
 
   return (
     <div className="mx-auto max-w-4xl p-6">
@@ -137,14 +137,6 @@ function Article() {
                 )}
               </div>
             </div>
-
-            {/* Article Excerpt */}
-            {article.excerpt && (
-              <div className="rounded-lg bg-muted/50 p-4">
-                <h3 className="mb-2 font-semibold">Summary</h3>
-                <p className="text-muted-foreground">{article.excerpt}</p>
-              </div>
-            )}
 
             {/* Article Content */}
             <div className="reader-mode prose prose-lg dark:prose-invert max-w-none">

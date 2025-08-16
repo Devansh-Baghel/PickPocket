@@ -260,3 +260,4 @@
 - [ ] https://www.launch-list.org/?ref=peerlist&utm_source=peerlist use this to see all places to launch
 - [ ] https://www.uneed.best/
 - [ ] https://www.uneed.best/free-tools/product-launch-checklist launch checklist
+- [ ] https://launchigniter.com/ launch here as well

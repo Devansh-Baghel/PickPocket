@@ -61,7 +61,7 @@ function RouteComponent() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">
+    <div className="container mx-auto max-w-4xl space-y-6 px-4 py-6">
       {/* Search Bar */}
       <div className="relative">
         <Input
@@ -85,31 +85,14 @@ function RouteComponent() {
         </div>
       </div>
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-
       {/* Saves List */}
       <div className="space-y-4">
         {filteredSaves.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">
-              <BookmarkIcon className="size-12 mx-auto mb-4 text-muted-foreground" />
-              <h3 className="text-lg font-semibold mb-2">No articles found</h3>
-              <p className="text-muted-foreground mb-4">
+              <BookmarkIcon className="mx-auto mb-4 size-12 text-muted-foreground" />
+              <h3 className="mb-2 text-lg font-semibold">No articles found</h3>
+              <p className="mb-4 text-muted-foreground">
                 {searchQuery
                   ? `No articles match your search "${searchQuery}"`
                   : "Start by saving your first article!"}
@@ -127,6 +110,23 @@ function RouteComponent() {
           ))
         )}
       </div>
+
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }
